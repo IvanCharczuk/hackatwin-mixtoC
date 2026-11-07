@@ -3,9 +3,10 @@
 # llega un mensaje nuevo a origin/main. No hace pull ni toca tu trabajo: sólo
 # avisa; el pull lo hacés vos (o tu IA) cuando te conviene.
 #
-# uso: scripts/escuchar [--para <persona>] [--cada <segundos>] [--una-vez]
+# uso: scripts/escuchar [--para <persona>] [--cada <segundos>] [--commits] [--una-vez]
 #   --para <persona>  sólo avisa mensajes con "para: todos" o "para: <persona>"
 #   --cada <seg>      intervalo entre fetch (default 25)
+#   --commits         avisa también los commits nuevos de otros en origin/main
 #   --una-vez         revisa una vez y sale (0 si hubo nuevos, 1 si no)
 #
 # La primera vez marca como vistos los mensajes que ya existen. Lo visto se
@@ -15,11 +16,13 @@ set -u
 PARA=""
 CADA=25
 UNA_VEZ=0
+COMMITS=0
 while [ $# -gt 0 ]; do
   case "$1" in
     --para) PARA="${2:-}"; shift 2 ;;
     --cada) CADA="${2:-25}"; shift 2 ;;
     --una-vez) UNA_VEZ=1; shift ;;
+    --commits) COMMITS=1; shift ;;
     -h|--help) sed -n '2,13p' "$0" | sed 's/^# \{0,1\}//'; exit 0 ;;
     *) echo "escuchar: opción desconocida: $1" >&2; exit 2 ;;
   esac
@@ -44,9 +47,22 @@ if [ ! -f "$VISTOS" ]; then
   [ "$UNA_VEZ" -eq 0 ] && echo "escuchar: escuchando mensajes/ en $REF cada ${CADA}s$( [ -n "$PARA" ] && echo " (para: todos o $PARA)")"
 fi
 
+YO="$(git config user.name)"
+ULTIMO_SHA="$(git rev-parse "$REF" 2>/dev/null)"
+
 revisar() {
   git fetch -q origin main 2>/dev/null || { echo "escuchar: falló git fetch, reintento" >&2; return 1; }
   NUEVOS=0
+  if [ "$COMMITS" -eq 1 ]; then
+    actual="$(git rev-parse "$REF")"
+    if [ "$actual" != "$ULTIMO_SHA" ]; then
+      git log --format='%h|%an|%s' "$ULTIMO_SHA..$actual" 2>/dev/null | while IFS='|' read -r h a s; do
+        [ "$a" = "$YO" ] && continue
+        echo "COMMIT NUEVO: $h · $a · $s"
+      done
+      ULTIMO_SHA="$actual"
+    fi
+  fi
   for f in $(listar); do
     grep -qxF "$f" "$VISTOS" && continue
     echo "$f" >> "$VISTOS"
