@@ -5,3 +5,7 @@ export const PRIVY_APP_ID = process.env.NEXT_PUBLIC_PRIVY_APP_ID;
 export const MOCK = !PRIVY_APP_ID || process.env.NEXT_PUBLIC_MOCK === "1";
 export const MOCK_ADDRESS = (process.env.NEXT_PUBLIC_MOCK_ADDRESS ??
   "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045") as `0x${string}`;
+// NEXT_PUBLIC_MOCK_POSITION=1 llena el dashboard con el ejemplo de la SPEC (5.000 CHLt →
+// 5,09 USDT0, 4.000 ARGt prestados), marcado "ilustrativo". Sirve porque la wallet de demo
+// no tiene posición en Morpho.
+export const MOCK_POSITION = process.env.NEXT_PUBLIC_MOCK_POSITION === "1";
