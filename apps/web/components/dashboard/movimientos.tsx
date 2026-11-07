@@ -15,8 +15,8 @@ type Fila = { hash?: `0x${string}`; titulo: string; monto?: string; timestamp: n
 
 // El recorrido de la SPEC, para la demo con NEXT_PUBLIC_MOCK_POSITION=1. Sin hash: no existe en la red.
 const ILUSTRATIVOS: Fila[] = [
-  { titulo: "Adelanto recibido", monto: "+4.000 ARGt", timestamp: 0, nota: "ilustrativo" },
-  { titulo: "Garantía depositada", monto: "+5,09 USDT0", timestamp: 0, nota: "ilustrativo" },
+  { titulo: "Pago financiado", monto: "4.000 ARGt", timestamp: 0, nota: "ilustrativo" },
+  { titulo: "Respaldo depositado", monto: "+5,09 USDT0", timestamp: 0, nota: "ilustrativo" },
   { titulo: "CHLt congelados", monto: "−5.000 CHLt", timestamp: 0, nota: "ilustrativo" },
 ];
 
@@ -40,7 +40,7 @@ export function Movimientos({ address, ilustrativo }: { address: `0x${string}`; 
     <section className="bg-cream">
       <div className="mx-auto w-full max-w-[1248px] px-6 py-[72px] lg:py-[96px]">
         <p className={EYEBROW}>Movimientos</p>
-        <h2 className="mt-3 text-[30px] leading-[1.1] font-semibold tracking-[-0.6px] text-navy lg:text-[40px] lg:tracking-[-1px]">Lo que pasó con tu crédito</h2>
+        <h2 className="mt-3 text-[30px] leading-[1.1] font-semibold tracking-[-0.6px] text-navy lg:text-[40px] lg:tracking-[-1px]">Tus pagos y movimientos</h2>
         <div className="mt-8 rounded-[22px] border border-line bg-paper px-5 lg:px-7">
           {isLoading && !ilustrativo && filas.length === 0 && (
             <p className="flex items-center gap-2 py-8 text-[15px] text-ink-2">
@@ -51,12 +51,12 @@ export function Movimientos({ address, ilustrativo }: { address: `0x${string}`; 
           {!isLoading && filas.length === 0 && (
             <div className="py-10">
               <p className="text-[16px] font-semibold text-navy">Todavía no hay movimientos</p>
-              <p className="mt-1 text-[15px] text-ink-2">Cuando dejes garantía o recibas ARGt, lo vas a ver acá con su link a Arbiscan.</p>
+              <p className="mt-1 text-[15px] text-ink-2">Cuando financies un pago o dejes tu respaldo, lo vas a ver acá con su link a Arbiscan.</p>
             </div>
           )}
           <ul className="divide-y divide-line">
             {filas.map((f, i) => {
-              const Icono = f.titulo.startsWith("Garantía") ? ShieldCheck : f.monto?.startsWith("−") ? ArrowUpRight : ArrowDownLeft;
+              const Icono = f.titulo.startsWith("Respaldo") ? ShieldCheck : f.monto?.startsWith("−") ? ArrowUpRight : ArrowDownLeft;
               return (
                 <li key={f.hash ?? `${f.titulo}-${i}`} className="flex min-h-16 items-center gap-4 py-4">
                   <span className={cn("flex size-10 shrink-0 items-center justify-center rounded-full", f.fallo ? "bg-bad/12 text-bad" : "bg-cream-2 text-navy")}>

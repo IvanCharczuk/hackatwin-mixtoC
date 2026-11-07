@@ -74,14 +74,14 @@ export function Hero({ credito, cargando, onPedir }: { credito: Credito | undefi
     <div className="mx-auto grid w-full max-w-[1248px] gap-8 px-6 pt-6 pb-[200px] lg:grid-cols-[1fr_auto] lg:items-end lg:gap-12 lg:pt-14 lg:pb-[190px]">
       <div className="flex flex-col items-start gap-5">
         <p className={`${EYEBROW} flex items-center gap-3 text-sun`}>
-          Tu crédito en Argentina
+          Pagá hoy en Argentina, devolvé después
           {credito?.ilustrativo && <span className="rounded-full border border-sun/60 px-2 py-0.5 text-[11px] tracking-[1px]">ilustrativo</span>}
         </p>
         {cargando || !credito ? (
           <div className="h-[84px] w-[min(560px,100%)] animate-pulse rounded-2xl bg-white/10 lg:h-[144px]" />
         ) : vacio ? (
           <h1 className="max-w-[640px] text-[38px] leading-[1.06] font-semibold tracking-[-1px] text-white lg:text-[64px] lg:tracking-[-1.8px]">
-            Todavía no pediste un adelanto
+            Todavía no financiaste ningún pago
           </h1>
         ) : (
           <h1 className="text-[38px] leading-[1.06] font-semibold tracking-[-1px] text-white lg:text-[68px] lg:tracking-[-1.8px]">
@@ -89,27 +89,27 @@ export function Hero({ credito, cargando, onPedir }: { credito: Credito | undefi
               <SlidingNumber number={Math.floor(credito.disponibleArgt)} thousandSeparator="." className="tabular-nums" />
               <span>ARGt</span>
             </span>
-            <span className="block">disponibles para pedir hoy</span>
+            <span className="block">de límite disponible</span>
           </h1>
         )}
         <p className="max-w-[520px] text-[17px] leading-[1.45] font-medium text-lavender-soft lg:text-[19px]">
           {vacio
-            ? "Congelás tus CHLt como garantía y recibís ARGt para operar acá. Te prestamos hasta el 60 % de lo que dejás."
+            ? "Dejás tus CHLt de respaldo y le pagamos a tu proveedor en ARGt. Lo devolvés cuando cobrás acá. Tu límite es el 60 % de tu respaldo."
             : credito
-              ? `Hasta el 60 % de tu garantía${credito.comisionAnual !== null ? ` · comisión ${pct(credito.comisionAnual, 1)} anual` : ""}.`
+              ? `Tu límite es el 60 % de tu respaldo${credito.comisionAnual !== null ? ` · costo de financiación ${pct(credito.comisionAnual, 1)} anual` : ""}.`
               : "Leyendo tu posición en Arbitrum…"}
         </p>
         <button type="button" onClick={onPedir} className="brillo-sol mt-1 inline-flex items-center gap-2 rounded-full bg-sun px-[30px] py-4 text-[16px] font-bold text-navy-deep transition-transform hover:-translate-y-0.5 lg:px-[34px] lg:py-[18px] lg:text-[17px]">
-          Pedir adelanto
+          Financiar un pago
           <ArrowRight className="size-5" aria-hidden="true" />
         </button>
       </div>
 
       {credito && !cargando && (
         <div className="flex flex-col items-start gap-2 lg:mb-2 lg:items-stretch">
-          <PillMoneda logo="/tokens/CHLt.svg" etiqueta={vacio ? "Congelás" : "Congelaste"} monto={vacio ? "CHLt" : `≈ ${fmt(credito.chltCongelado)} CHLt`} />
+          <PillMoneda logo="/tokens/CHLt.svg" etiqueta={vacio ? "Dejás de respaldo" : "Tu respaldo"} monto={vacio ? "CHLt" : `≈ ${fmt(credito.chltCongelado)} CHLt`} />
           <ArrowDown className="ml-7 size-4 text-sun" aria-hidden="true" />
-          <PillMoneda logo="/tokens/ARGt.svg" etiqueta={vacio ? "Recibís" : "Te prestamos"} monto={vacio ? "ARGt" : `${fmt(credito.deudaArgt)} ARGt`} />
+          <PillMoneda logo="/tokens/ARGt.svg" etiqueta={vacio ? "Le pagamos" : "Financiado"} monto={vacio ? "ARGt" : `${fmt(credito.deudaArgt)} ARGt`} />
         </div>
       )}
     </div>

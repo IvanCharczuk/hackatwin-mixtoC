@@ -14,10 +14,10 @@ const SPAN = 100_000n;
 const VENTANAS = 4;
 
 const EVENTOS = {
-  SupplyCollateral: { titulo: "Garantía depositada", token: "USDT0", decimals: 6, signo: "+" },
-  Borrow: { titulo: "Adelanto recibido", token: "ARGt", decimals: 18, signo: "+" },
-  Repay: { titulo: "Repago", token: "ARGt", decimals: 18, signo: "−" },
-  WithdrawCollateral: { titulo: "Garantía recuperada", token: "USDT0", decimals: 6, signo: "−" },
+  SupplyCollateral: { titulo: "Respaldo depositado", token: "USDT0", decimals: 6, signo: "+" },
+  Borrow: { titulo: "Pago financiado", token: "ARGt", decimals: 18, signo: "+" },
+  Repay: { titulo: "Pago de tu saldo", token: "ARGt", decimals: 18, signo: "−" },
+  WithdrawCollateral: { titulo: "Respaldo liberado", token: "USDT0", decimals: 6, signo: "−" },
 } as const;
 type Evento = keyof typeof EVENTOS;
 
