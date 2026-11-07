@@ -55,11 +55,11 @@ sueltas, nada de frases largas) y Ivan cuenta. El video no tiene voz.
 
 | Tiempo | En pantalla (video) | Lo que decís |
 |---|---|---|
-| 0:00 a 0:14 | **El caso.** Amanece sobre la cordillera de San Juan. Un camión con el nombre «Excon» cruza de Chile hacia «San Juan». Texto: «Pagar en pesos». | «Excon, una contratista minera chilena, ya está analizando entrar a San Juan. Para arrancar tiene que pagar sueldos y proveedores en pesos desde el primer día.» |
-| 0:14 a 0:22 | **El muro.** Caen dos cruces: «Banco» ✗ «Trámites» ✗. | «Pero el banco no la conoce y conseguir pesos desde afuera lleva tiempo y trámites.» |
-| 0:22 a 0:32 | **Los beneficios.** El logo de Saltar despeja el riel; aparecen tres checks: «Día uno» ✓ «Con su garantía» ✓ «Factura revisada» ✓. | «Saltar agiliza los rieles para que tenga pesos desde el día uno, con su propia garantía y cada factura revisada antes de pagar.» |
+| 0:00 a 0:14 | **El mercado y el caso.** Contadores que suben: «13 proyectos mineros · US$ 25B» y «+20 esperando». Después, un camión con el nombre «Excon» cruza de Chile hacia «San Juan». | «Hay 13 proyectos mineros aprobados en el RIGI por 25 billions de dólares, y 20 más esperando. Contratistas chilenas como Excon ya analizan entrar a San Juan.» |
+| 0:14 a 0:22 | **El problema.** Una solicitud de crédito se sella: «Sin historial en Argentina». | «Para arrancar necesitan pesos desde el primer día, pero en Argentina no tienen historial para pedir crédito.» |
+| 0:22 a 0:32 | **Los beneficios.** El logo de Saltar despeja el riel; aparecen tres checks: «Día uno» ✓ «Con su garantía» ✓ «Factura revisada» ✓. | «Saltar agiliza los rieles para que tengan pesos desde el día uno, con su propia garantía y cada factura revisada antes de pagar.» |
 | 0:32 a 0:44 | **Por qué los demás no alcanzan.** Cuatro columnas: «Banco» ✗, «Bitso · BVNK» ✗, «Lemon · Ripio» ✗, «Saltar» ✓. | «El banco pide historia, Bitso o BVNK mueven plata pero no prestan pesos, y Lemon o Ripio son para ahorro personal. Saltar resuelve las tres cosas.» |
-| 0:44 a 0:56 | **Tamaño.** Contadores: «13 proyectos mineros · US$ 25B», «+20 esperando», «7.500 pymes proveedoras». Debajo: «1%» y «0,3%». | «Y no es un caso aislado. Hay 13 proyectos mineros aprobados, 20 esperando y 7.500 pymes proveedoras en Vaca Muerta. Cobramos 1% por abrir y 0,3% por pago.» |
+| 0:44 a 0:56 | **Tamaño y negocio.** «7.500 pymes proveedoras» se llenan de puntos. Debajo: «1%» y «0,3%». | «Detrás hay 7.500 pymes proveedoras sólo en Vaca Muerta. Cobramos 1% por abrir el crédito y 0,3% por cada pago.» |
 | 0:56 a 1:00 | **Cierre.** El logo de Saltar sobre el sol: «Financiación desde el día uno». | «Les muestro cómo funciona.» |
 
 ## Demo en vivo: cómo funciona (unos 90 segundos)
