@@ -119,7 +119,7 @@ export default function App() {
         </div>
       </main>
 
-      <Asistente endpoint="/api/chat" wallet={wallet ?? null} idioma="es" />
+      <Asistente endpoint="/api/chat" wallet={wallet ?? null} idioma="es" pagina="pagar-factura" cuit={cuit} />
     </div>
   );
 }

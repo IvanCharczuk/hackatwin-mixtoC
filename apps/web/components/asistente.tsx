@@ -15,7 +15,7 @@ const TEXTOS = {
     titulo: "Asistente de Saltar",
     sub: "Responde con datos en vivo de Morpho y el BCRA",
     hola: "Hola. Te ayudo con cómo funciona Saltar, cuánta garantía necesitás y cómo financiar tu llegada a Argentina.",
-    holaCuenta: "Hola. Veo tu wallet: puedo decirte tus saldos, cuánto usás de tu garantía y tu límite disponible hoy.",
+    holaCuenta: "Hola. Veo tu wallet: te digo cuánto podés financiar hoy, qué te falta para empezar y cómo pagar o devolver.",
     placeholder: "Escribí tu pregunta",
     enviar: "Enviar",
     cerrar: "Cerrar",
@@ -27,14 +27,14 @@ const TEXTOS = {
       "¿Cuánta garantía necesito para 1.000.000 de pesos?",
       "¿Cuánto cuesta y de dónde salen los pesos?",
     ],
-    sugerenciasCuenta: ["¿Cuál es mi límite disponible hoy?", "¿Cuál es mi saldo y cuánto uso de mi garantía?", "¿Cómo está el mercado hoy?"],
+    sugerenciasCuenta: ["¿Cuánto puedo financiar hoy?", "¿Cómo pago una factura?", "¿Cómo devuelvo lo que usé?"],
   },
   en: {
     abrir: "Ask Saltar",
     titulo: "Saltar assistant",
     sub: "Answers with live Morpho and BCRA data",
     hola: "Hi. I can help with how Saltar works, how much collateral you need and how to fund your move to Argentina.",
-    holaCuenta: "Hi. I can see your wallet: I can tell you your balances, how much of your collateral you use and your available limit today.",
+    holaCuenta: "Hi. I can see your wallet: I can tell you how much you can finance today, what you need to start and how to pay or pay back.",
     placeholder: "Type your question",
     enviar: "Send",
     cerrar: "Close",
@@ -42,14 +42,14 @@ const TEXTOS = {
     error: "I couldn't answer right now. Please try again.",
     nota: "Read-only: it never signs or moves funds. Not financial advice.",
     sugerencias: ["How does Saltar work?", "How much collateral do I need for 1,000,000 pesos?", "What does it cost and where do the pesos come from?"],
-    sugerenciasCuenta: ["What is my available limit today?", "What is my balance?", "How is the market today?"],
+    sugerenciasCuenta: ["How much can I finance today?", "How do I pay an invoice?", "How do I pay back what I used?"],
   },
   pt: {
     abrir: "Pergunte à Saltar",
     titulo: "Assistente da Saltar",
     sub: "Responde com dados ao vivo do Morpho e do BCRA",
     hola: "Olá. Posso ajudar com como a Saltar funciona, quanta garantia você precisa e como financiar sua chegada à Argentina.",
-    holaCuenta: "Olá. Vejo sua wallet: posso dizer seus saldos, quanto da sua garantia você usa e seu limite disponível hoje.",
+    holaCuenta: "Olá. Vejo sua wallet: digo quanto você pode financiar hoje, o que falta para começar e como pagar ou devolver.",
     placeholder: "Escreva sua pergunta",
     enviar: "Enviar",
     cerrar: "Fechar",
@@ -57,7 +57,7 @@ const TEXTOS = {
     error: "Não consegui responder agora. Tente de novo.",
     nota: "Só lê dados: não assina nem move fundos. Não é aconselhamento financeiro.",
     sugerencias: ["Como a Saltar funciona?", "Quanta garantia preciso para 1.000.000 de pesos?", "Quanto custa e de onde vêm os pesos?"],
-    sugerenciasCuenta: ["Qual é meu limite disponível hoje?", "Qual é meu saldo?", "Como está o mercado hoje?"],
+    sugerenciasCuenta: ["Quanto posso financiar hoje?", "Como pago uma fatura?", "Como devolvo o que usei?"],
   },
 } satisfies Record<Idioma, unknown>;
 
@@ -128,7 +128,21 @@ function Texto({ texto }: { texto: string }) {
   );
 }
 
-export function Asistente({ endpoint, wallet, idioma = "es" }: { endpoint: string; wallet?: string | null; idioma?: Idioma }) {
+export function Asistente({
+  endpoint,
+  wallet,
+  idioma = "es",
+  pagina,
+  cuit,
+}: {
+  endpoint: string;
+  wallet?: string | null;
+  idioma?: Idioma;
+  /** Qué pantalla está viendo, para que responda en contexto. */
+  pagina?: "dashboard" | "pagar-factura";
+  /** CUIT de la empresa en pantalla, para aplicar el tope del BCRA. */
+  cuit?: string;
+}) {
   const t = TEXTOS[idioma] ?? TEXTOS.es;
   const [abierto, setAbierto] = useState(false);
   const [mensajes, setMensajes] = useState<Mensaje[]>([]);
@@ -168,7 +182,7 @@ export function Asistente({ endpoint, wallet, idioma = "es" }: { endpoint: strin
       const r = await fetch(endpoint, {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ mensajes: nuevos, wallet: wallet ?? null }),
+        body: JSON.stringify({ mensajes: nuevos, wallet: wallet ?? null, pagina: pagina ?? null, cuit: cuit ?? null }),
       });
       const j = await r.json().catch(() => ({}));
       if (!r.ok || typeof j.texto !== "string") throw new Error(j.error ?? t.error);

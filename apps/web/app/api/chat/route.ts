@@ -46,7 +46,7 @@ function leerMensajes(v: unknown): Anthropic.Beta.BetaMessageParam[] | null {
 }
 
 export async function POST(req: Request) {
-  let body: { mensajes?: unknown; wallet?: unknown };
+  let body: { mensajes?: unknown; wallet?: unknown; pagina?: unknown; cuit?: unknown };
   try {
     body = await req.json();
   } catch {
@@ -60,9 +60,17 @@ export async function POST(req: Request) {
   if (!apiKey) return responder({ error: "El asistente no está configurado (falta ANTHROPIC_API_KEY)." }, 503);
   const client = new Anthropic({ apiKey, timeout: 45_000, maxRetries: 1 });
 
-  const contexto = wallet
-    ? `La persona entró a la app con la wallet ${wallet}. Podés usar mi_cuenta.`
-    : "La persona no tiene una wallet conectada (está en la landing o sin sesión).";
+  const pagina = body.pagina === "pagar-factura" ? "Pagar una factura (/app)" : body.pagina === "dashboard" ? "el dashboard" : null;
+  const cuit = typeof body.cuit === "string" && /^\d{2}-?\d{8}-?\d$/.test(body.cuit.trim()) ? body.cuit.trim() : null;
+  const contexto = [
+    wallet
+      ? `La persona entró a la app con la wallet ${wallet}. Podés usar mi_cuenta.`
+      : "La persona no tiene una wallet conectada (está en la landing o sin sesión).",
+    pagina && `Está mirando ${pagina}.`,
+    cuit && `El CUIT de su empresa en pantalla es ${cuit}.`,
+  ]
+    .filter(Boolean)
+    .join(" ");
 
   try {
     for (let vuelta = 0; vuelta < MAX_VUELTAS; vuelta++) {
