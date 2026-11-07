@@ -15,11 +15,15 @@ import {
 } from "lucide-react";
 import { MAX_LTV, money, num, quote, short, tokenSrc, type Ticker } from "./data";
 import { LANGS, useT } from "./i18n";
+import { Asistente } from "./Asistente";
 
 const NAME = "Saltar";
 const APP_URL = "https://saltarg-app.vercel.app/";
+// El asistente vive en la app (/api/chat); en local se puede apuntar a otro con VITE_CHAT_URL.
+const CHAT_URL = import.meta.env.VITE_CHAT_URL ?? `${APP_URL}api/chat`;
 
 export function App() {
+  const { lang } = useT();
   return (
     <div className="overflow-x-clip">
       <SiteHeader />
@@ -33,6 +37,7 @@ export function App() {
         <Closing />
       </main>
       <Footer />
+      <Asistente endpoint={CHAT_URL} idioma={lang} />
     </div>
   );
 }
