@@ -1,6 +1,6 @@
 // Factura de ejemplo ya leída: mismos datos que packages/agente/test/factura.test.ts,
 // con el total en 200 ARS para que la demo alcance con pocos CHLt. Sirve sin ANTHROPIC_API_KEY.
-// ponytail: el PDF de public/factura-ejemplo.pdf sigue diciendo 8.500 ARS; no se linkea desde /app.
+// public/factura-ejemplo.pdf tiene estos mismos datos (se genera con scripts/factura-ejemplo.html).
 import type { FacturaVista } from "@/lib/hooks/use-factura";
 
 export const FACTURA_EJEMPLO: FacturaVista = {
@@ -18,4 +18,6 @@ export const FACTURA_EJEMPLO: FacturaVista = {
   vencimientoPago: "2027-01-04",
   total: 200,
   moneda: "ARS",
+  // Figura en «Forma de pago» del PDF de ejemplo.
+  walletProveedor: "0x40326B77C55b2EF41a0ca933B6Bc9Cb4995a4320",
 };

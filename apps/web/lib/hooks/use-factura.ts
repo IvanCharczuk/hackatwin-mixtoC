@@ -36,6 +36,8 @@ export type FacturaVista = {
   vencimientoPago: string;
   total: number;
   moneda: string;
+  /** Wallet del proveedor si la factura la trae (forma de pago u observaciones). */
+  walletProveedor?: string;
 };
 export type ResultadoAgente = {
   perfil: { bcra: Bcra };

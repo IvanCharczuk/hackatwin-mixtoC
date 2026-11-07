@@ -77,6 +77,9 @@ export function Panel({
         { id: "num", titulo: `Factura ${factura.tipo} ${factura.numeroCompleto}`, detalle: `Emitida el ${fecha(factura.fechaEmision)} · CAE ${factura.cae || "sin CAE"}`, estado: factura.cae ? "ok" : "no" },
         { id: "emisor", titulo: factura.razonSocialEmisor || "Proveedor sin nombre", detalle: `Te la emite · CUIT ${cuitLindo(factura.cuitEmisor)}`, estado: "dato" },
         { id: "receptor", titulo: factura.receptorCoincide ? "Está a nombre de tu empresa" : "No está a nombre de tu empresa", detalle: factura.razonSocialReceptor, estado: factura.receptorCoincide ? "ok" : "no" },
+        factura.walletProveedor
+          ? { id: "wallet", titulo: `Cobra en ${factura.walletProveedor.slice(0, 6)}…${factura.walletProveedor.slice(-4)}`, detalle: "Wallet del proveedor en Arbitrum, según la factura", estado: "ok" }
+          : { id: "wallet", titulo: "La factura no trae wallet", detalle: "Hay que cargar la del proveedor a mano", estado: "no" },
         { id: "total", titulo: `${fmt(factura.total, 2)} ${factura.moneda}`, detalle: factura.vencimientoPago ? `Vence el ${fecha(factura.vencimientoPago)}` : "La factura no dice vencimiento", estado: factura.moneda === "ARS" ? "dato" : "no" },
       ]
     : [];

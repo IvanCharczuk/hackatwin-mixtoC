@@ -31,6 +31,8 @@ export default function App() {
   const [montoTxt, setMontoTxt] = useState("");
   const facturaOk = f.fase === "listo" && f.factura?.ok ? f.factura : undefined;
   useEffect(() => setMontoTxt(facturaOk ? String(facturaOk.total) : ""), [facturaOk]);
+  // La wallet del proveedor sale de la factura; se puede corregir a mano.
+  useEffect(() => setProveedor(f.factura?.walletProveedor ?? ""), [f.factura]);
   const monto = Number(montoTxt.replace(",", "."));
   const montoValido = Boolean(facturaOk) && monto > 0 && monto <= (facturaOk?.total ?? 0);
   const total = montoValido ? monto : undefined;
@@ -62,6 +64,8 @@ export default function App() {
             proveedor={proveedor}
             setProveedor={setProveedor}
             proveedorValido={Boolean(pagarA)}
+            hayFactura={Boolean(f.factura)}
+            desdeFactura={Boolean(f.factura?.walletProveedor) && proveedor.toLowerCase() === f.factura?.walletProveedor?.toLowerCase()}
           />
 
           {facturaOk && (

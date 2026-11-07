@@ -15,6 +15,8 @@ export function Subir({
   proveedor,
   setProveedor,
   proveedorValido,
+  hayFactura,
+  desdeFactura,
 }: {
   fase: Fase;
   error: string;
@@ -25,6 +27,8 @@ export function Subir({
   proveedor: string;
   setProveedor: (s: string) => void;
   proveedorValido: boolean;
+  hayFactura: boolean;
+  desdeFactura: boolean;
 }) {
   const input = useRef<HTMLInputElement>(null);
   const [encima, setEncima] = useState(false);
@@ -90,6 +94,9 @@ export function Subir({
         <button type="button" onClick={onEjemplo} disabled={bloqueado || ocupado} className="rounded-full border-[1.5px] border-navy px-5 py-2.5 text-[14px] font-semibold text-navy hover:bg-navy/5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-navy disabled:cursor-not-allowed disabled:border-line disabled:text-ink-2">
           Usar la factura de ejemplo
         </button>
+        <a href="/factura-ejemplo.pdf" target="_blank" rel="noreferrer" className="text-[14px] text-ink-2 underline underline-offset-2 hover:text-navy">
+          Ver el PDF de ejemplo
+        </a>
         {bloqueado && <span className="text-[14px] text-ink-2">Entrá con tu cuenta para empezar.</span>}
       </div>
 
@@ -101,7 +108,7 @@ export function Subir({
 
       <div className="flex flex-col gap-2">
         <label htmlFor="proveedor" className="text-[14px] font-semibold text-navy">
-          ¿A qué wallet le pagás?
+          Wallet del proveedor
         </label>
         <input
           id="proveedor"
@@ -113,7 +120,15 @@ export function Subir({
           className={cn("rounded-full border bg-white px-5 py-3 font-mono text-[14px] text-navy outline-none focus-visible:border-navy", proveedor && !proveedorValido ? "border-bad" : "border-line")}
         />
         <p id="proveedor-ayuda" className={cn("text-[13px]", proveedor && !proveedorValido ? "text-bad" : "text-ink-2")}>
-          {proveedor && !proveedorValido ? "No es una dirección válida." : proveedorValido ? "El ARGt le llega directo y el saldo queda a tu nombre." : "La del proveedor en Arbitrum. Si la dejás vacía, el ARGt llega a tu wallet."}
+          {proveedor && !proveedorValido
+            ? "No es una dirección válida."
+            : desdeFactura
+              ? "Sale de la factura. El ARGt le llega directo y el saldo queda a tu nombre."
+              : proveedorValido
+                ? "La cargaste a mano. El ARGt le llega directo y el saldo queda a tu nombre."
+                : hayFactura
+                  ? "La factura no trae wallet. Pedísela al proveedor y cargala acá; si la dejás vacía, el ARGt llega a tu wallet."
+                  : "Sale de la factura cuando la subís."}
         </p>
       </div>
     </section>
