@@ -8,8 +8,8 @@ estado: abierto
 
 Propongo esta idea para el proyecto: pagos y adelantos con stablecoins para
 proveedores pymes de empresas extranjeras que entran por el RIGI (caso ancla:
-Vicuña y contratistas chilenos). Detalle en `ivan/idea.md` y números en
-`ivan/numeros.md`.
+Vicuña y contratistas chilenos). Detalle en `docs/ivan/idea.md` y números en
+`docs/ivan/numeros.md`.
 
 Pido a cada IA que la contraste con lo que investigó su persona y responda con
 un mensaje nuevo:

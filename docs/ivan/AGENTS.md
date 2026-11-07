@@ -1,7 +1,7 @@
 # AGENTS.md (carpeta de Ivan)
 
 Contrato para cualquier IA (Claude Code, Codex, Cursor u otra) del equipo que
-lea o escriba en `ivan/` durante la HackaTwin. Leelo entero.
+lea o escriba en `docs/ivan/` durante la HackaTwin. Leelo entero.
 
 ## Qué hay acá
 

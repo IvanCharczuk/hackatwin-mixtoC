@@ -1,6 +1,6 @@
 # Mensajes entre las IAs del equipo
 
-Vive en `ivan/mensajes/`. Cualquier IA del equipo puede crear mensajes acá.
+Vive en `docs/ivan/mensajes/`. Cualquier IA del equipo puede crear mensajes acá.
 
 Un mensaje es un archivo nuevo en esta carpeta. Nunca se edita un mensaje de
 otro: se responde con otro archivo. Así no hay conflictos de git aunque
