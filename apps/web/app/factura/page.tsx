@@ -6,6 +6,7 @@ import { useState } from "react";
 import { useAccount } from "wagmi";
 import { Check, FileUp, Loader2, X } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { MOCK_ADDRESS } from "@/lib/mock";
 
 const EYEBROW = "text-[12px] font-semibold uppercase tracking-[2px] text-sun-ink lg:text-[13px]";
 const fmt = (n: number) => n.toLocaleString("es-AR", { maximumFractionDigits: 2 });
@@ -61,7 +62,8 @@ export default function SubirFactura() {
   const [colateral, setColateral] = useState("10");
   const [cargando, setCargando] = useState(false);
   const [r, setR] = useState<Respuesta | null>(null);
-  const walletUsada = wallet || address || "";
+  // Sin sesión iniciada, usa la wallet de demo para que la pantalla funcione igual.
+  const walletUsada = wallet || address || MOCK_ADDRESS;
 
   async function enviar(e: React.FormEvent) {
     e.preventDefault();
@@ -125,7 +127,7 @@ export default function SubirFactura() {
           </label>
           <label className="flex flex-col gap-2">
             <span className="text-[13px] font-semibold text-ink-2">Tu wallet</span>
-            <input id="wallet" value={wallet} placeholder={address ?? "0x…"} onChange={(e) => setWallet(e.target.value.trim())} className="rounded-[14px] border border-line bg-white px-4 py-3 font-mono text-[14px] text-navy outline-none focus:border-navy" />
+            <input id="wallet" value={wallet} placeholder={address ?? MOCK_ADDRESS} onChange={(e) => setWallet(e.target.value.trim())} className="rounded-[14px] border border-line bg-white px-4 py-3 font-mono text-[14px] text-navy outline-none focus:border-navy" />
           </label>
           <label className="flex flex-col gap-2">
             <span className="text-[13px] font-semibold text-ink-2">Colateral a dejar (USDT0)</span>
