@@ -12,13 +12,14 @@ día uno.»**
 
 ## Elevator pitch para mentores (30 segundos)
 
-> Hoy hay 13 mineras con proyectos aprobados en el RIGI y otros 20 de minería
-> y petróleo esperando. Para arrancar acá necesitan pesos, pero el banco no
-> las conoce y el cepo frena los dólares. Saltar agiliza los rieles para que
-> dejen su garantía en stablecoins y reciban ARGt, los pesos digitales de
-> Twin, desde el día uno, con el crédito de Morpho. Y un agente revisa cada
-> factura de sus proveedores antes de pagar. Cobramos 1% por abrir el crédito
-> y 0,3% por cada pago.
+El problema, sin detalle técnico.
+
+> Hoy hay 13 mineras con proyectos aprobados en Argentina por 25.000 millones
+> de dólares, y otros 20 de minería y petróleo esperando. Cuando llegan,
+> tienen que pagarles desde el primer día a cientos de proveedores locales.
+> Pero el banco no las conoce, traer dólares es lento por el cepo y vender lo
+> que tienen las deja sin respaldo. Saltar les da pesos desde el día uno, con
+> su propia plata como garantía, y revisa cada factura antes de pagar.
 
 Qué preguntarles después:
 
