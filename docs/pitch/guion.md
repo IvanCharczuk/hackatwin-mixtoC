@@ -18,7 +18,7 @@ El problema, sin detalle técnico.
 > dólares, y otros 20 de minería y petróleo esperando. Las empresas que
 > llegan tienen que pagarles desde el primer día a cientos de proveedores
 > locales.
-> Pero el banco no las conoce, traer dólares es lento por el cepo y vender lo
+> Pero el banco no las conoce, convertir sus dólares lleva tiempo y vender lo
 > que tienen las deja sin respaldo. Saltar les da pesos desde el día uno, con
 > su propia plata como garantía, y revisa cada factura antes de pagar.
 
@@ -34,8 +34,8 @@ Qué preguntarles después:
 
 Total 2,5 minutos:
 
-1. **Primer minuto, el pitch:** problema, propuesta, solución, mercado y
-   diferencia. Ivan lo cuenta mientras corre detrás un video de 1 minuto (sin
+1. **Primer minuto, el pitch:** el caso, el muro, los beneficios, por qué los
+   demás no alcanzan y el tamaño. Ivan lo cuenta mientras corre detrás un video de 1 minuto (sin
    voz, pocas palabras en pantalla).
 2. **Después, la demo en vivo** (unos 90 segundos): cómo funciona, paso a
    paso.
@@ -44,16 +44,22 @@ Siguen las preguntas.
 
 ## El minuto del pitch: lo que se ve y lo que decís (video de la spec 0135)
 
+Regla (propuesta de Steven, aceptada por Ivan): primero el caso y los
+beneficios, después el cómo. Morpho, Curve y ARGt van en la demo y en las
+preguntas. Fuente del caso: Vicuña (BHP y Lundin, US$ 9.700 M en el RIGI,
+obras desde 2027) y los proveedores chilenos que miran San Juan
+([EconoJournal, 22/5/2026](https://econojournal.com.ar/?p=127981)).
+
 **Show, don't tell:** el video muestra (imágenes, movimiento y palabras
 sueltas, nada de frases largas) y Ivan cuenta. El video no tiene voz.
 
 | Tiempo | En pantalla (video) | Lo que decís |
 |---|---|---|
-| 0:00 a 0:14 | **Problema.** Amanece sobre la cordillera. Contadores: «13 proyectos mineros · US$ 25B» y «+20 en espera». Después caen tres cruces: «Banco» ✗ «Cepo» ✗ «Vender» ✗. | «Hay 13 proyectos mineros aprobados en el RIGI por 25 billions de dólares, y 20 más esperando. Para arrancar, esas empresas necesitan pesos, pero el banco no las conoce y el cepo frena los dólares.» |
-| 0:14 a 0:22 | **Propuesta.** Aparece el logo de Saltar sobre un riel que se despeja. Texto: «Operá desde el día uno». | «Con Saltar agilizamos los rieles para que arranquen a operar en Argentina con financiación desde el día uno.» |
-| 0:22 a 0:32 | **Solución.** Los rieles se destraban: CHLt entra a una bóveda y sale ARGt; una factura recibe un check verde. Texto: «Día uno». | «Dejan su garantía en stablecoins y reciben ARGt, pesos digitales, desde el día uno. Y nuestro agente revisa cada factura antes de pagar.» |
-| 0:32 a 0:44 | **Mercado.** «7.500 pymes proveedoras» se llenan de puntos; el mapa se enciende país por país: «7 monedas». | «Detrás de cada proyecto hay cientos de proveedores: más de 7.500 pymes sólo en Vaca Muerta. Y con las siete monedas de Twin, cada país es un corredor.» |
-| 0:44 a 0:56 | **Diferencia.** Tres columnas: «Banco» ✗, «Pagos cripto» ✗, «Saltar» ✓. Debajo: «1%» y «0,3%». | «El banco pide historial y los pagos cripto no prestan en pesos. Nosotros conseguimos el crédito, con un agente que entiende Argentina. Cobramos 1% por abrir y 0,3% por pago.» |
+| 0:00 a 0:14 | **El caso.** Amanece sobre la cordillera de San Juan. «Vicuña · US$ 9,7B». Una persona con un calendario: «Lunes: pagar en pesos». | «La gerente de finanzas de un proveedor chileno de Vicuña, un proyecto de casi 10 billions en San Juan, llega a Argentina. El lunes tiene que pagar sueldos y proveedores en pesos.» |
+| 0:14 a 0:22 | **El muro.** Caen tres cruces, una por palabra: «Banco» ✗ «Tiempo» ✗ «Vender» ✗. | «Pero el banco no la conoce, convertir sus dólares lleva tiempo y vender sus stablecoins la deja sin respaldo.» |
+| 0:22 a 0:32 | **Los beneficios.** El logo de Saltar despeja el riel; aparecen tres checks: «Día uno» ✓ «Sin vender» ✓ «Factura revisada» ✓. | «Saltar agiliza los rieles para que tenga pesos desde el día uno, sin vender su respaldo y con cada factura revisada antes de pagar.» |
+| 0:32 a 0:44 | **Por qué los demás no alcanzan.** Cuatro columnas: «Banco» ✗, «Bitso · BVNK» ✗, «Lemon · Ripio» ✗, «Saltar» ✓. | «El banco pide historia, Bitso o BVNK mueven plata pero no prestan pesos, y Lemon o Ripio son para ahorro personal. Saltar resuelve las tres cosas.» |
+| 0:44 a 0:56 | **Tamaño.** Contadores: «13 proyectos mineros · US$ 25B», «+20 esperando», «7.500 pymes proveedoras». Debajo: «1%» y «0,3%». | «Y no es un caso aislado. Hay 13 proyectos mineros aprobados, 20 esperando y 7.500 pymes proveedoras en Vaca Muerta. Cobramos 1% por abrir y 0,3% por pago.» |
 | 0:56 a 1:00 | **Cierre.** El logo de Saltar sobre el sol: «Financiación desde el día uno». | «Les muestro cómo funciona.» |
 
 ## Demo en vivo: cómo funciona (unos 90 segundos)
@@ -134,8 +140,8 @@ pidió la CNV. La empresa igual se inscribe en la IGJ. La parte cambiaria la
 validamos con un abogado antes de vender.
 
 **¿Quién es la competencia?**
-El banco pide historial local. Traer plata de la casa matriz choca con el
-cepo. Bitso Business, BVNK o Bridge mueven plata pero no prestan en pesos ni
+El banco pide historial local. Traer plata de la casa matriz lleva tiempo y
+trámites. Bitso Business, BVNK o Bridge mueven plata pero no prestan en pesos ni
 validan facturas argentinas. Lemon, Ripio y belo usan DeFi para ahorro de
 personas, no crédito para empresas.
 
