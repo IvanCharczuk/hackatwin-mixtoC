@@ -39,7 +39,7 @@ export default function App() {
   const colateralUsdt0 = cap.limiteTotal && credito ? cap.limiteTotal / (credito.argtPorUsdt0 * 0.6) : undefined;
 
   return (
-    <div className="flex min-h-dvh flex-col bg-paper">
+    <div className="tema-medicus flex min-h-dvh flex-col bg-paper">
       <Encabezado
         sesion={sesion}
         cuit={cuit}
@@ -69,7 +69,7 @@ export default function App() {
               <label htmlFor="monto" className="text-[14px] font-semibold text-navy">
                 Monto a pagar ahora
               </label>
-              <div className="flex items-center gap-2 rounded-lg border border-line bg-white px-4 py-3 focus-within:border-navy">
+              <div className="flex items-center gap-2 rounded-full border border-line bg-white px-5 py-3 focus-within:border-sun">
                 <input id="monto" value={montoTxt} onChange={(e) => setMontoTxt(e.target.value.replace(/[^\d.,]/g, ""))} inputMode="decimal" aria-describedby="monto-ayuda" className="w-full min-w-0 bg-transparent text-[17px] font-semibold text-navy tabular-nums outline-none" />
                 <span className="text-[14px] font-semibold text-ink-2">ARS</span>
               </div>

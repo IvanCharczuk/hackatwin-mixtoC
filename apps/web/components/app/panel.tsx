@@ -45,7 +45,7 @@ function Grupo({ titulo, items, desde }: { titulo: string; items: Item[]; desde:
   if (!items.length) return null;
   return (
     <section aria-label={titulo} className="border-t border-line pt-3">
-      <h3 className="text-[12px] font-semibold text-ink-2">{titulo}</h3>
+      <h3 className="text-[12px] font-bold text-sun-ink">{titulo}</h3>
       <ul className="mt-1">{items.map((it, k) => <Fila key={it.id} item={it} i={desde + k} />)}</ul>
     </section>
   );
@@ -90,10 +90,10 @@ export function Panel({
   const ocupado = fase === "leyendo" || fase === "evaluando" || (factura && !listo && fase !== "error");
 
   return (
-    <aside aria-labelledby="revision" className="flex flex-col gap-4 rounded-2xl border border-line bg-white p-5 lg:sticky lg:top-6">
-      <h2 id="revision" className="text-[15px] font-semibold text-navy">Revisión de la factura</h2>
+    <aside aria-labelledby="revision" className="flex flex-col gap-4 rounded-[20px] bg-white p-6 shadow-[0_1px_2px_rgb(0_37_100/0.06)] lg:sticky lg:top-6">
+      <h2 id="revision" className="text-[16px] font-bold text-navy">Revisión de la factura</h2>
 
-      <div aria-live="polite" className={cn("rounded-xl px-4 py-4", !listo || fase !== "listo" ? "bg-cream" : alcanza ? "bg-ok/10" : "bg-bad/10")}>
+      <div aria-live="polite" className={cn("rounded-[16px] px-4 py-4", !listo || fase !== "listo" ? "bg-cream" : alcanza ? "bg-ok/10" : "bg-bad/10")}>
         {fase === "vacio" ? (
           <p className="text-[15px] text-ink-2">Subí una factura y te decimos si la podés pagar con tus CHLt.</p>
         ) : fase === "error" ? (

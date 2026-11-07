@@ -1,5 +1,6 @@
-// La factura de public/factura-ejemplo.pdf ya leída (mismos datos que
-// packages/agente/test/factura.test.ts). Sirve para la demo sin ANTHROPIC_API_KEY.
+// Factura de ejemplo ya leída: mismos datos que packages/agente/test/factura.test.ts,
+// con el total en 200 ARS para que la demo alcance con pocos CHLt. Sirve sin ANTHROPIC_API_KEY.
+// ponytail: el PDF de public/factura-ejemplo.pdf sigue diciendo 8.500 ARS; no se linkea desde /app.
 import type { FacturaVista } from "@/lib/hooks/use-factura";
 
 export const FACTURA_EJEMPLO: FacturaVista = {
@@ -15,6 +16,6 @@ export const FACTURA_EJEMPLO: FacturaVista = {
   cae: "76451283920471",
   fechaEmision: "2026-11-05",
   vencimientoPago: "2027-01-04",
-  total: 8500,
+  total: 200,
   moneda: "ARS",
 };
