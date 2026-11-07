@@ -90,6 +90,35 @@ Empresas chilenas grandes que **no** encontré en Argentina:
 3. **Proveedores de Vicuña**: la ronda de negocios muestra que hay compradores
    locales buscando proveedores.
 
+## 7. Verificación de los clientes (tarde del 7/11)
+
+- **Metaproject (no «Meta Project»)**: verificado. Ingeniería chilena, oficina
+  en San Juan (Villa Krause), inauguración anunciada para el 4/8/2026. Ofrece
+  servicios de ingeniería y consultoría. **No verifiqué que tenga contratos
+  con mineras**; la nota de Steven dice lo mismo. [Metaproject](https://metaprojectgroup.com/2026/07/23/metaproject-inaugura-oficina-en-san-juan-argentina/).
+- **Reliper**: verificado. Anunció expansión a Argentina con instalación en San
+  Juan (Reporte Minero, octubre 2026) y creó una filial de servicios SAP para
+  minería, AGP Cordillera. Atiende a mineras y contratistas del cobre.
+  [Reporte Minero](https://www.reporteminero.cl/noticia/noticias/2026/10/reliper-expande-argentina-san-juan-mineria).
+- **Vicuña, Corredor Norte (tramos E y F)**: la licitación la ganó la UTE
+  **Terusi Construcciones S.A. y Semisa Infraestructura S.A.** (abril de 2025,
+  16 meses de obra). No los identifiqué como chilenos; la fuente no lo dice.
+  [LM Neuquén](https://mase.lmneuquen.com/mineria/san-juan-vicuna-corp-adjudica-la-construccion-dos-tramos-clave-del-corredor-norte-n1185678).
+- **Vicuña prioriza empresas sanjuaninas**: la misma nota dice que el
+  mantenimiento de los tramos A a D se adjudica a empresas de San Juan, y exige
+  un Plan de Gestión Social a los contratistas para comprar localmente. Ya
+  había conflicto por la exclusión de proveedores locales ([Acero y Roca](https://aceroyroca.com/2025/08/21/proveedores-mineros-vicuna-san-juan/)).
+- **Excon, ICV, Vecchiola, Mas Errázuriz**: **no encontré contratos con Vicuña**
+  en ninguna búsqueda. No los uso como clientes confirmados.
+
+**Cambio en la recomendación:** la idea de «una contratista chilena que ya
+trabaja para Vicuña» no tiene respaldo. El cliente más firme hoy es
+**Metaproject o Reliper**, que se instalan en San Juan sin contrato confirmado
+todavía. Y la presión de Vicuña es hacia proveedores de San Juan, no chilenos.
+Eso hace más fuerte el argumento de Saltar: ayuda a una empresa de afuera que
+todavía no tiene historial local, justo cuando el mercado pide proveedores
+locales.
+
 ## Qué verificar antes del pitch
 
 - Que Excon, ICV, Vecchiola o Mas Errázuriz tengan contrato con Vicuña y no solo
