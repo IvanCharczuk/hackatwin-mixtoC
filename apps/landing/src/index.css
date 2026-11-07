@@ -53,6 +53,20 @@ body {
   height: auto;
 }
 
+/*
+ * Desktop: the sun sits in the valley left of the tallest peak, high enough that its
+ * face clears the ridge. Positions follow the Andes image, which is max(100vw, 1440px)
+ * wide and 0.268 of that tall, so the sun stays in the valley on wide screens too.
+ */
+@media (min-width: 1024px) {
+  .sun-spot {
+    --aw: max(100vw, 1440px);
+    width: calc(var(--aw) * 0.264);
+    left: calc(50% - var(--aw) * 0.083 - var(--aw) * 0.132);
+    bottom: calc(-110px + var(--aw) * 0.268 * 0.6 - var(--aw) * 0.132 + 35px);
+  }
+}
+
 /* Anchors land below the fixed header. */
 section[id] {
   scroll-margin-top: 72px;

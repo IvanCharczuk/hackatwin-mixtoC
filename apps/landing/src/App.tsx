@@ -250,7 +250,7 @@ function Hero() {
       </div>
       <div className="parallax-layer absolute inset-0" style={{ ["--depth" as string]: 0.4 }} aria-hidden>
         <div className="hero-glow absolute bottom-[-60px] left-1/2 h-[400px] w-[640px] -translate-x-1/2 rounded-full lg:h-[520px] lg:w-[900px]" />
-        <SolDeMayo className="sun-rise bottom-[-20px] left-[calc(50%-120px)] w-[240px] lg:bottom-[-64px] lg:left-[calc(50%-210px)] lg:w-[420px]" />
+        <SolDeMayo className="sun-rise sun-spot bottom-[-20px] left-[calc(50%-120px)] w-[240px]" />
       </div>
       <div className="parallax-layer absolute inset-0 z-[2]" style={{ ["--depth" as string]: 0.12 }} aria-hidden>
         <div className="andes-rise absolute inset-0">
@@ -258,7 +258,7 @@ function Hero() {
         </div>
       </div>
 
-      <div className="parallax-copy relative z-10 flex flex-col items-center lg:flex-1 lg:justify-center lg:pb-[150px]">
+      <div className="parallax-copy relative z-10 flex flex-col items-center lg:flex-1 lg:justify-center lg:pb-[200px]">
         <p className="intro-up flex items-center gap-2 pt-12 pb-4 lg:pt-0 lg:pb-6" style={{ animationDelay: "0.1s" }}>
           <span className="size-[7px] rounded-full bg-live lg:size-2" aria-hidden />
           <span className="text-[13px] text-mist lg:hidden">{t.hero.tagMobile}</span>
