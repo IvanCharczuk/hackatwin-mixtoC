@@ -21,21 +21,21 @@ export const HERRAMIENTAS: Anthropic.Beta.BetaTool[] = [
   {
     name: "mercado_hoy",
     description:
-      "Lee en vivo el mercado ARGt/USDT0 de Morpho en Arbitrum: ARGt disponible para prestar, tasa anual variable, cuántos ARGt vale 1 USDT0 de garantía, cuántos CHLt equivalen a 1 USDT0 en Curve, el tope (60%) y el punto de liquidación (77%).",
+      "Lee en vivo el mercado ARGt/USDT0 de Morpho en Arbitrum: ARGt disponible en el mercado, tasa anual variable, cuántos ARGt vale 1 USDT0 de garantía, cuántos CHLt equivalen a 1 USDT0 en Curve, el tope (60%) y el punto de liquidación (77%).",
     input_schema: { type: "object", properties: {}, additionalProperties: false },
     strict: true,
   },
   {
     name: "simular_garantia",
     description:
-      "Calcula con precios en vivo cuánta garantía hace falta para recibir una cantidad de pesos (ARGt), pidiendo un porcentaje del valor de la garantía (por defecto el máximo, 60%). Devuelve la garantía en ARGt, USDT0 y CHLt, y si el mercado tiene liquidez para prestarlo. Es una simulación, no una oferta.",
+      "Calcula con precios en vivo cuánta garantía hace falta para recibir una cantidad de pesos (ARGt), usando un porcentaje del valor de la garantía (por defecto el máximo, 60%). Devuelve la garantía en ARGt, USDT0 y CHLt, y si el mercado tiene ese ARGt disponible. Es una simulación, no una oferta.",
     input_schema: {
       type: "object",
       properties: {
         pesos: { type: "number", description: "Pesos (ARGt) que la empresa necesita recibir." },
         porcentaje: {
           type: ["number", "null"],
-          description: "Porcentaje del valor de la garantía a pedir, entre 1 y 60. null para usar 60.",
+          description: "Porcentaje del valor de la garantía a usar, entre 1 y 60. null para usar 60.",
         },
       },
       required: ["pesos", "porcentaje"],
@@ -46,14 +46,14 @@ export const HERRAMIENTAS: Anthropic.Beta.BetaTool[] = [
   {
     name: "mi_cuenta",
     description:
-      "Lee la cuenta de la persona conectada en la app: saldos de ETH, ARGt, CHLt y USDT0 en Arbitrum, su garantía y deuda en Morpho, qué porcentaje usa y cuánto ARGt puede pedir hoy. Sólo funciona si hay una wallet conectada.",
+      "Lee la cuenta de la persona conectada en la app: saldos de ETH, ARGt, CHLt y USDT0 en Arbitrum, su garantía y saldo en Morpho, qué porcentaje usa y su límite disponible hoy en ARGt. Sólo funciona si hay una wallet conectada.",
     input_schema: { type: "object", properties: {}, additionalProperties: false },
     strict: true,
   },
   {
     name: "revisar_empresa",
     description:
-      "Consulta una empresa argentina por su CUIT en la Central de Deudores del BCRA y aplica las reglas del agente: situación, cheques rechazados, tope que le corresponde (60%, 50%, 40% o 0%) y por qué. Si hay wallet conectada, también dice cuánto ARGt podría pedir con su garantía.",
+      "Consulta una empresa argentina por su CUIT en la Central de Deudores del BCRA y aplica las reglas del agente: situación, cheques rechazados, tope que le corresponde (60%, 50%, 40% o 0%) y por qué. Si hay wallet conectada, también dice su límite disponible en ARGt con su garantía.",
     input_schema: {
       type: "object",
       properties: { cuit: { type: "string", description: "CUIT de 11 dígitos, con o sin guiones." } },
@@ -72,7 +72,7 @@ async function mercado() {
   ]);
   return {
     red: "Arbitrum One",
-    argtDisponibleParaPrestar: r2(c.liquidezArgt),
+    argtDisponibleEnMercado: r2(c.liquidezArgt),
     tasaAnualVariable: c.comisionAnual === null ? null : `${r2(c.comisionAnual * 100)}%`,
     argtPorUsdt0: r2(c.argtPorUsdt0),
     chltPorUsdt0: r2(Number(formatUnits(chltPorUsdt0, 18))),
@@ -91,8 +91,8 @@ async function simular(pesos: number, porcentaje: number | null) {
     pesosQueRecibe: r2(pesos),
     pidiendo: `${r2(pct * 100)}% del valor de la garantía`,
     garantia: { ARGt: r2(garantiaArgt), USDT0: r2(garantiaUsdt0), CHLt: r2(garantiaUsdt0 * m.chltPorUsdt0) },
-    alcanzaLaLiquidez: pesos <= m.argtDisponibleParaPrestar,
-    argtDisponibleParaPrestar: m.argtDisponibleParaPrestar,
+    alcanzaLaLiquidez: pesos <= m.argtDisponibleEnMercado,
+    argtDisponibleEnMercado: m.argtDisponibleEnMercado,
     tasaAnualVariable: m.tasaAnualVariable,
     nota: "Simulación con precios de este momento. Si la garantía pierde valor, puede hacer falta sumar más.",
   };
@@ -121,9 +121,9 @@ async function cuenta(wallet: `0x${string}`) {
       tienePosicion: c.tienePosicion,
       garantiaUsdt0: r2(c.garantiaUsdt0),
       garantiaEnArgt: r2(c.garantiaEnArgt),
-      deudaArgt: r2(c.deudaArgt),
+      saldoArgt: r2(c.deudaArgt),
       usaDelValorDeLaGarantia: `${r2(c.ltv * 100)}%`,
-      puedePedirHoyArgt: r2(c.disponibleArgt),
+      limiteDisponibleHoyArgt: r2(c.disponibleArgt),
       tasaAnualVariable: c.comisionAnual === null ? null : `${r2(c.comisionAnual * 100)}%`,
     },
   };
@@ -145,7 +145,7 @@ async function empresa(cuit: string, wallet: `0x${string}` | null) {
     estado: r.decision.estado,
     motivos: r.decision.motivos,
     ...(wallet
-      ? { puedePedirHoyArgt: r2(r.decision.disponibleArgt), garantiaUsdt0: r2(r.decision.colateralUsdt0) }
+      ? { limiteDisponibleHoyArgt: r2(r.decision.disponibleArgt), garantiaUsdt0: r2(r.decision.colateralUsdt0) }
       : { nota: "Sin wallet conectada: el tope vale sobre la garantía que deje." }),
   };
 }
