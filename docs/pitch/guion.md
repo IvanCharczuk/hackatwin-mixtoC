@@ -55,7 +55,7 @@ sueltas, nada de frases largas) y Ivan cuenta. El video no tiene voz.
 
 | Tiempo | En pantalla (video) | Lo que decís |
 |---|---|---|
-| 0:00 a 0:14 | **El caso.** Amanece sobre la cordillera de San Juan. Un camión con el nombre «Excon» cruza de Chile hacia «San Juan · Vicuña · US$ 9,7B». Texto: «Pagar en pesos». | «Excon, una contratista chilena, ya está analizando entrar a San Juan, donde Vicuña invierte casi 10 billions. Para arrancar tiene que pagar sueldos y proveedores en pesos desde el primer día.» |
+| 0:00 a 0:14 | **El caso.** Amanece sobre la cordillera de San Juan. Un camión con el nombre «Excon» cruza de Chile hacia «San Juan · mina de cobre de BHP · US$ 9,7B». Texto: «Pagar en pesos». | «Excon, una contratista chilena, ya está analizando entrar a San Juan, donde BHP invierte casi 10 billions en una mina de cobre. Para arrancar tiene que pagar sueldos y proveedores en pesos.» |
 | 0:14 a 0:22 | **El muro.** Caen dos cruces: «Banco» ✗ «Trámites» ✗. | «Pero el banco no la conoce y conseguir pesos desde afuera lleva tiempo y trámites.» |
 | 0:22 a 0:32 | **Los beneficios.** El logo de Saltar despeja el riel; aparecen tres checks: «Día uno» ✓ «Con su garantía» ✓ «Factura revisada» ✓. | «Saltar agiliza los rieles para que tenga pesos desde el día uno, con su propia garantía y cada factura revisada antes de pagar.» |
 | 0:32 a 0:44 | **Por qué los demás no alcanzan.** Cuatro columnas: «Banco» ✗, «Bitso · BVNK» ✗, «Lemon · Ripio» ✗, «Saltar» ✓. | «El banco pide historia, Bitso o BVNK mueven plata pero no prestan pesos, y Lemon o Ripio son para ahorro personal. Saltar resuelve las tres cosas.» |
