@@ -5,5 +5,5 @@ factura de crédito y esperar. Spec y criterios de aceptación: [SPEC.md](SPEC.m
 
 - **Dueño:** Ivan
 - **Estado:** spec lista, código sin empezar.
-- **Lee de:** `packages/comun` (redes y tokens), `packages/contratos` (saldo
+- **Lee de:** la factura (PDF o foto), la Central de Deudores del BCRA, `packages/comun` (redes y tokens), `packages/contratos` (saldo
   comprometido), API de Morpho (liquidez y tasa de ARGt).

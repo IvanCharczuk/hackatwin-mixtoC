@@ -6,16 +6,35 @@
 
 ## Objetivo
 
-Cuando un proveedor manda una factura en pesos, el agente decide si se le puede
-adelantar, cuánto, y le explica en castellano por qué conviene (o no) frente a
-descontar la factura de crédito o esperar al vencimiento. Es lo que el mentor
-validó: chequear que haya plata para depositar, tomar el préstamo y pagar en
-pesos, y tener el control del colateral.
+El proveedor manda la factura y nada más. El agente la lee, hace todos los
+chequeos, arma el perfil de la empresa que la emite (y de la que paga) con
+fuentes públicas, y decide si se le puede adelantar, cuánto, y por qué conviene
+(o no) frente a descontar la factura de crédito o esperar al vencimiento. Es lo
+que el mentor validó: chequear que haya plata para depositar, tomar el préstamo
+y pagar en pesos, y tener el control del colateral.
+
+## Flujo
+
+1. **Lee la factura** (PDF o foto): CUIT del emisor y del receptor, monto,
+   fecha, CAE y vencimiento. Si la factura trae el QR de ARCA, lo usa.
+2. **Valida la factura:** CAE autorizado por ARCA (constatación de
+   comprobantes; el web service pide certificado, así que para la demo se
+   valida con los datos del QR y queda marcado como simulado si no hay acceso).
+3. **Arma el perfil del proveedor:**
+   - Central de Deudores del BCRA por CUIT: situación (1 a 5), deudas por
+     entidad y cheques rechazados. API pública y gratuita, sin clave
+     ([BCRA](https://www.bcra.gob.ar/apis-banco-central/)).
+   - Historial onchain: cobros previos en ARGt por nuestro contrato.
+   - KYB (KUMPLY; simulado si no hay clave).
+4. **Mira a la empresa que paga:** su pago comprometido en el contrato y su
+   propio perfil en el BCRA.
+5. **Hace los chequeos financieros** (tabla de abajo) y compara opciones.
+6. **Responde con el perfil, la decisión y la explicación.** No ejecuta nada.
 
 ## Cómo decide
 
-Entrada: la factura (proveedor, monto en pesos, vencimiento) y el pago que la
-empresa comprometió en el contrato (USDC).
+Entrada: lo que salió de la factura y del perfil, y el pago que la empresa
+comprometió en el contrato (USDC).
 
 | Chequeo | Regla | Si falla |
 |---|---|---|
@@ -24,6 +43,8 @@ empresa comprometió en el contrato (USDC).
 | V3 Liquidez | Hay ARGt disponible para prestar (mercado de Morpho en Arbitrum) | Recorta a lo disponible o recomienda la factura de crédito |
 | V4 Identidad | Proveedor con KYB (KUMPLY; simulado si no hay clave) | Rechaza hasta verificar |
 | V5 Plazo | Factura no vencida y a 120 días o menos | Rechaza |
+| V6 Factura | CAE válido y CUIT del receptor igual al de la empresa que comprometió el pago | Rechaza: factura no corresponde |
+| V7 Perfil | Proveedor en situación 1 o 2 del BCRA y sin cheques rechazados recientes | Situación 3 o peor: rechaza; cheques rechazados: recorta y lo explica |
 
 Después compara el costo para el proveedor:
 
@@ -72,6 +93,10 @@ Stack recomendado: TypeScript con Node, para compartirlo con el front.
 - **CA-5** — La lectura en vivo de Morpho devuelve la liquidez y la tasa del
   mercado ARGt, o falla con un mensaje claro.
   `npm run leer-morpho`
+- **CA-6** — Con una factura de ejemplo, el agente extrae CUIT, monto, CAE y
+  vencimiento, consulta la Central de Deudores del BCRA por ese CUIT y
+  devuelve el perfil junto con la decisión.
+  `npm run validar -- ejemplos/factura-1.pdf`
 
 ## Notas
 
