@@ -18,6 +18,8 @@ export type FacturaLeida = {
   /** AAAA-MM-DD; vacío si la factura no lo dice. */
   vencimientoPago: string;
   total: number;
+  /** Wallet del proveedor (0x…) si la factura la trae en forma de pago u observaciones; vacío si no. */
+  walletProveedor?: string;
   /** "ARS", "USD" u otra. */
   moneda: string;
 };
@@ -64,7 +66,7 @@ const ESQUEMA = {
   additionalProperties: false,
   required: [
     "tipo", "cuitEmisor", "razonSocialEmisor", "cuitReceptor", "razonSocialReceptor", "puntoVenta",
-    "numero", "fechaEmision", "cae", "vencimientoCae", "vencimientoPago", "total", "moneda",
+    "numero", "fechaEmision", "cae", "vencimientoCae", "vencimientoPago", "total", "moneda", "walletProveedor",
   ],
   properties: {
     tipo: { type: "string", description: "Letra del comprobante (A, B, C, M) o «FCE» si es factura de crédito electrónica." },
@@ -80,6 +82,7 @@ const ESQUEMA = {
     vencimientoPago: { type: "string", description: "AAAA-MM-DD; vacío si no figura." },
     total: { type: "number", description: "Importe total en la moneda de la factura." },
     moneda: { type: "string", description: "ARS si es en pesos; si no, el código (USD, etc.)." },
+    walletProveedor: { type: "string", description: "Dirección de wallet del proveedor (0x seguido de 40 caracteres hexadecimales) si figura en forma de pago u observaciones; vacío si no figura." },
   },
 } as const;
 
@@ -108,7 +111,7 @@ export async function leerFactura(archivo: Archivo, apiKey = process.env.ANTHROP
           adjunto,
           {
             type: "text",
-            text: "Es una factura argentina. Extraé los datos tal como figuran en el comprobante. Si un dato no figura, dejalo vacío (o 0 para el total). Fechas en AAAA-MM-DD; el total como número (sin separador de miles).",
+            text: "Es una factura argentina. Extraé los datos tal como figuran en el comprobante. Si un dato no figura, dejalo vacío (o 0 para el total). Fechas en AAAA-MM-DD; el total como número (sin separador de miles). Si la factura indica una wallet del proveedor para cobrar (0x…), copiala exacta en walletProveedor.",
           },
         ],
       },
