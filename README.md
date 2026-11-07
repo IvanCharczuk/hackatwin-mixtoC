@@ -17,3 +17,7 @@ Participamos en el track de Twin Stablecoins.
 La entrega cierra el 7 de noviembre de 2026 a las 18:00, hora de Buenos Aires.
 El producto debe usar al menos una Twin Stablecoin elegible y demostrar una
 transacción onchain real con hash verificable. Los detalles están en la consigna.
+
+## Contacto
+Bri: araceliaponte2007@gmail.com
+
