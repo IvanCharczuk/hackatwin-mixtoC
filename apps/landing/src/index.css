@@ -1,0 +1,68 @@
+@import "tailwindcss";
+
+@theme {
+  --color-navy: #262f63;
+  --color-navy-deep: #1b2250;
+  --color-ink-2: #545c86;
+  --color-cream: #f4eee3;
+  --color-cream-2: #ece3d3;
+  --color-paper: #fbf8f2;
+  --color-line: #d9d0bf;
+  --color-edge: #e6decf;
+  --color-sun: #f2ae2e;
+  --color-sun-soft: #f8d995;
+  --color-sun-ink: #94601a;
+  --color-lavender: #8c98c8;
+  --color-lavender-soft: #c9cfe8;
+  --color-mist: #dde1f2;
+  --color-live: #2fbf71;
+  --color-no: #b5524a;
+  --color-yes: #2e8b57;
+  --font-sans: "Montserrat", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--color-cream);
+  color: var(--color-navy);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+.hero-sky {
+  background: linear-gradient(180deg, #161c45 0%, #2b3470 45%, #8a7fa6 70%, #f3c98a 90%, #f6ddb0 100%);
+}
+
+.hero-glow {
+  background: radial-gradient(ellipse 50% 50% at 50% 50%, #ffd98acc 0%, #ffd98a00 100%);
+}
+
+.closing-sky {
+  background: linear-gradient(180deg, #f4eee3 0%, #f3dfc2 100%);
+}
+
+/* The Andes are always full width; on narrow screens they crop instead of shrinking. */
+.andes {
+  width: max(100%, 1440px);
+  max-width: none;
+  height: auto;
+}
+
+@keyframes rise {
+  from { transform: translateY(40px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.sun-rise {
+  animation: rise 1.6s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .sun-rise { animation: none; }
+}

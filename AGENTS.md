@@ -17,6 +17,7 @@ para operar acá, con transacciones reales en Morpho y Curve (ver
 | Carpeta | Qué hay | Dueño |
 |---|---|---|
 | `apps/web/` | Front de la demo | Franco |
+| `apps/landing/` | Landing pública (diseño C · Amanecer) | Steven |
 | `packages/agente/` | Agente que valida la factura y arma el perfil (`SPEC.md`) | Ivan (en pausa) |
 | `packages/circuito/` | Circuito CHLt → colateral en Morpho → ARGt → repago (`SPEC.md`) | Franco |
 | `packages/contratos/` | Contrato que guarda el pago comprometido | a definir |
