@@ -1,4 +1,4 @@
-// uso: npm run -s -w packages/agente perfil -- <cuit> <wallet> [--colateral <usdt0>] [--pedido <argt>] [--sin-explicacion]
+// uso: npm run -s -w packages/agente perfil -- <cuit> <wallet> [--colateral <usdt0>] [--pedido <argt>] [--factura-cuit <cuit> --factura-monto <ars> [--factura-numero <n>]] [--sin-explicacion]
 // Lee ANTHROPIC_API_KEY y ARBITRUM_RPC_URL del .env de la raíz del repo.
 import { readFileSync, existsSync } from "node:fs";
 import { resolve, dirname } from "node:path";
@@ -26,7 +26,7 @@ for (let i = 0; i < args.length; i++) {
 }
 
 if (pos.length < 2) {
-  console.error("uso: perfil <cuit> <wallet> [--colateral <usdt0>] [--pedido <argt>] [--sin-explicacion]");
+  console.error("uso: perfil <cuit> <wallet> [--colateral <usdt0>] [--pedido <argt>] [--factura-cuit <cuit> --factura-monto <ars> [--factura-numero <n>]] [--sin-explicacion]");
   process.exit(2);
 }
 
@@ -38,6 +38,9 @@ try {
     colateralUsdt0: opt.colateral as string | undefined as any,
     pedidoArgt: opt.pedido as string | undefined as any,
     conExplicacion: !opt.sinExplicacion,
+    factura: opt["factura-cuit"]
+      ? { cuitProveedor: String(opt["factura-cuit"]), montoArs: Number(opt["factura-monto"]), numero: opt["factura-numero"] as string | undefined }
+      : undefined,
   });
   console.log(JSON.stringify(r, null, 2));
 } catch (e: any) {

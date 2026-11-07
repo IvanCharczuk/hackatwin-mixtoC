@@ -12,7 +12,7 @@ resolvemos lo argentino.**
 |---|---|---|
 | Apertura del crédito en ARGt | 1% del monto | Pesos desde el día uno, sin banco ni historial local |
 | Pago a proveedor con factura validada | 0,3% del pago | Factura y proveedor revisados, impuestos en regla y comprobante de pagada |
-| Plan para empresas grandes | mensual, a definir | Reporte de compras locales y control de muchos proveedores |
+| Plan para empresas grandes | mensual, a definir | Licitaciones para proveedores, control de proveedores (BCRA y onchain) y un dashboard de análisis de proveedores y pagos |
 
 El interés del crédito es del mercado de Morpho, no nuestro. El proveedor no
 paga nada.

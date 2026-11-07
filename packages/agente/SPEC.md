@@ -38,6 +38,13 @@ dejar de colateral y cuánto ARGt quiere pedir.
 5. **Explicación en castellano** con Claude Haiku (`claude-haiku-5-5`), sin
    prometer rendimiento; si la API falla, un texto armado y lo dice.
 
+6. **Factura a pagar (opcional):** con el CUIT del proveedor, el monto en
+   pesos (= ARGt) y el número, suma el perfil del proveedor en el BCRA (avisa,
+   no bloquea: decide la empresa), el plan de pago (cuánto sale del saldo de
+   ARGt, cuánto hay que pedir, si alcanza, cuánto colateral falta y qué queda
+   disponible después) y los cuatro checks para la pantalla. Sólo el hash de
+   la factura (`id`) podría ir a la cadena, nunca los datos fiscales.
+
 **Interfaces:** la función `evaluar()` (`packages/agente/src/index.ts`), el
 comando `npm run -w packages/agente perfil -- <cuit> <wallet> [--colateral
 <usdt0>] [--pedido <argt>]` y el endpoint `POST /api/agente` de `apps/web`,
@@ -54,6 +61,12 @@ del lado del servidor (la clave de Claude nunca llega al navegador).
 - **CA-D3** — El endpoint responde lo mismo desde la web, y con datos
   inválidos devuelve 400 con un mensaje claro.
   `curl -s -X POST localhost:3000/api/agente -H 'content-type: application/json' -d '{"cuit":"30546689979","wallet":"0x000000000000000000000000000000000000dEaD","colateralUsdt0":10}' | grep -q decision`
+
+- **CA-D4** — Con una factura, la respuesta trae el perfil del proveedor, el
+  plan de pago (saldo, a pedir, faltante, disponible después) y los checks
+  `proveedor-bcra`, `empresa-bcra`, `plata-suficiente` y `disponible-despues`.
+  `npm test -w packages/agente` (pago.test.ts) y
+  `npm run -s -w packages/agente perfil -- 30546689979 0x000000000000000000000000000000000000dEaD --colateral 10 --factura-cuit 30500010912 --factura-monto 12000 | grep -q plata-suficiente`
 
 Lo que sigue más abajo (factura, niveles por historial, repago por factura,
 vínculo factura y plata) es para después de la demo.

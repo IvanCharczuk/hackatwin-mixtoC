@@ -2,6 +2,7 @@
 import Anthropic from "@anthropic-ai/sdk";
 import type { Decision, Bcra } from "./reglas";
 import type { Onchain } from "./onchain";
+import type { Pago } from "./index";
 
 const MODELO = "claude-haiku-5-5";
 const fmt = (n: number) => n.toLocaleString("es-AR", { maximumFractionDigits: 2 });
@@ -20,6 +21,7 @@ export async function explicar(
   d: Decision,
   bcra: Bcra,
   onchain: Onchain | null,
+  pago: Pago | null = null,
   apiKey = process.env.ANTHROPIC_API_KEY,
 ): Promise<{ texto: string; fuente: "claude" | "armada"; error?: string }> {
   const armada = explicacionArmada(d, bcra);
@@ -41,6 +43,11 @@ export async function explicar(
     // Lo que todavía no depositó: es una simulación de cuánto podría pedir si lo deja.
     colateralSimuladoUsdt0: onchain ? Math.max(0, d.colateralUsdt0 - onchain.posicion.colateralUsdt0) : null,
     decision: d,
+    factura: pago && {
+      montoArs: pago.factura.montoArs,
+      proveedor: { situacion: pago.proveedor.situacionMax, chequesRechazados: pago.proveedor.chequesRechazados, alertas: pago.alertas },
+      plan: pago.plan,
+    },
   };
   const client = new Anthropic({ apiKey, timeout: 25_000, maxRetries: 1 });
   try {
@@ -54,7 +61,9 @@ export async function explicar(
       messages: [
         {
           role: "user",
-          content: `Explicale a la empresa cuánto puede pedir, por qué (perfil del BCRA, colateral, liquidez del mercado) y qué podría hacer para pedir más. Datos:\n${JSON.stringify(datos)}`,
+          content: (pago
+            ? "La empresa cargó una factura de un proveedor para pagarla con ARGt. Explicale si le alcanza, de dónde sale la plata (su saldo y lo que pide prestado), qué le queda disponible después y si el proveedor tiene alertas en el BCRA. "
+            : "Explicale a la empresa cuánto puede pedir, por qué (perfil del BCRA, colateral, liquidez del mercado) y qué podría hacer para pedir más. ") + `Datos:\n${JSON.stringify(datos)}`,
         },
       ],
     });

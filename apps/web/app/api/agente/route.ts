@@ -1,7 +1,7 @@
 // Endpoint del agente (lado del servidor): la clave de Claude nunca llega al navegador.
-// POST { cuit, wallet, colateralUsdt0?, pedidoArgt?, bcraSimulado? } → perfil, decisión y explicación.
+// POST { cuit, wallet, colateralUsdt0?, pedidoArgt?, bcraSimulado?, factura? } → perfil, decisión y explicación.
 // Lógica en packages/agente (spec: packages/agente/SPEC.md).
-import { evaluar } from "agente";
+import { evaluar, type Factura } from "agente";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -13,7 +13,7 @@ export async function POST(req: Request) {
   } catch {
     return Response.json({ error: "El cuerpo tiene que ser JSON." }, { status: 400 });
   }
-  const { cuit, wallet, colateralUsdt0, pedidoArgt, bcraSimulado } = body ?? {};
+  const { cuit, wallet, colateralUsdt0, pedidoArgt, bcraSimulado, factura } = body ?? {};
   if (typeof cuit !== "string" || typeof wallet !== "string") {
     return Response.json({ error: "Faltan «cuit» y «wallet» (texto)." }, { status: 400 });
   }
@@ -24,6 +24,7 @@ export async function POST(req: Request) {
       colateralUsdt0: colateralUsdt0 as number | undefined,
       pedidoArgt: pedidoArgt as number | undefined,
       bcraSimulado: bcraSimulado as { situacion: number | null; chequesRechazados?: number } | undefined,
+      factura: factura as Factura | undefined,
     });
     return Response.json(r);
   } catch (e) {
