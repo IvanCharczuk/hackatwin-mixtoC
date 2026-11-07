@@ -10,6 +10,24 @@ arranque con financiación desde el día uno.
 Frase que se repite en todo: **«Operá en Argentina con financiación desde el
 día uno.»**
 
+## Elevator pitch para mentores (30 segundos)
+
+> Hoy hay 13 mineras con proyectos aprobados en el RIGI y otros 20 de minería
+> y petróleo esperando. Para arrancar acá necesitan pesos, pero el banco no
+> las conoce y el cepo frena los dólares. Saltar agiliza los rieles para que
+> dejen su garantía en stablecoins y reciban ARGt, los pesos digitales de
+> Twin, desde el día uno, con el crédito de Morpho. Y un agente revisa cada
+> factura de sus proveedores antes de pagar. Cobramos 1% por abrir el crédito
+> y 0,3% por cada pago.
+
+Qué preguntarles después:
+
+1. ¿Podemos acordar un cupo de liquidez de ARGt en el mercado de Morpho? ¿Quién
+   es el curador del vault?
+2. ¿Nos dan fondos de prueba para la transacción real? ¿Vale una red de
+   prueba?
+3. ¿Qué le falta al pitch para el jurado?
+
 ## Formato
 
 Total 2,5 minutos:
