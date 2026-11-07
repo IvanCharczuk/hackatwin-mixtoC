@@ -24,9 +24,20 @@ npm run -w packages/fork probar -- 0xTuWallet 0xProveedor --colateral 10 --pedid
 ARBITRUM_RPC_URL=http://127.0.0.1:8545 npm run -w packages/agente perfil -- <cuit> 0xTuWallet
 ```
 
-Para la web (`apps/web`) o una wallet como MetaMask: red con RPC
-`http://127.0.0.1:8545` y chain id `42161` (el mismo de Arbitrum, para no
-cambiar direcciones).
+Para la web (`apps/web`) en modo demo, con transacciones que sí se ejecutan
+en la copia local:
+
+```bash
+npm run -w packages/fork fondear -- 0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045 --desbloquear
+# apps/web/.env.local
+NEXT_PUBLIC_MOCK=1
+NEXT_PUBLIC_RPC_ARBITRUM=http://127.0.0.1:8545
+```
+
+`--desbloquear` hace que el servidor de prueba firme por esa wallet (la de
+demo, `MOCK_ADDRESS`) sin clave: un `eth_sendTransaction` desde ella se
+ejecuta en la copia local (probado). Para MetaMask: red con RPC
+`http://127.0.0.1:8545` y chain id `42161`.
 
 ## Resultado de la prueba (7/11/2026)
 
