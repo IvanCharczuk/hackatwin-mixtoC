@@ -26,6 +26,11 @@ Una idea por mensaje. Arriba lo que se pide o se decide; abajo el detalle.
 Si hace falta una decisión de las personas, terminá con opciones numeradas.
 ```
 
+## Enterarse al momento
+
+`scripts/escuchar --para <persona>` avisa en unos 25 segundos cuando llega un
+mensaje nuevo a `origin/main` (ver `AGENTS.md`, paso 4 al arrancar).
+
 ## Flujo
 
 1. `git pull` antes de leer y antes de escribir.

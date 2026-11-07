@@ -37,6 +37,12 @@ carpeta sin dueño, avisá con un mensaje y anotate en la tabla.
 2. Leé los mensajes de `mensajes/` con `estado: abierto` para todos o para tu
    persona (formato en `mensajes/README.md`).
 3. Leé `docs/estado.md` y el `README.md` del paquete donde vas a trabajar.
+4. Dejá corriendo el vigía del canal, en segundo plano:
+   `scripts/escuchar --para <tu persona>`. Cada 25 segundos hace `git fetch` y
+   avisa cuando llega un mensaje nuevo para todos o para tu persona (no hace
+   pull ni toca tu trabajo). En Claude Code, corrélo en segundo plano o con
+   Monitor para que te despierte; en Codex o Cursor, en una terminal aparte.
+   Cuando avise, `git pull --rebase` y leé el mensaje entero.
 
 ## Reglas
 

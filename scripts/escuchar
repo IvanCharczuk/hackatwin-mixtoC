@@ -1,0 +1,73 @@
+#!/usr/bin/env bash
+# Vigía del canal mensajes/: cada N segundos hace `git fetch` y avisa cuando
+# llega un mensaje nuevo a origin/main. No hace pull ni toca tu trabajo: sólo
+# avisa; el pull lo hacés vos (o tu IA) cuando te conviene.
+#
+# uso: scripts/escuchar [--para <persona>] [--cada <segundos>] [--una-vez]
+#   --para <persona>  sólo avisa mensajes con "para: todos" o "para: <persona>"
+#   --cada <seg>      intervalo entre fetch (default 25)
+#   --una-vez         revisa una vez y sale (0 si hubo nuevos, 1 si no)
+#
+# La primera vez marca como vistos los mensajes que ya existen. Lo visto se
+# guarda en .git/escuchar-vistos (fuera del repo, no se commitea).
+set -u
+
+PARA=""
+CADA=25
+UNA_VEZ=0
+while [ $# -gt 0 ]; do
+  case "$1" in
+    --para) PARA="${2:-}"; shift 2 ;;
+    --cada) CADA="${2:-25}"; shift 2 ;;
+    --una-vez) UNA_VEZ=1; shift ;;
+    -h|--help) sed -n '2,13p' "$0" | sed 's/^# \{0,1\}//'; exit 0 ;;
+    *) echo "escuchar: opción desconocida: $1" >&2; exit 2 ;;
+  esac
+done
+
+RAIZ="$(git rev-parse --show-toplevel 2>/dev/null)" || { echo "escuchar: no estoy en un repo git" >&2; exit 2; }
+cd "$RAIZ" || exit 2
+VISTOS="$(git rev-parse --git-dir)/escuchar-vistos"
+REF="origin/main"
+
+listar() {
+  git ls-tree --name-only "$REF" mensajes/ 2>/dev/null | grep -E '^mensajes/[0-9]{8}-[0-9]{4}-.+\.md$' | sort
+}
+
+campo() { # campo <archivo> <nombre>
+  git show "$REF:$1" 2>/dev/null | sed -n '2,10p' | sed -n "s/^$2: *//p" | head -1 | sed 's/ *#.*$//'
+}
+
+if [ ! -f "$VISTOS" ]; then
+  git fetch -q origin main 2>/dev/null
+  listar > "$VISTOS"
+  [ "$UNA_VEZ" -eq 0 ] && echo "escuchar: escuchando mensajes/ en $REF cada ${CADA}s$( [ -n "$PARA" ] && echo " (para: todos o $PARA)")"
+fi
+
+revisar() {
+  git fetch -q origin main 2>/dev/null || { echo "escuchar: falló git fetch, reintento" >&2; return 1; }
+  NUEVOS=0
+  for f in $(listar); do
+    grep -qxF "$f" "$VISTOS" && continue
+    echo "$f" >> "$VISTOS"
+    para="$(campo "$f" para)"
+    if [ -n "$PARA" ] && [ "$para" != "todos" ] && [ "$para" != "$PARA" ]; then
+      continue
+    fi
+    NUEVOS=$((NUEVOS + 1))
+    echo "MENSAJE NUEVO: $f | de: $(campo "$f" de) | para: $para | tipo: $(campo "$f" tipo)"
+    git show "$REF:$f" | awk 'n>=2 && NF {print "  " $0; c++} /^---$/ {n++} c>=4 {exit}'
+    echo "  -> git pull --rebase y leelo entero"
+  done
+  return 0
+}
+
+if [ "$UNA_VEZ" -eq 1 ]; then
+  revisar
+  [ "${NUEVOS:-0}" -gt 0 ] && exit 0 || exit 1
+fi
+
+while true; do
+  revisar
+  sleep "$CADA"
+done
