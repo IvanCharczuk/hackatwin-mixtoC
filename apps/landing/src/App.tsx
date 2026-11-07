@@ -13,7 +13,8 @@ import {
   X,
   type LucideIcon,
 } from "lucide-react";
-import { MAX_LTV, money, quote, short, tokenSrc, type Ticker } from "./data";
+import { MAX_LTV, money, num, quote, short, tokenSrc, type Ticker } from "./data";
+import { LANGS, useT } from "./i18n";
 
 // La demo con wallet (apps/web). VITE_APP_URL la pisa en otro deploy.
 const APP_URL = import.meta.env.VITE_APP_URL ?? "https://hackatwin-mixtoc-web.vercel.app";
@@ -124,7 +125,35 @@ const STARS: [number, number, number][] = [
 ];
 
 /* The header is fixed: clear over the hero sky, navy with blur once the page scrolls. */
+function LangSwitch() {
+  const { lang, setLang, t } = useT();
+  return (
+    <div
+      role="group"
+      aria-label={t.nav.langGroup}
+      className="flex items-center rounded-full p-0.5 text-[11px] font-semibold ring-1 ring-white/30 ring-inset lg:text-[13px]"
+    >
+      {LANGS.map((l) => (
+        <button
+          key={l}
+          type="button"
+          lang={l}
+          aria-pressed={lang === l}
+          aria-label={t.nav.langNames[l]}
+          onClick={() => setLang(l)}
+          className={`rounded-full px-2 py-1 uppercase transition-colors lg:px-2.5 ${
+            lang === l ? "bg-sun text-navy-deep" : "text-mist hover:text-white"
+          }`}
+        >
+          {l}
+        </button>
+      ))}
+    </div>
+  );
+}
+
 function SiteHeader() {
+  const { t } = useT();
   const [scrolled, setScrolled] = useState(false);
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -142,22 +171,22 @@ function SiteHeader() {
       }`}
     >
       <nav className="flex w-full max-w-[1248px] items-center justify-between">
-        <a href="#" aria-label={`${NAME}, inicio`}>
+        <a href="#" aria-label={t.nav.home}>
           <Logo size={16} />
         </a>
         <div className="hidden items-center gap-9 text-[15px] font-medium text-mist lg:flex">
-          <a className="transition-colors hover:text-white" href="#como-funciona">Cómo funciona</a>
-          <a className="transition-colors hover:text-white" href="#calculadora">Calculadora</a>
-          <a className="transition-colors hover:text-white" href="#preguntas">Preguntas frecuentes</a>
+          <a className="transition-colors hover:text-white" href="#como-funciona">{t.nav.how}</a>
+          <a className="transition-colors hover:text-white" href="#calculadora">{t.nav.calc}</a>
+          <a className="transition-colors hover:text-white" href="#preguntas">{t.nav.faq}</a>
         </div>
-        <div className="flex items-center gap-4">
-          <span className="hidden text-sm font-medium text-mist lg:inline">ES / EN</span>
+        <div className="flex items-center gap-2.5 lg:gap-4">
+          <LangSwitch />
           <a
             href="#contacto"
-            className="rounded-full px-4 py-2 text-[13px] font-medium text-white ring-[1.5px] ring-white/50 ring-inset transition-colors hover:bg-white/10 lg:px-[22px] lg:py-3 lg:text-[15px]"
+            className="rounded-full px-3 py-2 text-[13px] font-medium whitespace-nowrap text-white ring-[1.5px] ring-white/50 ring-inset transition-colors hover:bg-white/10 lg:px-[22px] lg:py-3 lg:text-[15px]"
           >
-            <span className="lg:hidden">Evaluar</span>
-            <span className="hidden lg:inline">Evaluar mi expansión</span>
+            <span className="lg:hidden">{t.nav.ctaShort}</span>
+            <span className="hidden lg:inline">{t.nav.ctaLong}</span>
           </a>
         </div>
       </nav>
@@ -197,6 +226,7 @@ function useHeroParallax() {
 }
 
 function Hero() {
+  const { t } = useT();
   const ref = useHeroParallax();
   return (
     <section
@@ -225,9 +255,9 @@ function Hero() {
       <div className="parallax-copy relative z-10 flex flex-col items-center">
         <p className="intro-up flex items-center gap-2 pt-12 pb-4 lg:pt-[72px] lg:pb-6" style={{ animationDelay: "0.1s" }}>
           <span className="size-[7px] rounded-full bg-live lg:size-2" aria-hidden />
-          <span className="text-[13px] text-mist lg:hidden">Para empresas que se expanden a Argentina</span>
+          <span className="text-[13px] text-mist lg:hidden">{t.hero.tagMobile}</span>
           <span className="hidden text-sm text-lavender-soft lg:inline">
-            Para empresas de Chile que se expanden a Argentina
+            {t.hero.tagDesktop}
           </span>
         </p>
 
@@ -235,22 +265,21 @@ function Hero() {
           className="intro-up max-w-[1120px] text-center text-[34px] leading-[38px] font-semibold tracking-[-1px] text-white lg:text-[60px] lg:leading-[66px] lg:tracking-[-1.6px]"
           style={{ animationDelay: "0.25s" }}
         >
-          Expandí tu empresa a Argentina.{" "}
-          <span className="text-sun">Operá en pesos desde el primer día.</span>
+          {t.hero.title1} <span className="text-sun">{t.hero.title2}</span>
         </h1>
 
         <p className="intro-up pt-4 pb-6 text-center text-[17px] leading-[25px] text-mist lg:hidden" style={{ animationDelay: "0.4s" }}>
-          Dejás tus stablecoins de garantía y recibís pesos digitales para abrir tu operación, sin vender lo que tenés.
+          {t.hero.sub}
         </p>
 
         <div className="intro-up flex items-center gap-2.5 lg:gap-5 lg:pt-8 lg:pb-7" style={{ animationDelay: "0.45s" }}>
-          <EquationPill t="CHLt" label="Dejás de garantía" value="CHLt" />
+          <EquationPill t="CHLt" label={t.hero.leave} value="CHLt" />
           <ArrowRight className="size-5 text-sun lg:size-7" aria-hidden />
-          <EquationPill t="ARGt" label="Recibís para operar" value="ARGt" />
+          <EquationPill t="ARGt" label={t.hero.receive} value="ARGt" />
         </div>
 
         <p className="intro-up hidden text-center text-xl font-medium text-mist lg:block" style={{ animationDelay: "0.55s" }}>
-          Dejás tus stablecoins de garantía y recibís pesos digitales para abrir tu operación, sin vender lo que tenés.
+          {t.hero.sub}
         </p>
 
         <div className="intro-up w-full pt-5 lg:w-auto lg:pt-7" style={{ animationDelay: "0.65s" }}>
@@ -258,7 +287,7 @@ function Hero() {
             href="#contacto"
             className="flex items-center justify-center gap-2.5 rounded-full bg-sun px-[34px] py-4 text-base font-bold text-navy-deep shadow-[0_10px_30px_#f2ae2e59] transition-transform hover:-translate-y-0.5 lg:py-[18px] lg:text-[17px]"
           >
-            Evaluar mi expansión
+            {t.hero.cta}
             <ArrowRight size={18} aria-hidden />
           </a>
         </div>
@@ -266,7 +295,7 @@ function Hero() {
           className="intro-up max-w-[340px] pt-4 text-center text-xs leading-[18px] font-medium text-white [text-shadow:0_1px_10px_#1b2250] lg:max-w-none lg:text-[13px]"
           style={{ animationDelay: "0.75s" }}
         >
-          Piloto para empresas de Chile. Sujeto a evaluación, garantía y fondos disponibles.
+          {t.hero.note}
         </p>
       </div>
     </section>
@@ -288,36 +317,31 @@ function EquationPill({ t, label, value }: { t: Ticker; label: string; value: st
 
 /* ---------- problem ---------- */
 
-const ROWS = [
-  ["Crédito", "El banco argentino no conoce tu empresa", "Tu garantía en CHLt define cuánto ARGt recibís"],
-  ["Pesos", "Para tener pesos tenés que vender tus stablecoins", "Recibís ARGt, 1 a 1 con el peso, y tus CHLt quedan de garantía"],
-  ["Condiciones", "Las conocés del todo recién al firmar", "Ves monto, costo, garantía y devolución antes"],
-] as const;
-
 function Problem() {
+  const { t } = useT();
   return (
     <section className="flex flex-col gap-7 bg-cream px-6 py-[72px] lg:items-center lg:gap-14 lg:px-24 lg:py-[120px]">
       <div className="flex flex-col gap-2.5 lg:items-center lg:gap-3.5">
-        <Eyebrow>El problema</Eyebrow>
-        <SectionTitle>Llegar a Argentina, hoy y con {NAME}</SectionTitle>
+        <Eyebrow>{t.problem.eyebrow}</Eyebrow>
+        <SectionTitle>{t.problem.title(NAME)}</SectionTitle>
       </div>
 
       {/* Desktop: comparison table */}
       <div className="hidden w-full max-w-[1040px] overflow-hidden rounded-3xl bg-paper ring-1 ring-edge lg:block" role="table">
         <div className="flex text-[15px] font-bold" role="row">
           <div className="flex-1 px-7 py-[18px]" role="columnheader" />
-          <div className="flex-1 bg-cream-2 px-7 py-[18px] text-ink-2" role="columnheader">Hoy</div>
-          <div className="flex-1 bg-navy px-7 py-[18px] text-white" role="columnheader">Con {NAME}</div>
+          <div className="flex-1 bg-cream-2 px-7 py-[18px] text-ink-2" role="columnheader">{t.problem.today}</div>
+          <div className="flex-1 bg-navy px-7 py-[18px] text-white" role="columnheader">{t.problem.withUs(NAME)}</div>
         </div>
-        {ROWS.map(([k, today, withUs]) => (
+        {t.problem.rows.map(({ k, today, withUs }) => (
           <div key={k} className="flex min-h-24 border-t border-line" role="row">
             <div className="flex flex-1 items-center px-7 py-6 text-[17px] font-semibold text-navy" role="rowheader">{k}</div>
             <div className="flex flex-1 items-center gap-2.5 bg-cream-2/40 px-7 py-6" role="cell">
-              <X size={18} className="shrink-0 text-no" aria-label="No" />
+              <X size={18} className="shrink-0 text-no" aria-label={t.problem.no} />
               <span className="text-base leading-[23px] text-ink-2">{today}</span>
             </div>
             <div className="flex flex-1 items-center gap-2.5 bg-navy/5 px-7 py-6" role="cell">
-              <Check size={18} className="shrink-0 text-yes" aria-label="Sí" />
+              <Check size={18} className="shrink-0 text-yes" aria-label={t.problem.yes} />
               <span className="text-base leading-[23px] font-medium text-navy">{withUs}</span>
             </div>
           </div>
@@ -326,18 +350,18 @@ function Problem() {
 
       {/* Mobile: one card per row */}
       <div className="flex flex-col gap-3.5 lg:hidden">
-        {ROWS.map(([k, today, withUs]) => (
+        {t.problem.rows.map(({ k, today, withUs }) => (
           <div key={k} className="overflow-hidden rounded-[20px] bg-paper ring-1 ring-edge">
             <p className="px-[18px] pt-4 pb-2 text-base font-bold text-navy">{k}</p>
             <div className="px-[18px] pt-2.5 pb-3.5">
               <p className="flex items-center gap-1.5 text-[11px] font-bold tracking-[1.2px] text-ink-2">
-                <X size={13} className="text-no" aria-hidden /> HOY
+                <X size={13} className="text-no" aria-hidden /> {t.problem.todayUpper}
               </p>
               <p className="text-[15px] leading-[22px] text-ink-2">{today}</p>
             </div>
             <div className="bg-navy px-[18px] pt-3.5 pb-4">
               <p className="flex items-center gap-1.5 text-[11px] font-bold tracking-[1.2px] text-sun">
-                <Check size={13} aria-hidden /> CON {NAME.toUpperCase()}
+                <Check size={13} aria-hidden /> {t.problem.withUsUpper(NAME)}
               </p>
               <p className="text-[15px] leading-[22px] font-medium text-white">{withUs}</p>
             </div>
@@ -350,29 +374,26 @@ function Problem() {
 
 /* ---------- how it works ---------- */
 
-const STEPS: { title: string; desc: string; icon: LucideIcon }[] = [
-  { title: "Contanos tu expansión", desc: "Dónde abrís, qué ponés en marcha y cuántos pesos necesitás los primeros meses.", icon: Receipt },
-  { title: "Revisamos tu empresa", desc: "Un agente revisa la documentación y consulta a tu empresa en el BCRA.", icon: ShieldCheck },
-  { title: "Dejás CHLt de garantía", desc: `Pedís hasta el ${MAX_LTV * 100}% de su valor. Ves el costo antes de firmar.`, icon: Lock },
-  { title: "Recibís ARGt para operar", desc: "Pagás en pesos alquiler, equipos y sueldos. Devolvés lo pedido más el costo y recuperás tu garantía.", icon: Repeat },
-];
+const STEP_ICONS: LucideIcon[] = [Receipt, ShieldCheck, Lock, Repeat];
 
 function HowItWorks() {
+  const { t } = useT();
+  const steps = t.how.steps.map((s, i) => ({ title: s.title, desc: s.desc(MAX_LTV * 100), icon: STEP_ICONS[i] }));
   return (
     <section
       id="como-funciona"
       className="flex scroll-mt-4 flex-col gap-3.5 bg-paper px-6 py-[72px] lg:flex-row lg:gap-[72px] lg:px-24 lg:py-[120px]"
     >
       <div className="flex flex-col gap-2.5 pb-3.5 lg:w-[400px] lg:shrink-0 lg:gap-4 lg:pb-0">
-        <Eyebrow>Cómo funciona</Eyebrow>
-        <SectionTitle>De tu plan a operar en Argentina</SectionTitle>
+        <Eyebrow>{t.how.eyebrow}</Eyebrow>
+        <SectionTitle>{t.how.title}</SectionTitle>
         <p className="text-base leading-6 text-ink-2 lg:text-lg lg:leading-[27px]">
-          No prestamos capital propio. El préstamo sale de un mercado de Morpho, un protocolo abierto de préstamos.
+          {t.how.intro}
         </p>
       </div>
       <ol className="grid flex-1 gap-3.5 lg:grid-cols-2 lg:gap-4">
-        {STEPS.map((s, i) => (
-          <Step key={s.title} n={i + 1} last={i === STEPS.length - 1} {...s} />
+        {steps.map((s, i) => (
+          <Step key={i} n={i + 1} last={i === steps.length - 1} {...s} />
         ))}
       </ol>
     </section>
@@ -407,13 +428,14 @@ function Step({ n, title, desc, icon: Icon, last }: { n: number; title: string; 
 
 /* ---------- calculator ---------- */
 
-const ORIGINS: { name: string; t: Ticker; on: boolean }[] = [
-  { name: "Chile", t: "CHLt", on: true },
-  { name: "Perú", t: "PERt", on: false },
-  { name: "México", t: "MEXt", on: false },
+const ORIGINS: { t: "CHLt" | "PERt" | "MEXt"; on: boolean }[] = [
+  { t: "CHLt", on: true },
+  { t: "PERt", on: false },
+  { t: "MEXt", on: false },
 ];
 
 function Calculator() {
+  const { t, lang } = useT();
   const [ars, setArs] = useState(12_000_000);
   const q = quote(ars);
 
@@ -428,19 +450,19 @@ function Calculator() {
       className="flex scroll-mt-4 flex-col gap-[22px] bg-navy-deep px-6 py-[72px] lg:flex-row lg:items-center lg:gap-[72px] lg:p-[120px]"
     >
       <div className="flex flex-1 flex-col gap-[22px] lg:gap-7">
-        <Eyebrow dark>Calculadora</Eyebrow>
-        <SectionTitle dark>¿Cuánta garantía necesitás?</SectionTitle>
-        <p className="hidden text-lg text-lavender-soft lg:block">Poné cuántos pesos necesitás para abrir tu operación en Argentina.</p>
+        <Eyebrow dark>{t.calc.eyebrow}</Eyebrow>
+        <SectionTitle dark>{t.calc.title}</SectionTitle>
+        <p className="hidden text-lg text-lavender-soft lg:block">{t.calc.intro}</p>
 
         <label className="flex flex-col gap-2 lg:gap-2.5 lg:pt-3">
-          <span className="text-[13px] font-semibold text-lavender-soft lg:text-sm">Pesos que necesitás en Argentina</span>
+          <span className="text-[13px] font-semibold text-lavender-soft lg:text-sm">{t.calc.pesosLabel}</span>
           <span className="flex items-center justify-between gap-3 rounded-[14px] bg-white/8 p-4 ring-1 ring-white/20 ring-inset focus-within:ring-sun lg:px-5 lg:py-[18px]">
             <span className="flex flex-1 items-center gap-2 text-xl font-semibold text-white lg:text-2xl">
               <span aria-hidden>$</span>
               <input
                 inputMode="numeric"
-                aria-label="Pesos que necesitás en Argentina"
-                value={ars ? ars.toLocaleString("es-AR") : ""}
+                aria-label={t.calc.pesosLabel}
+                value={ars ? num(ars, lang) : ""}
                 placeholder="0"
                 onChange={(e) => onArs(e.target.value)}
                 className="w-full min-w-0 bg-transparent tabular-nums outline-none placeholder:text-white/40"
@@ -453,7 +475,7 @@ function Calculator() {
         </label>
 
         <div className="flex flex-col gap-2 lg:gap-2.5">
-          <p className="text-[13px] font-semibold text-lavender-soft lg:text-sm">Tu empresa viene de <span className="font-normal text-lavender lg:hidden">(Perú y México, pronto)</span></p>
+          <p className="text-[13px] font-semibold text-lavender-soft lg:text-sm">{t.calc.from} <span className="font-normal text-lavender lg:hidden">{t.calc.soonMobile}</span></p>
           <div className="grid grid-cols-3 gap-2 lg:flex lg:gap-2.5">
             {ORIGINS.map((o) => (
               <span
@@ -463,8 +485,8 @@ function Calculator() {
                 }`}
               >
                 <Coin t={o.t} size={20} className={o.on ? "" : "opacity-50"} />
-                {o.name}
-                {!o.on && <span className="hidden text-xs font-medium lg:inline">· pronto</span>}
+                {t.calc.countries[o.t]}
+                {!o.on && <span className="hidden text-xs font-medium lg:inline">{t.calc.soon}</span>}
               </span>
             ))}
           </div>
@@ -472,27 +494,27 @@ function Calculator() {
       </div>
 
       <div className="flex flex-col rounded-[22px] bg-paper p-[22px] lg:w-[560px] lg:shrink-0 lg:rounded-3xl lg:p-9" aria-live="polite">
-        <p className="text-[13px] font-semibold text-ink-2 lg:text-sm">Garantía mínima</p>
+        <p className="text-[13px] font-semibold text-ink-2 lg:text-sm">{t.calc.minCollateral}</p>
         <p className="flex items-baseline gap-2 text-[40px] font-bold tracking-[-1px] text-navy tabular-nums lg:text-[56px] lg:tracking-[-1.5px]">
-          {money(q.collateralClp)}
+          {money(q.collateralClp, lang)}
           <span className="text-lg font-semibold tracking-normal lg:text-2xl">CHLt</span>
         </p>
         <p className="text-sm leading-5 text-ink-2 lg:text-[15px] lg:leading-[22px]">
-          Equivale a {money(q.collateralArs)} en pesos. Pedís hasta el {MAX_LTV * 100}% de tu garantía.
+          {t.calc.equals(money(q.collateralArs, lang), MAX_LTV * 100)}
         </p>
 
         <dl className="flex flex-col pt-[18px] pb-1 lg:pt-7 lg:pb-0">
-          <ResultRow icon={Receipt} k="Recibís">
-            <span className="text-base font-bold text-navy tabular-nums lg:text-lg">{short(q.pay)} ARGt</span>
-            <span className="text-xs text-ink-2 lg:text-[13px]">1 ARGt = 1 peso</span>
+          <ResultRow icon={Receipt} k={t.calc.youGet}>
+            <span className="text-base font-bold text-navy tabular-nums lg:text-lg">{short(q.pay, lang)} ARGt</span>
+            <span className="text-xs text-ink-2 lg:text-[13px]">{t.calc.oneToOne}</span>
           </ResultRow>
-          <ResultRow icon={Lock} k="Tu garantía">
-            <span className="text-base font-bold text-navy tabular-nums lg:text-lg">{short(q.collateralClp)} CHLt</span>
-            <span className="text-xs text-ink-2 lg:text-[13px]">Queda en Morpho hasta que devolvés</span>
+          <ResultRow icon={Lock} k={t.calc.yourCollateral}>
+            <span className="text-base font-bold text-navy tabular-nums lg:text-lg">{short(q.collateralClp, lang)} CHLt</span>
+            <span className="text-xs text-ink-2 lg:text-[13px]">{t.calc.stays}</span>
           </ResultRow>
-          <ResultRow icon={Info} k="Costo">
-            <span className="text-sm font-medium text-ink-2">Tasa variable de Morpho</span>
-            <span className="text-xs text-ink-2 lg:text-[13px]">La ves antes de confirmar</span>
+          <ResultRow icon={Info} k={t.calc.cost}>
+            <span className="text-sm font-medium text-ink-2">{t.calc.variableRate}</span>
+            <span className="text-xs text-ink-2 lg:text-[13px]">{t.calc.seeBefore}</span>
           </ResultRow>
         </dl>
 
@@ -500,10 +522,10 @@ function Calculator() {
           href={APP_URL}
           className="flex items-center justify-center gap-2.5 rounded-full bg-navy p-4 text-[15px] font-semibold text-white transition-colors hover:bg-navy-deep lg:p-[18px] lg:text-base"
         >
-          Evaluar mi expansión <ArrowRight size={18} aria-hidden />
+          {t.calc.cta} <ArrowRight size={18} aria-hidden />
         </a>
         <p className="pt-3 text-center text-xs leading-[17px] text-ink-2 lg:pt-3.5 lg:text-[13px]">
-          Números ilustrativos. Si tu garantía pierde valor, puede que tengas que sumar más.
+          {t.calc.disclaimer}
         </p>
       </div>
     </section>
@@ -524,29 +546,30 @@ function ResultRow({ icon: Icon, k, children }: { icon: LucideIcon; k: ReactNode
 
 const EXAMPLE_ARS = 12_000_000;
 const ex = quote(EXAMPLE_ARS);
-const TICKET = [
-  ["Pesos que necesita", money(EXAMPLE_ARS)],
-  ["Recibe", `${short(EXAMPLE_ARS)} ARGt`],
-  [`Garantía (pide el ${MAX_LTV * 100}%)`, `≈ ${short(ex.collateralClp)} CHLt`],
-  ["Costo", "Lo ve antes de firmar"],
-  ["Devolución", "Préstamo y costo, como se acordó"],
-] as const;
 
 function Example() {
+  const { t, lang } = useT();
+  const TICKET = [
+    [t.example.needs, money(EXAMPLE_ARS, lang)],
+    [t.example.gets, `${short(EXAMPLE_ARS, lang)} ARGt`],
+    [t.example.collateral(MAX_LTV * 100), `≈ ${short(ex.collateralClp, lang)} CHLt`],
+    [t.example.cost, t.example.costValue],
+    [t.example.repay, t.example.repayValue],
+  ];
   return (
     <section
       id="ejemplo"
       className="flex scroll-mt-4 flex-col gap-[18px] bg-cream px-6 py-[72px] lg:flex-row lg:items-center lg:gap-20 lg:px-24 lg:py-[120px]"
     >
       <div className="flex flex-1 flex-col gap-[18px]">
-        <Eyebrow>Ejemplo ilustrativo</Eyebrow>
-        <SectionTitle>Una empresa minera de Antofagasta suma una operación en San Juan</SectionTitle>
+        <Eyebrow>{t.example.eyebrow}</Eyebrow>
+        <SectionTitle>{t.example.title}</SectionTitle>
         <p className="text-base leading-6 text-ink-2 lg:text-lg lg:leading-7">
-          Sigue operando en Chile, abre una base en San Juan y necesita pesos para el galpón, los equipos y los primeros sueldos. Con {NAME} deja CHLt de garantía y recibe ARGt para operar.
+          {t.example.body(NAME)}
         </p>
         <img
           src="/ejemplo-san-juan.jpg"
-          alt="Un equipo descarga herramientas frente a un galpón nuevo en San Juan, con la cordillera de fondo, al amanecer"
+          alt={t.example.alt}
           className="h-[210px] w-full rounded-[18px] object-cover lg:h-60 lg:rounded-[20px]"
         />
       </div>
@@ -566,7 +589,7 @@ function Example() {
           ))}
         </dl>
         <p className="flex items-center gap-2 px-[18px] pt-3.5 pb-[18px] text-xs text-ink-2 lg:px-7 lg:pt-[18px] lg:pb-6 lg:text-[13px]">
-          <Info size={16} aria-hidden /> Números ilustrativos, no es una oferta.
+          <Info size={16} aria-hidden /> {t.example.disclaimer}
         </p>
       </div>
     </section>
@@ -588,44 +611,22 @@ function TicketCity({ t, city }: { t: Ticker; city: string }) {
 
 /* ---------- faq ---------- */
 
-const FAQ = [
-  [
-    "¿Para qué sirven los ARGt?",
-    "Para operar en Argentina: alquiler, equipos, sueldos e impuestos. Cada ARGt vale un peso. Tu empresa devuelve lo pedido más los costos, según lo acordado.",
-  ],
-  [
-    "¿Quién presta la plata?",
-    "No prestamos capital propio. El préstamo sale de un mercado de Morpho, financiado por quienes ponen liquidez en él.",
-  ],
-  [
-    "¿Qué pasa con la garantía?",
-    "Queda comprometida mientras debés. Si pierde valor y deja de cubrir el préstamo, tenés que sumar más; si no, puede venderse para cubrir la deuda.",
-  ],
-  [
-    "¿Puedo devolverlo con lo que gane en Argentina?",
-    "Podés planificarlo así, pero el calendario de pago tiene que poder cumplirse aunque tus ingresos se demoren.",
-  ],
-  [
-    "¿Ya puedo usarlo?",
-    "Estamos preparando el piloto con empresas de Chile. Contanos tu caso y vemos si encaja.",
-  ],
-] as const;
-
 function Faq() {
+  const { t } = useT();
   return (
     <section
       id="preguntas"
       className="flex scroll-mt-4 flex-col gap-3.5 bg-paper px-6 py-[72px] lg:flex-row lg:gap-[72px] lg:px-24 lg:py-[120px]"
     >
       <div className="flex flex-col gap-2.5 pb-3.5 lg:w-[400px] lg:shrink-0 lg:gap-4 lg:pb-0">
-        <Eyebrow>Preguntas frecuentes</Eyebrow>
-        <SectionTitle>Antes de comprometer nada</SectionTitle>
+        <Eyebrow>{t.faq.eyebrow}</Eyebrow>
+        <SectionTitle>{t.faq.title}</SectionTitle>
         <p className="text-base leading-6 text-ink-2 lg:text-lg lg:leading-[27px]">
-          Cuánto recibís, cuánto cuesta y cómo se devuelve, antes de firmar.
+          {t.faq.intro}
         </p>
       </div>
       <div className="flex flex-1 flex-col">
-        {FAQ.map(([q, a], i) => (
+        {t.faq.items.map(({ q, a }, i) => (
           <details key={q} open={i === 0} className="group border-b border-line">
             <summary className="flex cursor-pointer list-none items-center justify-between gap-4 py-5 text-base font-semibold text-navy lg:py-6 lg:text-lg [&::-webkit-details-marker]:hidden">
               {q}
@@ -645,6 +646,7 @@ const FIELD =
   "w-full rounded-xl bg-paper px-4 py-3 text-[15px] text-navy ring-1 ring-edge ring-inset outline-none placeholder:text-ink-2/60 focus:ring-2 focus:ring-sun";
 
 function Closing() {
+  const { t } = useT();
   const [sent, setSent] = useState(false);
   const onSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -659,43 +661,43 @@ function Closing() {
       <SolDeMayo className="bottom-[70px] left-[calc(50%-80px)] w-40 lg:bottom-[180px]" />
       <Andes className="bottom-[-176px] z-[1] lg:bottom-[-76px]" />
       <h2 className="relative z-[2] max-w-[820px] text-center text-[32px] leading-9 font-semibold tracking-[-0.8px] text-navy lg:text-[52px] lg:leading-[57px] lg:tracking-[-1.5px]">
-        Ya sabés hacia dónde querés crecer
+        {t.closing.title}
       </h2>
-      <p className="relative z-[2] text-center text-lg text-ink-2 lg:text-[22px]">Hablemos de cómo llegar con pesos para operar.</p>
+      <p className="relative z-[2] text-center text-lg text-ink-2 lg:text-[22px]">{t.closing.sub}</p>
 
       <div className="relative z-[3] w-full max-w-[560px] rounded-[22px] bg-white p-[22px] shadow-[0_20px_50px_#1b225026] lg:rounded-3xl lg:p-8">
         {sent ? (
           <div className="flex flex-col items-center gap-3 py-6 text-center">
             <Check size={32} className="text-yes" aria-hidden />
-            <p className="text-lg font-semibold text-navy">Recibimos tu consulta</p>
+            <p className="text-lg font-semibold text-navy">{t.closing.sentTitle}</p>
             <p className="text-[15px] leading-6 text-ink-2">
-              El próximo paso es revisar tu caso y contactarte para conocer mejor tu proyecto.
+              {t.closing.sentBody}
             </p>
           </div>
         ) : (
           <form onSubmit={onSubmit} className="flex flex-col gap-3">
             <div className="grid gap-3 lg:grid-cols-2">
-              <input required name="nombre" placeholder="Nombre" aria-label="Nombre" className={FIELD} />
-              <input required name="empresa" placeholder="Empresa" aria-label="Empresa" className={FIELD} />
-              <input required type="email" name="correo" placeholder="Correo de trabajo" aria-label="Correo de trabajo" className={FIELD} />
-              <input required name="pais" defaultValue="Chile" placeholder="País de origen" aria-label="País de origen" className={FIELD} />
+              <input required name="nombre" placeholder={t.closing.name} aria-label={t.closing.name} className={FIELD} />
+              <input required name="empresa" placeholder={t.closing.company} aria-label={t.closing.company} className={FIELD} />
+              <input required type="email" name="correo" placeholder={t.closing.email} aria-label={t.closing.email} className={FIELD} />
+              <input required name="pais" defaultValue={t.closing.countryDefault} key={t.closing.countryDefault} placeholder={t.closing.country} aria-label={t.closing.country} className={FIELD} />
             </div>
             <textarea
               required
               name="pagos"
               rows={3}
-              placeholder="¿Qué vas a poner en marcha en Argentina?"
-              aria-label="¿Qué vas a poner en marcha en Argentina?"
+              placeholder={t.closing.what}
+              aria-label={t.closing.what}
               className={`${FIELD} resize-none`}
             />
             <button
               type="submit"
               className="flex items-center justify-center gap-2.5 rounded-full bg-navy p-4 text-[15px] font-semibold text-white transition-colors hover:bg-navy-deep lg:text-base"
             >
-              Quiero evaluar mi expansión <ArrowRight size={18} aria-hidden />
+              {t.closing.submit} <ArrowRight size={18} aria-hidden />
             </button>
             <p className="text-center text-xs leading-[17px] text-ink-2">
-              Enviar tus datos no te compromete a contratar ni confirma la aprobación de una operación.
+              {t.closing.fine}
             </p>
           </form>
         )}
@@ -705,16 +707,15 @@ function Closing() {
 }
 
 function Footer() {
+  const { t } = useT();
   return (
     <footer className="flex flex-col gap-3.5 bg-navy-deep px-6 py-9 lg:flex-row lg:items-center lg:justify-between lg:px-[120px] lg:py-10">
       <div className="flex flex-col gap-2">
         <Logo size={17} />
-        <p className="text-sm text-lavender-soft">Proyecto de HackaTwin 2026, equipo Mixto C</p>
+        <p className="text-sm text-lavender-soft">{t.footer.project}</p>
       </div>
       <p className="text-xs leading-[18px] text-lavender lg:w-[560px] lg:text-right lg:text-[13px] lg:leading-5">
-        No prestamos capital propio: el préstamo sale de un mercado de Morpho. El financiamiento requiere garantía, tiene
-        costos y puede implicar la pérdida de los activos comprometidos. Las monedas de Twin son un medio de pago, no una
-        inversión.
+        {t.footer.legal}
       </p>
     </footer>
   );
