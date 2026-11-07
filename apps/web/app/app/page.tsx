@@ -70,10 +70,10 @@ export default function App() {
         <Onboarding
           wallet={wallet}
           simular={sesion.mock}
-          onListo={(c) => {
-            guardarOnboarding(wallet, { cuit: c });
-            setCuitEstado(c);
-            setOb({ cuit: c });
+          onListo={(d) => {
+            guardarOnboarding(wallet, d);
+            setCuitEstado(d.cuit);
+            setOb(d);
           }}
         />
       ) : (

@@ -4,7 +4,9 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { usePublicClient } from "wagmi";
-import { BadgeCheck, Building2, CircleHelp } from "lucide-react";
+import { BadgeCheck, Building2, Check, CircleHelp } from "lucide-react";
+import { motion, useReducedMotion } from "motion/react";
+import { PAISES } from "@/lib/paises";
 import { CHAIN_ID } from "@/lib/tokens";
 import { planPermisos } from "@/lib/credito";
 import { useEmpresa } from "@/lib/hooks/use-factura";
@@ -13,15 +15,22 @@ import { cn } from "@/lib/utils";
 
 const digitos = (s: string) => s.replace(/\D/g, "");
 
-export function Onboarding({ wallet, simular, onListo }: { wallet: `0x${string}`; simular: boolean; onListo: (cuit: string) => void }) {
+export function Onboarding({ wallet, simular, onListo }: { wallet: `0x${string}`; simular: boolean; onListo: (datos: { cuit: string; pais: string; idLocal: string }) => void }) {
   const [paso, setPaso] = useState<1 | 2>(1);
-  const [cuit, setCuit] = useState("");
-  const valido = digitos(cuit).length === 11;
+  const [paisId, setPaisId] = useState("CL");
+  const pais = PAISES.find((p) => p.id === paisId)!;
+  const [idLocal, setIdLocal] = useState("");
+  const [cuitFilial, setCuitFilial] = useState("");
+  const local = pais.id === "AR";
+  const idOk = pais.valida(idLocal);
+  const cuit = local ? idLocal : cuitFilial;
+  const valido = digitos(cuit).length === 11 && idOk;
+  const quieto = useReducedMotion();
   const empresa = useEmpresa(valido ? cuit : "", wallet);
   const bcra = empresa.data?.perfil.bcra;
   const client = usePublicClient({ chainId: CHAIN_ID });
   const permisos = useQuery({ queryKey: ["permisos", wallet], enabled: paso === 2 && Boolean(client), queryFn: () => planPermisos(client!, wallet) });
-  const terminar = () => onListo(digitos(cuit));
+  const terminar = () => onListo({ cuit: digitos(cuit), pais: pais.id, idLocal: idLocal.trim() });
 
   return (
     <main className="mx-auto flex w-full max-w-[560px] flex-1 flex-col gap-6 px-6 py-12">
@@ -37,14 +46,45 @@ export function Onboarding({ wallet, simular, onListo }: { wallet: `0x${string}`
       {paso === 1 ? (
         <section aria-labelledby="ob-empresa" className="flex flex-col gap-5 rounded-[20px] bg-white p-6 shadow-[0_1px_2px_rgb(0_37_100/0.06)]">
           <div>
-            <h2 id="ob-empresa" className="text-[24px] font-bold tracking-[-0.01em] text-navy">¿Qué empresa paga?</h2>
-            <p className="mt-1 text-[15px] text-ink-2">Con el CUIT miramos tu perfil en el BCRA y validamos que las facturas estén a tu nombre.</p>
+            <h2 id="ob-empresa" className="text-[24px] font-bold tracking-[-0.01em] text-navy">¿De dónde es tu empresa?</h2>
+            <p className="mt-1 text-[15px] text-ink-2">Revisamos tus antecedentes en las instituciones de tu país y a tu filial argentina en el BCRA.</p>
           </div>
+          <fieldset className="flex flex-col gap-2">
+            <legend className="mb-2 text-[14px] font-semibold text-navy">País de origen</legend>
+            <div className="flex flex-wrap gap-2">
+              {PAISES.map((p) => (
+                <button key={p.id} type="button" aria-pressed={p.id === paisId} onClick={() => { setPaisId(p.id); setIdLocal(""); }} className={cn("rounded-full border px-4 py-2 text-[14px] font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sun", p.id === paisId ? "border-navy bg-navy text-white" : "border-line bg-white text-navy hover:border-sun")}>
+                  {p.nombre}
+                </button>
+              ))}
+            </div>
+          </fieldset>
           <div className="flex flex-col gap-2">
-            <label htmlFor="ob-cuit" className="text-[14px] font-semibold text-navy">CUIT de la empresa</label>
-            <input id="ob-cuit" value={cuit} onChange={(e) => setCuit(e.target.value)} inputMode="numeric" autoFocus placeholder="30-99999902-3" className="rounded-full border border-line bg-white px-5 py-3 font-mono text-[16px] text-navy outline-none focus-visible:border-sun" />
-            <p className="text-[13px] text-ink-2">11 números, con o sin guiones. Para la demo: 30-99999902-3.</p>
+            <label htmlFor="ob-id" className="text-[14px] font-semibold text-navy">{pais.idNombre} de la empresa en {pais.nombre}</label>
+            <input id="ob-id" value={idLocal} onChange={(e) => setIdLocal(e.target.value)} autoFocus placeholder={pais.ejemplo} spellCheck={false} aria-invalid={Boolean(idLocal) && !idOk} className={cn("rounded-full border bg-white px-5 py-3 font-mono text-[16px] text-navy outline-none focus-visible:border-sun", idLocal && !idOk ? "border-bad" : "border-line")} />
+            <p className={cn("text-[13px]", idLocal && !idOk ? "text-bad" : "text-ink-2")}>{idLocal && !idOk ? `Ese ${pais.idNombre} no es válido.` : `Por ejemplo ${pais.ejemplo}.`}</p>
           </div>
+          {idOk && !local && (
+            <section aria-label={`Antecedentes en ${pais.nombre}`} className="flex flex-col gap-1 rounded-[16px] bg-paper px-4 py-3">
+              <p className="text-[12px] font-bold text-sun-ink">Antecedentes en {pais.nombre}</p>
+              <ul>
+                {pais.instituciones.map((inst, k) => (
+                  <motion.li key={inst} initial={quieto ? false : { opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.22, delay: quieto ? 0 : 0.25 + k * 0.35, ease: [0.22, 1, 0.36, 1] }} className="flex items-center gap-2 py-1.5 text-[14px] text-navy">
+                    <span className="flex size-5 items-center justify-center rounded-full bg-ok/14 text-ok"><Check className="size-3" strokeWidth={3} aria-hidden="true" /></span>
+                    {inst} <span className="text-ink-2">· sin observaciones</span>
+                  </motion.li>
+                ))}
+              </ul>
+              <p className="pt-1 text-[12px] text-ink-2">Demo: consultas simuladas. La de BCRA, abajo, es real.</p>
+            </section>
+          )}
+          {!local && idOk && (
+            <div className="flex flex-col gap-2">
+              <label htmlFor="ob-cuit" className="text-[14px] font-semibold text-navy">CUIT de tu filial en Argentina</label>
+              <input id="ob-cuit" value={cuitFilial} onChange={(e) => setCuitFilial(e.target.value)} inputMode="numeric" placeholder="30-99999902-3" className="rounded-full border border-line bg-white px-5 py-3 font-mono text-[16px] text-navy outline-none focus-visible:border-sun" />
+              <p className="text-[13px] text-ink-2">Es a quien le llegan las facturas. Para la demo: 30-99999902-3.</p>
+            </div>
+          )}
           {valido && (
             <div className="flex items-center gap-3 rounded-[16px] bg-paper px-4 py-3" aria-live="polite">
               <Building2 className="size-5 shrink-0 text-sun-ink" aria-hidden="true" />
