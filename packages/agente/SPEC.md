@@ -78,6 +78,26 @@ Después compara el costo para el proveedor:
 Devuelve una decisión en JSON y un texto corto que la explica. No ejecuta
 nada: la transacción la confirma una persona.
 
+### Repago y liberación del colateral, factura por factura
+
+Cada factura es una posición propia, con su deuda y su colateral. El agente
+muestra el estado de cada una y lo que pasa en cada paso:
+
+| Estado | Qué pasa | Deuda | Colateral de esa factura |
+|---|---|---|---|
+| Comprometida | La empresa deposita el pago de la orden de compra | 0 | Bloqueado entero |
+| Adelantada | El proveedor recibe el adelanto en ARGt | Adelanto + comisión | Bloqueado entero |
+| Pago parcial | La empresa paga una parte de la factura | Baja en ese monto | Se libera en proporción a lo repagado |
+| Repagada | Se cubre la deuda completa | 0 | El sobrante va al proveedor; el resto, a la empresa si sobra |
+| Vencida sin pago | Pasa el vencimiento y no se cubrió | Lo que falte | Se ejecuta lo necesario para cancelar; el resto se libera |
+
+- El colateral de una factura nunca cubre la deuda de otra: si una se atrasa,
+  las demás siguen liberándose normalmente.
+- Cada repago a tiempo suma al historial onchain del proveedor y puede
+  subirlo de nivel (menos colateralización en la próxima factura).
+- Para el resumen, el agente suma por proveedor: deuda viva, colateral
+  bloqueado, colateral liberado y próxima factura que vence.
+
 ## Alcance
 
 **Dentro:**
@@ -118,6 +138,11 @@ Stack recomendado: TypeScript con Node, para compartirlo con el front.
   proveedores de nivel 0, 1 y 2, y la explicación nombra el nivel y qué le
   falta para subir.
   `npm test -- nivel`
+- **CA-8** — Con dos facturas del mismo proveedor, un pago parcial de la
+  primera libera colateral en proporción a lo repagado, el atraso de una no
+  bloquea la liberación de la otra, y el resumen por proveedor cuadra (deuda
+  viva + repagado = adelantado + comisión).
+  `npm test -- repago`
 - **CA-6** — Con una factura de ejemplo, el agente extrae CUIT, monto, CAE y
   vencimiento, consulta la Central de Deudores del BCRA por ese CUIT y
   devuelve el perfil junto con la decisión.
