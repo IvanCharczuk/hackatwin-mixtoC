@@ -18,6 +18,7 @@ export function Pagar({
   textoBoton,
   textoListo,
   onListo,
+  plano = false,
 }: {
   pasos: Paso[];
   simular: boolean;
@@ -27,6 +28,8 @@ export function Pagar({
   textoBoton?: string;
   textoListo?: string;
   onListo?: () => void;
+  /** Sin caja propia, para ir dentro de otra tarjeta. */
+  plano?: boolean;
 }) {
   const [fijos] = useState(pasos); // el plan no cambia mientras se paga
   const { stages, hashes, errores, hechos, firmarTodos, listo } = usePasos(fijos, simular);
@@ -41,10 +44,10 @@ export function Pagar({
   }
 
   return (
-    <section aria-labelledby="pagar" className="flex flex-col gap-5 rounded-[20px] bg-white p-6 shadow-[0_1px_2px_rgb(0_37_100/0.06)]">
+    <section aria-labelledby="pagar" className={cn("flex flex-col gap-5", !plano && "rounded-[20px] bg-white p-6 shadow-[0_1px_2px_rgb(0_37_100/0.06)]")}>
       <div>
-        <h2 id="pagar" className="text-[22px] font-bold tracking-[-0.01em] text-navy">{titulo}</h2>
-        <p className="mt-1 text-[14px] text-ink-2">
+        <h2 id="pagar" className={plano ? "text-[16px] font-semibold text-navy" : "text-[22px] font-bold tracking-[-0.01em] text-navy"}>{titulo}</h2>
+        <p className={cn("mt-1 text-ink-2", plano ? "text-[13px]" : "text-[14px]")}>
           {simular ? "Modo demo: las firmas se simulan, no sale nada a la red." : `${fijos.length} transacciones en Arbitrum. Tu wallet te pide confirmar cada una.`}
         </p>
       </div>
@@ -93,7 +96,11 @@ export function Pagar({
           type="button"
           onClick={pagar}
           disabled={corriendo}
-          className="inline-flex items-center justify-center gap-2 rounded-full bg-sun px-6 py-4 text-[16px] font-bold text-navy transition-colors duration-200 hover:bg-sun-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-navy disabled:cursor-progress disabled:opacity-80"
+          className={cn(
+            "inline-flex items-center justify-center gap-2 rounded-full px-6 transition-colors duration-200",
+            plano ? "bg-navy py-3.5 text-[15px] font-semibold text-white hover:bg-navy-deep" : "bg-sun py-4 text-[16px] font-bold text-navy hover:bg-sun-soft",
+            "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-navy disabled:cursor-progress disabled:opacity-80",
+          )}
         >
           {corriendo && <Loader2 className="size-5 animate-spin motion-reduce:animate-none" aria-hidden="true" />}
           {corriendo ? `Pagando… paso ${Math.min(hechos + 1, fijos.length)} de ${fijos.length}` : fallo ? "Reintentar" : (textoBoton ?? `Pagar ${monto} ARS`)}

@@ -1,7 +1,7 @@
 "use client";
 
-// /app: todo el recorrido en una pantalla. Arriba la empresa, a la izquierda la factura y
-// el plan de firmas, a la derecha la revisión que se va llenando y el veredicto.
+// /app: todo el recorrido en una pantalla, como un hero claro (cielo, nubes, sol y Andes) con una
+// sola tarjeta encima. A la izquierda la empresa y la revisión; a la derecha los 3 pasos y el pago.
 import { useEffect, useState } from "react";
 import { isAddress } from "viem";
 import { useAccount } from "wagmi";
@@ -9,9 +9,11 @@ import { useAuth } from "@/lib/auth";
 import { useCredito } from "@/lib/hooks/use-credito";
 import { useCapacidad, useEmpresa, useFactura, useSaldos } from "@/lib/hooks/use-factura";
 import { FACTURA_EJEMPLO } from "@/lib/factura-ejemplo";
-import { Encabezado } from "@/components/app/encabezado";
+import { Barra, Empresa } from "@/components/app/encabezado";
 import { Subir } from "@/components/app/subir";
-import { Panel } from "@/components/app/panel";
+import { Agente, Panel } from "@/components/app/panel";
+import { Campo, Paso as PasoForm } from "@/components/app/paso";
+import { Cielo } from "@/components/app/cielo";
 import { Pagar } from "@/components/app/pagar";
 import { Onboarding } from "@/components/app/onboarding";
 import { Movimientos } from "@/components/dashboard/movimientos";
@@ -69,96 +71,107 @@ export default function App() {
 
   return (
     <div className="tema-medicus flex min-h-dvh flex-col bg-paper">
-      <Encabezado
-        sesion={sesion}
-        cuit={cuit}
-        setCuit={setCuit}
-        bcra={empresa.data?.perfil.bcra ?? f.resultado?.perfil.bcra}
-        cargandoBcra={empresa.isLoading}
-        razonSocialFactura={(f.factura?.receptorCoincide ? f.factura.razonSocialReceptor : undefined) ?? ob?.nombre ?? (cuit.replace(/\D/g, "") === FACTURA_EJEMPLO.cuitReceptor ? FACTURA_EJEMPLO.razonSocialReceptor : undefined)}
-        saldos={saldos}
-      />
-
-      {dentro && wallet && ob === null ? (
-        <Onboarding
-          wallet={wallet}
-          simular={sesion.mock}
-          onListo={(d) => {
-            guardarOnboarding(wallet, d);
-            setCuitEstado(d.cuit);
-            setOb(d);
-          }}
-        />
-      ) : (
-      <main className="mx-auto grid w-full max-w-[1200px] flex-1 gap-10 px-6 py-14 lg:grid-cols-[minmax(0,1fr)_400px] lg:gap-16 lg:py-20">
-        <div className="flex min-w-0 flex-col gap-14">
-          <Subir
-            fase={f.fase}
-            error={f.error}
-            bloqueado={!dentro}
-            onArchivo={(file) => wallet && f.leerArchivo(file, cuit, wallet, colateralUsdt0)}
-            onEjemplo={() => wallet && f.usarFactura(FACTURA_EJEMPLO, cuit, wallet, colateralUsdt0)}
-            onReiniciar={f.reiniciar}
-            proveedor={proveedor}
-            setProveedor={setProveedor}
-            proveedorValido={Boolean(pagarA)}
-            hayFactura={Boolean(f.factura)}
-            desdeFactura={Boolean(f.factura?.walletProveedor) && proveedor.toLowerCase() === f.factura?.walletProveedor?.toLowerCase()}
+      <Cielo>
+        <Barra sesion={sesion} />
+        {dentro && wallet && ob === null ? (
+          <Onboarding
+            wallet={wallet}
+            simular={sesion.mock}
+            onListo={(d) => {
+              guardarOnboarding(wallet, d);
+              setCuitEstado(d.cuit);
+              setOb(d);
+            }}
           />
-
-          {facturaOk && (
-            <div className="flex flex-col gap-2">
-              <label htmlFor="monto" className="text-[14px] font-semibold text-navy">
-                Monto a pagar ahora
-              </label>
-              <div className="flex items-center gap-2 rounded-full border border-line bg-white px-5 py-3 focus-within:border-sun">
-                <input id="monto" value={montoTxt} onChange={(e) => setMontoTxt(e.target.value.replace(/[^\d.,]/g, ""))} inputMode="decimal" aria-describedby="monto-ayuda" className="w-full min-w-0 bg-transparent text-[17px] font-semibold text-navy tabular-nums outline-none" />
-                <span className="text-[14px] font-semibold text-ink-2">ARS</span>
+        ) : (
+          <main className="mx-auto flex w-full max-w-[1120px] flex-1 items-center px-4 pt-2 pb-[200px] sm:px-6 lg:pb-[260px]">
+            <div className="grid w-full overflow-hidden rounded-[28px] border border-white/80 bg-white/80 shadow-[0_40px_90px_-40px_rgb(0_37_100/0.35)] backdrop-blur-xl lg:grid-cols-[380px_minmax(0,1fr)]">
+              <div className="order-2 flex flex-col gap-6 border-t border-line/70 bg-[#F5F8FD]/80 p-6 sm:p-8 lg:order-1 lg:border-t-0 lg:border-r">
+                <Empresa
+                  sesion={sesion}
+                  cuit={cuit}
+                  setCuit={setCuit}
+                  bcra={empresa.data?.perfil.bcra ?? f.resultado?.perfil.bcra}
+                  cargandoBcra={empresa.isLoading}
+                  razonSocialFactura={(f.factura?.receptorCoincide ? f.factura.razonSocialReceptor : undefined) ?? ob?.nombre ?? (cuit.replace(/\D/g, "") === FACTURA_EJEMPLO.cuitReceptor ? FACTURA_EJEMPLO.razonSocialReceptor : undefined)}
+                  saldos={saldos}
+                />
+                <div className="h-px bg-line" />
+                <Panel
+                  fase={f.fase}
+                  factura={f.factura}
+                  checksAgente={f.resultado?.pago?.checks ?? []}
+                  saldoChlt={saldos.chlt}
+                  limiteTotal={cap.limiteTotal}
+                  faltan={cap.faltan}
+                  chequeos={cap.chequeo.data?.chequeos}
+                  listo={cap.listo}
+                  alcanza={cap.alcanza}
+                  pagada={pagada}
+                />
+                {f.resultado?.explicacion?.texto && <Agente texto={f.resultado.explicacion.texto} />}
               </div>
-              <p id="monto-ayuda" className={montoValido ? "text-[13px] text-ink-2" : "text-[13px] text-bad"}>
-                {montoValido ? `De un total de ${facturaOk.total.toLocaleString("es-AR")} ARS. Podés pagar una parte ahora.` : `Poné un monto entre 1 y ${facturaOk.total.toLocaleString("es-AR")} ARS.`}
-              </p>
+
+              <div className="order-1 flex min-w-0 flex-col gap-9 p-6 sm:p-8 lg:order-2 lg:p-10">
+                <Subir
+                  fase={f.fase}
+                  error={f.error}
+                  bloqueado={!dentro}
+                  factura={f.factura}
+                  onArchivo={(file) => wallet && f.leerArchivo(file, cuit, wallet, colateralUsdt0)}
+                  onEjemplo={() => wallet && f.usarFactura(FACTURA_EJEMPLO, cuit, wallet, colateralUsdt0)}
+                  onReiniciar={f.reiniciar}
+                  proveedor={proveedor}
+                  setProveedor={setProveedor}
+                  proveedorValido={Boolean(pagarA)}
+                  hayFactura={Boolean(f.factura)}
+                  desdeFactura={Boolean(f.factura?.walletProveedor) && proveedor.toLowerCase() === f.factura?.walletProveedor?.toLowerCase()}
+                />
+
+                <PasoForm n={3} titulo="Cuánto pagás ahora" apagado={!facturaOk}>
+                  {facturaOk ? (
+                    <Campo
+                      id="monto"
+                      label="Monto en pesos"
+                      malo={!montoValido}
+                      ayuda={montoValido ? `De un total de ${facturaOk.total.toLocaleString("es-AR")} ARS. Podés pagar una parte ahora.` : `Poné un monto entre 1 y ${facturaOk.total.toLocaleString("es-AR")} ARS.`}
+                    >
+                      <span className="text-[20px] font-semibold text-ink-2" aria-hidden="true">$</span>
+                      <input id="monto" value={montoTxt} onChange={(e) => setMontoTxt(e.target.value.replace(/[^\d.,]/g, ""))} inputMode="decimal" aria-describedby="monto-ayuda" className="w-full min-w-0 bg-transparent text-[20px] font-semibold text-navy tabular-nums outline-none" />
+                      <span className="text-[12px] font-semibold text-ink-2">ARS</span>
+                    </Campo>
+                  ) : (
+                    <p className="text-[13px] text-ink-2">Podés pagar todo o una parte.</p>
+                  )}
+                </PasoForm>
+
+                {plan ? (
+                  <div className="sm:pl-11">
+                    <Pagar
+                      key={f.factura?.numeroCompleto ?? "factura"}
+                      pasos={plan}
+                      onListo={() => setPagada(true)}
+                      simular={sesion.mock}
+                      monto={(total ?? 0).toLocaleString("es-AR")}
+                      aProveedor={Boolean(pagarA)}
+                      plano
+                    />
+                  </div>
+                ) : (
+                  <div className="sm:pl-11">
+                    <button type="button" disabled className="w-full rounded-full bg-navy py-3.5 text-[15px] font-semibold text-white disabled:opacity-35">
+                      {facturaOk && total ? `Pagar ${total.toLocaleString("es-AR")} ARS` : "Pagar la factura"}
+                    </button>
+                  </div>
+                )}
+              </div>
             </div>
-          )}
-
-          {f.resultado?.explicacion?.texto && (
-            <section aria-labelledby="agente" className="flex flex-col gap-2">
-              <h2 id="agente" className="text-[17px] font-semibold text-navy">Lo que dice el agente</h2>
-              <p className="max-w-[68ch] text-[15px] leading-relaxed text-pretty text-ink-2">{f.resultado.explicacion.texto}</p>
-            </section>
-          )}
-
-          {plan && (
-            <Pagar
-              key={f.factura?.numeroCompleto ?? "factura"}
-              pasos={plan}
-              onListo={() => setPagada(true)}
-              simular={sesion.mock}
-              monto={(total ?? 0).toLocaleString("es-AR")}
-              aProveedor={Boolean(pagarA)}
-            />
-          )}
-        </div>
-
-        <div className="lg:row-span-2">
-          <Panel
-            fase={f.fase}
-            factura={f.factura}
-            checksAgente={f.resultado?.pago?.checks ?? []}
-            saldoChlt={saldos.chlt}
-            limiteTotal={cap.limiteTotal}
-            faltan={cap.faltan}
-            chequeos={cap.chequeo.data?.chequeos}
-            listo={cap.listo}
-            alcanza={cap.alcanza}
-            pagada={pagada}
-          />
-        </div>
-      </main>
-      )}
+          </main>
+        )}
+      </Cielo>
       {dentro && wallet && ob && <Movimientos address={wallet} ilustrativo={false} />}
       {dentro && wallet && ob && (
-        <footer className="mx-auto w-full max-w-[1200px] px-6 pb-8">
+        <footer className="mx-auto w-full max-w-[1120px] px-6 pb-8">
           <button type="button" onClick={() => { borrarOnboarding(wallet); setOb(null); f.reiniciar(); }} className="text-[13px] text-ink-2 underline underline-offset-2 hover:text-navy">
             Rehacer el onboarding
           </button>
