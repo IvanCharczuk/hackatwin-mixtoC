@@ -29,11 +29,11 @@ sueltas, nada de frases largas) y Ivan cuenta. El video no tiene voz.
 
 | Tiempo | En pantalla (video) | Lo que decís |
 |---|---|---|
-| 0:00 a 0:08 | **Propuesta.** Amanece sobre la cordillera; algo da un salto y aparece el logo de Saltar. Texto: «Tu primer salto». | «Saltar agiliza los rieles para que una empresa que llega a Argentina dé su primer salto, con financiación desde el día uno.» |
-| 0:08 a 0:20 | **Problema.** Un camión cruza de Chile a San Juan y frena. Caen tres cruces, una por palabra: «Banco» ✗ «Cepo» ✗ «Vender» ✗. | «Hoy 1.158 empresas chilenas le venden a Argentina, pero arrancar a operar acá es lento: el banco no las conoce, traer dólares choca con el cepo y vender sus stablecoins las deja sin respaldo.» |
-| 0:20 a 0:32 | **Solución.** Los rieles se destraban: CHLt entra a una bóveda y sale ARGt; una factura recibe un check verde. Texto: «Día uno». | «Nosotros agilizamos los rieles: deja CHLt de garantía y recibe ARGt, los pesos digitales de Twin, desde el día uno. Y nuestro agente revisa cada factura antes de pagar.» |
-| 0:32 a 0:44 | **Mercado.** Contadores que suben: «1.158 empresas», «US$ 50.000 M RIGI». El mapa se enciende país por país: «7 monedas». | «El RIGI aprobó casi 50.000 millones de dólares en proyectos que traen empresas de afuera. Y con las siete monedas de Twin, cada país es un corredor.» |
-| 0:44 a 0:56 | **Diferencia.** Tres columnas: «Banco» ✗, «Pagos cripto» ✗, «Saltar» ✓. Debajo: «1%» y «0,3%». | «El banco pide historial; los pagos con stablecoins no prestan en pesos. Nosotros no prestamos plata propia: conectamos el crédito de Morpho con un agente que entiende Argentina. Cobramos 1% por abrir el crédito y 0,3% por cada pago.» |
+| 0:00 a 0:08 | **Propuesta.** Amanece sobre la cordillera; algo da un salto y aparece el logo de Saltar. Texto: «Tu primer salto». | «Saltar agiliza los rieles para que las empresas que llegan a Argentina den su primer salto, con financiación desde el día uno.» |
+| 0:08 a 0:22 | **Problema.** Contadores: «13 mineras · US$ 25.000 M» y «+20 en espera». Después caen tres cruces: «Banco» ✗ «Cepo» ✗ «Vender» ✗. | «Hoy hay 13 mineras con proyectos aprobados en el RIGI por 25.000 millones de dólares, y otros 20 de minería y petróleo esperando. Para arrancar necesitan pesos: el banco no las conoce, el cepo frena los dólares y vender sus stablecoins las deja sin respaldo.» |
+| 0:22 a 0:32 | **Solución.** Los rieles se destraban: CHLt entra a una bóveda y sale ARGt; una factura recibe un check verde. Texto: «Día uno». | «Nosotros agilizamos los rieles: dejan su garantía en stablecoins y reciben ARGt, los pesos digitales de Twin, desde el día uno. Y nuestro agente revisa cada factura antes de pagar.» |
+| 0:32 a 0:44 | **Mercado.** «7.500 pymes proveedoras» se llenan de puntos; el mapa se enciende país por país: «7 monedas». | «Detrás de cada proyecto hay cientos de proveedores: más de 7.500 pymes sólo en Vaca Muerta. Y con las siete monedas de Twin, cada país es un corredor.» |
+| 0:44 a 0:56 | **Diferencia.** Tres columnas: «Banco» ✗, «Pagos cripto» ✗, «Saltar» ✓. Debajo: «1%» y «0,3%». | «El banco pide historial y los pagos con stablecoins no prestan en pesos. Nosotros conectamos el crédito de Morpho con un agente que entiende Argentina, sin prestar plata propia. Cobramos 1% por abrir y 0,3% por cada pago.» |
 | 0:56 a 1:00 | **Cierre.** El logo de Saltar sobre el sol: «Financiación desde el día uno». | «Les muestro cómo funciona.» |
 
 ## Demo en vivo: cómo funciona (unos 90 segundos)
@@ -139,4 +139,8 @@ USDT0: el CHLt se cambia en Curve. También puede dejar USDC o USDT0 directo.
 - [ ] El video de 1 minuto (spec 0135): es la primera mitad del pitch.
 - [ ] Ensayar la demo dos veces con el cronómetro.
 
-Números y fuentes: `docs/investigacion/numeros.md` y `negocio.md`.
+Números y fuentes: `docs/investigacion/numeros.md`, `negocio.md` y el
+mensaje de Franco `mensajes/20261107-1534-franco-dato-mineria-petroleo.md`
+(13 proyectos mineros en el RIGI por US$ 25.230 M a octubre de 2026; 13 de
+hidrocarburos y 7 mineros en evaluación; más de 7.500 pymes proveedoras en
+Vaca Muerta).
