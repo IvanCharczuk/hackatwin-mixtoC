@@ -17,6 +17,7 @@ import { MAX_LTV, money, num, quote, short, tokenSrc, type Ticker } from "./data
 import { LANGS, useT } from "./i18n";
 
 const NAME = "Saltar";
+const APP_URL = "https://saltarg-app.vercel.app/";
 
 export function App() {
   return (
@@ -181,6 +182,12 @@ function SiteHeader() {
         <div className="flex items-center gap-2.5 lg:gap-4">
           <LangSwitch />
           <a
+            href={APP_URL}
+            className="hidden rounded-full bg-sun px-[22px] py-3 text-[15px] font-bold whitespace-nowrap text-navy-deep transition-transform hover:-translate-y-0.5 lg:inline-flex"
+          >
+            {t.nav.app}
+          </a>
+          <a
             href="#contacto"
             className="rounded-full px-3 py-2 text-[13px] font-medium whitespace-nowrap text-white ring-[1.5px] ring-white/50 ring-inset transition-colors hover:bg-white/10 lg:px-[22px] lg:py-3 lg:text-[15px]"
           >
@@ -281,13 +288,19 @@ function Hero() {
           {t.hero.sub}
         </p>
 
-        <div className="intro-up w-full pt-5 lg:w-auto lg:pt-7" style={{ animationDelay: "0.65s" }}>
+        <div className="intro-up flex w-full flex-col gap-3 pt-5 lg:w-auto lg:flex-row lg:gap-4 lg:pt-7" style={{ animationDelay: "0.65s" }}>
           <a
             href="#contacto"
             className="flex items-center justify-center gap-2.5 rounded-full bg-sun px-[34px] py-4 text-base font-bold text-navy-deep shadow-[0_10px_30px_#f2ae2e59] transition-transform hover:-translate-y-0.5 lg:py-[18px] lg:text-[17px]"
           >
             {t.hero.cta}
             <ArrowRight size={18} aria-hidden />
+          </a>
+          <a
+            href={APP_URL}
+            className="flex items-center justify-center gap-2.5 rounded-full px-[34px] py-4 text-base font-bold text-white ring-[1.5px] ring-white/60 ring-inset transition-colors hover:bg-white/10 lg:py-[18px] lg:text-[17px]"
+          >
+            {t.nav.app}
           </a>
         </div>
         <p
