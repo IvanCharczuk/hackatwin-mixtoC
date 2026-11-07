@@ -28,7 +28,6 @@ const es = {
     leave: "Dejás de garantía",
     receive: "Recibís para operar",
     cta: "Evaluar mi expansión",
-    note: "Piloto para empresas de Chile. Sujeto a evaluación, garantía y fondos disponibles.",
   },
   problem: {
     title: (name: string) => `Conseguir pesos en Argentina: hoy y con ${name}`,
@@ -163,7 +162,6 @@ const en: Dict = {
     leave: "You post as collateral",
     receive: "You receive to operate",
     cta: "Assess my expansion",
-    note: "Pilot for Chilean companies. Subject to review, collateral and available funds.",
   },
   problem: {
     title: (name) => `Getting pesos in Argentina: today and with ${name}`,
@@ -296,7 +294,6 @@ const pt: Dict = {
     leave: "Você deixa como garantia",
     receive: "Você recebe para operar",
     cta: "Avaliar minha expansão",
-    note: "Piloto para empresas do Chile. Sujeito a avaliação, garantia e fundos disponíveis.",
   },
   problem: {
     title: (name) => `Conseguir pesos na Argentina: hoje e com a ${name}`,

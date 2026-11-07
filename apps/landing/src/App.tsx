@@ -303,12 +303,6 @@ function Hero() {
             {t.nav.app}
           </a>
         </div>
-        <p
-          className="intro-up max-w-[340px] pt-4 text-center text-xs leading-[18px] font-medium text-white [text-shadow:0_1px_10px_#1b2250] lg:max-w-none lg:text-[13px]"
-          style={{ animationDelay: "0.75s" }}
-        >
-          {t.hero.note}
-        </p>
       </div>
     </section>
   );
