@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type FormEvent, type ReactNode } from "react";
+import { Fragment, useEffect, useRef, useState, type FormEvent, type ReactNode } from "react";
 import {
   ArrowRight,
   Check,
@@ -128,22 +128,24 @@ function LangSwitch() {
     <div
       role="group"
       aria-label={t.nav.langGroup}
-      className="flex items-center rounded-full p-0.5 text-[11px] font-semibold ring-1 ring-white/30 ring-inset lg:text-[13px]"
+      className="flex items-center gap-1.5 text-[11px] font-semibold lg:text-[13px]"
     >
-      {LANGS.map((l) => (
-        <button
-          key={l}
-          type="button"
-          lang={l}
-          aria-pressed={lang === l}
-          aria-label={t.nav.langNames[l]}
-          onClick={() => setLang(l)}
-          className={`rounded-full px-2 py-1 uppercase transition-colors lg:px-2.5 ${
-            lang === l ? "bg-sun text-navy-deep" : "text-mist hover:text-white"
-          }`}
-        >
-          {l}
-        </button>
+      {LANGS.map((l, i) => (
+        <Fragment key={l}>
+          {i > 0 && <span className="text-white/30" aria-hidden>/</span>}
+          <button
+            type="button"
+            lang={l}
+            aria-pressed={lang === l}
+            aria-label={t.nav.langNames[l]}
+            onClick={() => setLang(l)}
+            className={`uppercase transition-colors ${
+              lang === l ? "text-sun" : "text-mist hover:text-white"
+            }`}
+          >
+            {l}
+          </button>
+        </Fragment>
       ))}
     </div>
   );
@@ -241,16 +243,16 @@ function Hero() {
       </div>
       <div className="parallax-layer absolute inset-0" style={{ ["--depth" as string]: 0.4 }} aria-hidden>
         <div className="hero-glow absolute bottom-[-60px] left-1/2 h-[400px] w-[640px] -translate-x-1/2 rounded-full lg:h-[520px] lg:w-[900px]" />
-        <SolDeMayo className="sun-rise bottom-[-20px] left-[calc(50%-120px)] w-[240px] lg:bottom-0 lg:left-[calc(50%-210px)] lg:w-[420px]" />
+        <SolDeMayo className="sun-rise bottom-[-20px] left-[calc(50%-120px)] w-[240px] lg:bottom-[-64px] lg:left-[calc(50%-210px)] lg:w-[420px]" />
       </div>
       <div className="parallax-layer absolute inset-0 z-[2]" style={{ ["--depth" as string]: 0.12 }} aria-hidden>
         <div className="andes-rise absolute inset-0">
-          <Andes className="bottom-[-226px] lg:bottom-[-46px]" />
+          <Andes className="bottom-[-226px] lg:bottom-[-110px]" />
         </div>
       </div>
 
-      <div className="parallax-copy relative z-10 flex flex-col items-center">
-        <p className="intro-up flex items-center gap-2 pt-12 pb-4 lg:pt-[72px] lg:pb-6" style={{ animationDelay: "0.1s" }}>
+      <div className="parallax-copy relative z-10 flex flex-col items-center lg:flex-1 lg:justify-center lg:pb-[150px]">
+        <p className="intro-up flex items-center gap-2 pt-12 pb-4 lg:pt-0 lg:pb-6" style={{ animationDelay: "0.1s" }}>
           <span className="size-[7px] rounded-full bg-live lg:size-2" aria-hidden />
           <span className="text-[13px] text-mist lg:hidden">{t.hero.tagMobile}</span>
           <span className="hidden text-sm text-lavender-soft lg:inline">
@@ -317,11 +319,8 @@ function EquationPill({ t, label, value }: { t: Ticker; label: string; value: st
 function Problem() {
   const { t } = useT();
   return (
-    <section className="flex flex-col gap-7 bg-cream px-6 py-[72px] lg:items-center lg:gap-14 lg:px-24 lg:py-[120px]">
-      <div className="flex flex-col gap-2.5 lg:items-center lg:gap-3.5">
-        <Eyebrow>{t.problem.eyebrow}</Eyebrow>
-        <SectionTitle>{t.problem.title(NAME)}</SectionTitle>
-      </div>
+    <section className="flex flex-col gap-7 bg-cream px-6 py-[88px] lg:items-center lg:gap-16 lg:px-24 lg:py-[152px]">
+      <SectionTitle className="lg:text-center">{t.problem.title(NAME)}</SectionTitle>
 
       {/* Desktop: comparison table */}
       <div className="hidden w-full max-w-[1040px] overflow-hidden rounded-3xl bg-paper ring-1 ring-edge lg:block" role="table">
@@ -379,7 +378,7 @@ function HowItWorks() {
   return (
     <section
       id="como-funciona"
-      className="flex scroll-mt-4 flex-col gap-3.5 bg-paper px-6 py-[72px] lg:flex-row lg:gap-[72px] lg:px-24 lg:py-[120px]"
+      className="flex scroll-mt-4 flex-col gap-3.5 bg-paper px-6 py-[88px] lg:flex-row lg:gap-24 lg:px-24 lg:py-[152px]"
     >
       <div className="flex flex-col gap-2.5 pb-3.5 lg:w-[400px] lg:shrink-0 lg:gap-4 lg:pb-0">
         <Eyebrow>{t.how.eyebrow}</Eyebrow>
@@ -444,7 +443,7 @@ function Calculator() {
   return (
     <section
       id="calculadora"
-      className="flex scroll-mt-4 flex-col gap-[22px] bg-navy-deep px-6 py-[72px] lg:flex-row lg:items-center lg:gap-[72px] lg:p-[120px]"
+      className="flex scroll-mt-4 flex-col gap-[22px] bg-navy-deep px-6 py-[88px] lg:flex-row lg:items-center lg:gap-24 lg:px-[120px] lg:py-[152px]"
     >
       <div className="flex flex-1 flex-col gap-[22px] lg:gap-7">
         <Eyebrow dark>{t.calc.eyebrow}</Eyebrow>
@@ -556,9 +555,9 @@ function Example() {
   return (
     <section
       id="ejemplo"
-      className="flex scroll-mt-4 flex-col gap-[18px] bg-cream px-6 py-[72px] lg:flex-row lg:items-center lg:gap-20 lg:px-24 lg:py-[120px]"
+      className="flex scroll-mt-4 flex-col gap-[18px] bg-cream px-6 py-[88px] lg:flex-row lg:items-center lg:gap-24 lg:px-24 lg:py-[152px]"
     >
-      <div className="flex flex-1 flex-col gap-[18px]">
+      <div className="flex flex-1 flex-col gap-5 lg:gap-6">
         <Eyebrow>{t.example.eyebrow}</Eyebrow>
         <SectionTitle>{t.example.title}</SectionTitle>
         <p className="text-base leading-6 text-ink-2 lg:text-lg lg:leading-7">
@@ -567,7 +566,7 @@ function Example() {
         <img
           src="/ejemplo-san-juan.jpg"
           alt={t.example.alt}
-          className="h-[210px] w-full rounded-[18px] object-cover lg:h-60 lg:rounded-[20px]"
+          className="aspect-[1600/872] w-full rounded-[18px] object-cover lg:rounded-[20px]"
         />
       </div>
 
@@ -613,7 +612,7 @@ function Faq() {
   return (
     <section
       id="preguntas"
-      className="flex scroll-mt-4 flex-col gap-3.5 bg-paper px-6 py-[72px] lg:flex-row lg:gap-[72px] lg:px-24 lg:py-[120px]"
+      className="flex scroll-mt-4 flex-col gap-3.5 bg-paper px-6 py-[88px] lg:flex-row lg:gap-24 lg:px-24 lg:py-[152px]"
     >
       <div className="flex flex-col gap-2.5 pb-3.5 lg:w-[400px] lg:shrink-0 lg:gap-4 lg:pb-0">
         <Eyebrow>{t.faq.eyebrow}</Eyebrow>
@@ -653,7 +652,7 @@ function Closing() {
   return (
     <section
       id="contacto"
-      className="closing-sky relative flex scroll-mt-4 flex-col items-center gap-[22px] overflow-hidden px-6 pt-[72px] pb-[300px] lg:gap-6 lg:px-[120px] lg:pt-[110px] lg:pb-[420px]"
+      className="closing-sky relative flex scroll-mt-4 flex-col items-center gap-[22px] overflow-hidden px-6 pt-[88px] pb-[300px] lg:gap-6 lg:px-[120px] lg:pt-[152px] lg:pb-[420px]"
     >
       <SolDeMayo className="bottom-[70px] left-[calc(50%-80px)] w-40 lg:bottom-[180px]" />
       <Andes className="bottom-[-176px] z-[1] lg:bottom-[-76px]" />
@@ -662,7 +661,7 @@ function Closing() {
       </h2>
       <p className="relative z-[2] text-center text-lg text-ink-2 lg:text-[22px]">{t.closing.sub}</p>
 
-      <div className="relative z-[3] w-full max-w-[560px] rounded-[22px] bg-white p-[22px] shadow-[0_20px_50px_#1b225026] lg:rounded-3xl lg:p-8">
+      <div className="relative z-[3] mt-6 w-full max-w-[560px] lg:mt-12 rounded-[22px] bg-white p-[22px] shadow-[0_20px_50px_#1b225026] lg:rounded-3xl lg:p-8">
         {sent ? (
           <div className="flex flex-col items-center gap-3 py-6 text-center">
             <Check size={32} className="text-yes" aria-hidden />

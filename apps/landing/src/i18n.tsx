@@ -30,8 +30,7 @@ const es = {
     note: "Piloto para empresas de Chile. Sujeto a evaluación, garantía y fondos disponibles.",
   },
   problem: {
-    eyebrow: "El problema",
-    title: (name: string) => `Llegar a Argentina, hoy y con ${name}`,
+    title: (name: string) => `Conseguir pesos en Argentina: hoy y con ${name}`,
     today: "Hoy",
     todayUpper: "HOY",
     withUs: (name: string) => `Con ${name}`,
@@ -165,8 +164,7 @@ const en: Dict = {
     note: "Pilot for Chilean companies. Subject to review, collateral and available funds.",
   },
   problem: {
-    eyebrow: "The problem",
-    title: (name) => `Getting to Argentina, today and with ${name}`,
+    title: (name) => `Getting pesos in Argentina: today and with ${name}`,
     today: "Today",
     todayUpper: "TODAY",
     withUs: (name) => `With ${name}`,
@@ -298,8 +296,7 @@ const pt: Dict = {
     note: "Piloto para empresas do Chile. Sujeito a avaliação, garantia e fundos disponíveis.",
   },
   problem: {
-    eyebrow: "O problema",
-    title: (name) => `Chegar à Argentina, hoje e com a ${name}`,
+    title: (name) => `Conseguir pesos na Argentina: hoje e com a ${name}`,
     today: "Hoje",
     todayUpper: "HOJE",
     withUs: (name) => `Com a ${name}`,
