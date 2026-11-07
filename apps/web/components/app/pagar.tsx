@@ -9,7 +9,25 @@ import { corta } from "@/lib/formato";
 import { cn } from "@/lib/utils";
 import type { Paso } from "@/lib/credito";
 
-export function Pagar({ pasos, simular, monto, aProveedor }: { pasos: Paso[]; simular: boolean; monto: string; aProveedor: boolean }) {
+export function Pagar({
+  pasos,
+  simular,
+  monto,
+  aProveedor,
+  titulo = "Pagar la factura",
+  textoBoton,
+  textoListo,
+  onListo,
+}: {
+  pasos: Paso[];
+  simular: boolean;
+  monto?: string;
+  aProveedor?: boolean;
+  titulo?: string;
+  textoBoton?: string;
+  textoListo?: string;
+  onListo?: () => void;
+}) {
   const [fijos] = useState(pasos); // el plan no cambia mientras se paga
   const { stages, hashes, errores, hechos, firmarTodos, listo } = usePasos(fijos, simular);
   const [corriendo, setCorriendo] = useState(false);
@@ -17,14 +35,15 @@ export function Pagar({ pasos, simular, monto, aProveedor }: { pasos: Paso[]; si
 
   async function pagar() {
     setCorriendo(true);
-    await firmarTodos();
+    const ok = await firmarTodos();
     setCorriendo(false);
+    if (ok) onListo?.();
   }
 
   return (
     <section aria-labelledby="pagar" className="flex flex-col gap-5 rounded-[20px] bg-white p-6 shadow-[0_1px_2px_rgb(0_37_100/0.06)]">
       <div>
-        <h2 id="pagar" className="text-[22px] font-bold tracking-[-0.01em] text-navy">Pagar la factura</h2>
+        <h2 id="pagar" className="text-[22px] font-bold tracking-[-0.01em] text-navy">{titulo}</h2>
         <p className="mt-1 text-[14px] text-ink-2">
           {simular ? "Modo demo: las firmas se simulan, no sale nada a la red." : `${fijos.length} transacciones en Arbitrum. Tu wallet te pide confirmar cada una.`}
         </p>
@@ -67,7 +86,7 @@ export function Pagar({ pasos, simular, monto, aProveedor }: { pasos: Paso[]; si
 
       {listo ? (
         <p className="flex items-center gap-2 rounded-[14px] bg-ok/10 px-4 py-3 text-[15px] font-semibold text-ok">
-          <Check className="size-5" aria-hidden="true" /> {aProveedor ? `Factura pagada: ${monto} ARS le llegaron al proveedor.` : `Listo: ${monto} ARGt llegaron a tu wallet.`}
+          <Check className="size-5" aria-hidden="true" /> {textoListo ?? (aProveedor ? `Factura pagada: ${monto} ARS le llegaron al proveedor.` : `Listo: ${monto} ARGt llegaron a tu wallet.`)}
         </p>
       ) : (
         <button
@@ -77,7 +96,7 @@ export function Pagar({ pasos, simular, monto, aProveedor }: { pasos: Paso[]; si
           className="inline-flex items-center justify-center gap-2 rounded-full bg-sun px-6 py-4 text-[16px] font-bold text-navy transition-colors duration-200 hover:bg-sun-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-navy disabled:cursor-progress disabled:opacity-80"
         >
           {corriendo && <Loader2 className="size-5 animate-spin motion-reduce:animate-none" aria-hidden="true" />}
-          {corriendo ? `Pagando… paso ${Math.min(hechos + 1, fijos.length)} de ${fijos.length}` : fallo ? "Reintentar el pago" : `Pagar ${monto} ARS`}
+          {corriendo ? `Pagando… paso ${Math.min(hechos + 1, fijos.length)} de ${fijos.length}` : fallo ? "Reintentar" : (textoBoton ?? `Pagar ${monto} ARS`)}
         </button>
       )}
     </section>

@@ -1,7 +1,7 @@
 // Lecturas del crédito en Morpho y chequeos C1 a C6 (packages/circuito/SPEC.md), con viem.
 // Funciones chicas que reciben un PublicClient: cuando packages/circuito exporte
 // chequear/planear, se cambian acá y la UI queda igual.
-import { encodeFunctionData, erc20Abi, formatUnits, parseUnits, type Hex, type PublicClient } from "viem";
+import { encodeFunctionData, erc20Abi, formatUnits, maxUint256, parseUnits, type Hex, type PublicClient } from "viem";
 import { TOKENS } from "@/lib/tokens";
 import {
   GAS_MINIMO_ETH,
@@ -131,6 +131,21 @@ const fmt = (n: number, d = 0) => n.toLocaleString("es-AR", { maximumFractionDig
 const approve = (spender: `0x${string}`, monto: bigint) =>
   encodeFunctionData({ abi: erc20Abi, functionName: "approve", args: [spender, monto] });
 
+// Permisos por el máximo: se firman una sola vez y los pagos siguientes ya no los piden.
+// ponytail: allowance infinito a Curve y a Morpho; bajarlo a montos justos si se usa con plata grande.
+export const PERMISO_CHLT: Paso = { id: "approve-chlt", titulo: "Permitir usar tus CHLt", detalle: "Una sola vez: el pool de Curve puede cambiar tus CHLt cuando pagás", tx: { to: TOKENS.CHLt.address, data: approve(POOL_CHLT_USDT0, maxUint256) } };
+export const PERMISO_USDT0: Paso = { id: "approve-usdt0", titulo: "Permitir dejar el respaldo", detalle: "Una sola vez: Morpho puede tomar el USDT0 de respaldo cuando pagás", tx: { to: TOKENS.USDT0.address, data: approve(MORPHO, maxUint256) } };
+
+/** Los permisos que faltan para que cada pago sean 3 firmas (onboarding). */
+export async function planPermisos(client: PublicClient, wallet: `0x${string}`): Promise<Paso[]> {
+  const [chlt, usdt0] = await Promise.all([
+    client.readContract({ address: TOKENS.CHLt.address, abi: erc20Abi, functionName: "allowance", args: [wallet, POOL_CHLT_USDT0] }),
+    client.readContract({ address: TOKENS.USDT0.address, abi: erc20Abi, functionName: "allowance", args: [wallet, MORPHO] }),
+  ]);
+  const mucho = maxUint256 / 2n;
+  return [...(chlt < mucho ? [PERMISO_CHLT] : []), ...(usdt0 < mucho ? [PERMISO_USDT0] : [])];
+}
+
 export async function chequear(
   client: PublicClient,
   wallet: `0x${string}`,
@@ -209,10 +224,10 @@ export async function chequear(
 
   const pasos: Paso[] = [];
   if (allowChlt < dx)
-    pasos.push({ id: "approve-chlt", titulo: "Aprobar CHLt", detalle: `Permite al pool de Curve usar ${fmt(chlt)} CHLt`, tx: { to: TOKENS.CHLt.address, data: approve(POOL_CHLT_USDT0, dx) } });
+    pasos.push(PERMISO_CHLT);
   pasos.push({ id: "exchange", titulo: "Pasar tus CHLt a dólares", detalle: `Cambia ${fmt(chlt)} CHLt por al menos ${fmt(num(minDy, 6), 2)} USDT0`, tx: { to: POOL_CHLT_USDT0, data: encodeFunctionData({ abi: curveAbi, functionName: "exchange", args: [0n, 1n, dx, minDy] }) } });
   if (allowUsdt0 < minDy)
-    pasos.push({ id: "approve-usdt0", titulo: "Aprobar USDT0", detalle: "Permite a Morpho tomar tu respaldo", tx: { to: TOKENS.USDT0.address, data: approve(MORPHO, minDy) } });
+    pasos.push(PERMISO_USDT0);
   pasos.push({ id: "supply", titulo: "Dejar tu respaldo", detalle: `${fmt(num(minDy, 6), 2)} USDT0 quedan en Morpho a tu nombre`, tx: { to: MORPHO, data: encodeFunctionData({ abi: morphoAbi, functionName: "supplyCollateral", args: [MARKET_PARAMS, minDy, wallet, "0x"] }) } });
   const aProveedor = pagarA.toLowerCase() !== wallet.toLowerCase();
   pasos.push({ id: "borrow", titulo: aProveedor ? "Pagarle a tu proveedor" : "Recibir ARGt", detalle: aProveedor ? `${fmt(argt)} ARGt van a ${pagarA.slice(0, 6)}…${pagarA.slice(-4)}, el saldo queda a tu nombre` : `${fmt(argt)} ARGt llegan a tu wallet`, tx: { to: MORPHO, data: encodeFunctionData({ abi: morphoAbi, functionName: "borrow", args: [MARKET_PARAMS, argtRaw, 0n, wallet, pagarA] }) } });

@@ -13,6 +13,8 @@ import { Encabezado } from "@/components/app/encabezado";
 import { Subir } from "@/components/app/subir";
 import { Panel } from "@/components/app/panel";
 import { Pagar } from "@/components/app/pagar";
+import { Onboarding } from "@/components/app/onboarding";
+import { borrarOnboarding, guardarOnboarding, leerOnboarding } from "@/lib/onboarding";
 
 export default function App() {
   const sesion = useAuth();
@@ -20,7 +22,19 @@ export default function App() {
   const dentro = sesion.ready && sesion.authenticated && Boolean(address);
   const wallet = dentro ? address : undefined;
 
-  const [cuit, setCuit] = useState("30-99999902-3");
+  const [cuit, setCuitEstado] = useState("");
+  // Primera vez por wallet: undefined = todavía no leído, null = falta el onboarding.
+  const [ob, setOb] = useState<{ cuit: string } | null | undefined>(undefined);
+  useEffect(() => {
+    if (!wallet) return setOb(undefined);
+    const o = leerOnboarding(wallet);
+    setOb(o);
+    if (o) setCuitEstado(o.cuit);
+  }, [wallet]);
+  const setCuit = (c: string) => {
+    setCuitEstado(c);
+    if (wallet && c.replace(/\D/g, "").length === 11) guardarOnboarding(wallet, { cuit: c.replace(/\D/g, "") });
+  };
   const [proveedor, setProveedor] = useState("");
   const pagarA = isAddress(proveedor) ? proveedor : undefined;
 
@@ -52,6 +66,17 @@ export default function App() {
         saldos={saldos}
       />
 
+      {dentro && wallet && ob === null ? (
+        <Onboarding
+          wallet={wallet}
+          simular={sesion.mock}
+          onListo={(c) => {
+            guardarOnboarding(wallet, { cuit: c });
+            setCuitEstado(c);
+            setOb({ cuit: c });
+          }}
+        />
+      ) : (
       <main className="mx-auto grid w-full max-w-[1200px] flex-1 gap-10 px-6 py-14 lg:grid-cols-[minmax(0,1fr)_400px] lg:gap-16 lg:py-20">
         <div className="flex min-w-0 flex-col gap-14">
           <Subir
@@ -115,6 +140,14 @@ export default function App() {
           />
         </div>
       </main>
+      )}
+      {dentro && wallet && ob && (
+        <footer className="mx-auto w-full max-w-[1200px] px-6 pb-8">
+          <button type="button" onClick={() => { borrarOnboarding(wallet); setOb(null); f.reiniciar(); }} className="text-[13px] text-ink-2 underline underline-offset-2 hover:text-navy">
+            Rehacer el onboarding
+          </button>
+        </footer>
+      )}
     </div>
   );
 }
