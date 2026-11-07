@@ -154,7 +154,7 @@ function SiteHeader() {
             className="rounded-full px-4 py-2 text-[13px] font-medium text-white ring-[1.5px] ring-white/50 ring-inset transition-colors hover:bg-white/10 lg:px-[22px] lg:py-3 lg:text-[15px]"
           >
             <span className="lg:hidden">Evaluar</span>
-            <span className="hidden lg:inline">Evaluar mi mudanza</span>
+            <span className="hidden lg:inline">Evaluar mi expansión</span>
           </a>
         </div>
       </nav>
@@ -222,9 +222,9 @@ function Hero() {
       <div className="parallax-copy relative z-10 flex flex-col items-center">
         <p className="intro-up flex items-center gap-2 pt-12 pb-4 lg:pt-[72px] lg:pb-6" style={{ animationDelay: "0.1s" }}>
           <span className="size-[7px] rounded-full bg-live lg:size-2" aria-hidden />
-          <span className="text-[13px] text-mist lg:hidden">Para empresas que se mudan a Argentina</span>
+          <span className="text-[13px] text-mist lg:hidden">Para empresas que se expanden a Argentina</span>
           <span className="hidden text-sm text-lavender-soft lg:inline">
-            Para empresas de Chile que se mudan a Argentina
+            Para empresas de Chile que se expanden a Argentina
           </span>
         </p>
 
@@ -232,12 +232,12 @@ function Hero() {
           className="intro-up max-w-[1120px] text-center text-[34px] leading-[38px] font-semibold tracking-[-1px] text-white lg:text-[60px] lg:leading-[66px] lg:tracking-[-1.6px]"
           style={{ animationDelay: "0.25s" }}
         >
-          Mudá tu empresa a Argentina.{" "}
+          Expandí tu empresa a Argentina.{" "}
           <span className="text-sun">Operá en pesos desde el primer día.</span>
         </h1>
 
         <p className="intro-up pt-4 pb-6 text-center text-[17px] leading-[25px] text-mist lg:hidden" style={{ animationDelay: "0.4s" }}>
-          Dejás tus stablecoins de garantía y recibís pesos digitales para instalarte, sin vender lo que traés.
+          Dejás tus stablecoins de garantía y recibís pesos digitales para abrir tu operación, sin vender lo que tenés.
         </p>
 
         <div className="intro-up flex items-center gap-2.5 lg:gap-5 lg:pt-8 lg:pb-7" style={{ animationDelay: "0.45s" }}>
@@ -247,7 +247,7 @@ function Hero() {
         </div>
 
         <p className="intro-up hidden text-center text-xl font-medium text-mist lg:block" style={{ animationDelay: "0.55s" }}>
-          Dejás tus stablecoins de garantía y recibís pesos digitales para instalarte, sin vender lo que traés.
+          Dejás tus stablecoins de garantía y recibís pesos digitales para abrir tu operación, sin vender lo que tenés.
         </p>
 
         <div className="intro-up w-full pt-5 lg:w-auto lg:pt-7" style={{ animationDelay: "0.65s" }}>
@@ -255,7 +255,7 @@ function Hero() {
             href="#contacto"
             className="flex items-center justify-center gap-2.5 rounded-full bg-sun px-[34px] py-4 text-base font-bold text-navy-deep shadow-[0_10px_30px_#f2ae2e59] transition-transform hover:-translate-y-0.5 lg:py-[18px] lg:text-[17px]"
           >
-            Evaluar mi mudanza
+            Evaluar mi expansión
             <ArrowRight size={18} aria-hidden />
           </a>
         </div>
@@ -287,7 +287,7 @@ function EquationPill({ t, label, value }: { t: Ticker; label: string; value: st
 
 const ROWS = [
   ["Crédito", "El banco argentino no conoce tu empresa", "Tu garantía en CHLt define cuánto ARGt recibís"],
-  ["Pesos", "Para tener pesos tenés que vender lo que traés", "Recibís ARGt, 1 a 1 con el peso, y tus CHLt quedan de garantía"],
+  ["Pesos", "Para tener pesos tenés que vender tus stablecoins", "Recibís ARGt, 1 a 1 con el peso, y tus CHLt quedan de garantía"],
   ["Condiciones", "Las conocés del todo recién al firmar", "Ves monto, costo, garantía y devolución antes"],
 ] as const;
 
@@ -348,7 +348,7 @@ function Problem() {
 /* ---------- how it works ---------- */
 
 const STEPS: { title: string; desc: string; icon: LucideIcon }[] = [
-  { title: "Contanos tu mudanza", desc: "Dónde te instalás, qué ponés en marcha y cuántos pesos necesitás los primeros meses.", icon: Receipt },
+  { title: "Contanos tu expansión", desc: "Dónde abrís, qué ponés en marcha y cuántos pesos necesitás los primeros meses.", icon: Receipt },
   { title: "Revisamos tu empresa", desc: "Un agente revisa la documentación y consulta a tu empresa en el BCRA.", icon: ShieldCheck },
   { title: "Dejás CHLt de garantía", desc: `Pedís hasta el ${MAX_LTV * 100}% de su valor. Ves el costo antes de firmar.`, icon: Lock },
   { title: "Recibís ARGt para operar", desc: "Pagás en pesos alquiler, equipos y sueldos. Devolvés lo pedido más el costo y recuperás tu garantía.", icon: Repeat },
@@ -427,7 +427,7 @@ function Calculator() {
       <div className="flex flex-1 flex-col gap-[22px] lg:gap-7">
         <Eyebrow dark>Calculadora</Eyebrow>
         <SectionTitle dark>¿Cuánta garantía necesitás?</SectionTitle>
-        <p className="hidden text-lg text-lavender-soft lg:block">Poné cuántos pesos necesitás para instalarte en Argentina.</p>
+        <p className="hidden text-lg text-lavender-soft lg:block">Poné cuántos pesos necesitás para abrir tu operación en Argentina.</p>
 
         <label className="flex flex-col gap-2 lg:gap-2.5 lg:pt-3">
           <span className="text-[13px] font-semibold text-lavender-soft lg:text-sm">Pesos que necesitás en Argentina</span>
@@ -497,7 +497,7 @@ function Calculator() {
           href="#contacto"
           className="flex items-center justify-center gap-2.5 rounded-full bg-navy p-4 text-[15px] font-semibold text-white transition-colors hover:bg-navy-deep lg:p-[18px] lg:text-base"
         >
-          Evaluar mi mudanza <ArrowRight size={18} aria-hidden />
+          Evaluar mi expansión <ArrowRight size={18} aria-hidden />
         </a>
         <p className="pt-3 text-center text-xs leading-[17px] text-ink-2 lg:pt-3.5 lg:text-[13px]">
           Números ilustrativos. Si tu garantía pierde valor, puede que tengas que sumar más.
@@ -537,9 +537,9 @@ function Example() {
     >
       <div className="flex flex-1 flex-col gap-[18px]">
         <Eyebrow>Ejemplo ilustrativo</Eyebrow>
-        <SectionTitle>Una empresa minera de Antofagasta se muda a San Juan</SectionTitle>
+        <SectionTitle>Una empresa minera de Antofagasta suma una operación en San Juan</SectionTitle>
         <p className="text-base leading-6 text-ink-2 lg:text-lg lg:leading-7">
-          Abre su base en San Juan y necesita pesos para el galpón, los equipos y los primeros sueldos. Con {NAME} deja CHLt de garantía y recibe ARGt para operar.
+          Sigue operando en Chile, abre una base en San Juan y necesita pesos para el galpón, los equipos y los primeros sueldos. Con {NAME} deja CHLt de garantía y recibe ARGt para operar.
         </p>
         <img
           src="/ejemplo-san-juan.jpg"
@@ -656,7 +656,7 @@ function Closing() {
       <SolDeMayo className="bottom-[70px] left-[calc(50%-80px)] w-40 lg:bottom-[180px]" />
       <Andes className="bottom-[-176px] z-[1] lg:bottom-[-76px]" />
       <h2 className="relative z-[2] max-w-[820px] text-center text-[32px] leading-9 font-semibold tracking-[-0.8px] text-navy lg:text-[52px] lg:leading-[57px] lg:tracking-[-1.5px]">
-        Ya decidiste venir a Argentina
+        Ya sabés hacia dónde querés crecer
       </h2>
       <p className="relative z-[2] text-center text-lg text-ink-2 lg:text-[22px]">Hablemos de cómo llegar con pesos para operar.</p>
 
@@ -689,7 +689,7 @@ function Closing() {
               type="submit"
               className="flex items-center justify-center gap-2.5 rounded-full bg-navy p-4 text-[15px] font-semibold text-white transition-colors hover:bg-navy-deep lg:text-base"
             >
-              Quiero evaluar mi mudanza <ArrowRight size={18} aria-hidden />
+              Quiero evaluar mi expansión <ArrowRight size={18} aria-hidden />
             </button>
             <p className="text-center text-xs leading-[17px] text-ink-2">
               Enviar tus datos no te compromete a contratar ni confirma la aprobación de una operación.
