@@ -1,7 +1,7 @@
 # Pitch de Saltar
 
 Para Ivan, que presenta. 7/11/2026. Formato del evento: primero 30 segundos y
-demo en vivo; los cuatro finalistas por track hacen 3 minutos más 2 de
+demo en vivo; los finalistas hacen un pitch de 2,5 minutos y después
 preguntas. El jurado de Twin puntúa por igual idea, problema, negocio y pitch.
 
 Frase que se repite en todo: **«Llegás a Argentina y operás en pesos desde el
@@ -18,53 +18,46 @@ primer día.»**
 > No prestamos plata propia: el crédito sale de Morpho. Llegás a Argentina y
 > operás en pesos desde el primer día.
 
-## Versión de 3 minutos
+## Versión de 2,5 minutos
 
-**0:00 a 0:30 · El problema**
+**0:00 a 0:25 · El problema**
 
-> Pensemos en una minera de Antofagasta que abre una base en San Juan. Tiene
-> la plata, pero en Chile y en stablecoins. Para arrancar acá necesita pesos:
-> el alquiler del galpón, los sueldos, el catering, el transporte.
-> El banco argentino no la conoce, porque no tiene historial acá. Traer
-> dólares por el mercado oficial es lento y con reglas que siguen vigentes
-> para empresas. Y vender sus stablecoins es quedarse sin respaldo.
+> Una minera de Antofagasta abre una base en San Juan. Tiene la plata, pero en
+> Chile y en stablecoins. Para arrancar necesita pesos: alquiler, sueldos,
+> catering. El banco argentino no la conoce, traer dólares choca con el cepo y
+> vender sus stablecoins es quedarse sin respaldo.
 
-**0:30 a 0:50 · La solución**
+**0:25 a 0:40 · La solución**
 
-> Saltar le resuelve eso. Deja sus CHLt, el peso chileno digital de Twin, de
-> garantía, y recibe ARGt, el peso argentino digital, para operar desde el
-> primer día. Pide hasta el 60% de su garantía y ve el costo antes de firmar.
-> Y cuando un proveedor le factura, nuestro agente revisa la factura y al
-> proveedor, y le paga en pesos.
+> Con Saltar deja sus CHLt, el peso chileno digital de Twin, de garantía, y
+> recibe ARGt, el peso argentino digital, para operar desde el primer día. Y
+> cuando un proveedor le factura, nuestro agente revisa la factura y al
+> proveedor antes de pagar.
 
-**0:50 a 2:00 · La demo** (ver «Demo paso a paso»)
+**0:40 a 1:40 · La demo** (ver «Demo paso a paso»)
 
-> Les muestro. [Entrar] Esta es la empresa. El agente ya revisó su perfil:
-> consulta al BCRA y su historial en Arbitrum, y le dice cuánto puede pedir y
-> por qué. [Perfil con atrasos] Si la empresa tuviera atrasos, el agente baja
-> el tope y lo explica.
-> Ahora llega una factura. [Subir el PDF] El agente la lee, chequea el CAE, que
-> esté hecha a nuestra empresa, al proveedor en el BCRA y si alcanza la plata.
-> Todo en verde. [Financiar] Deja la garantía en Morpho, pide los pesos y el
-> proveedor cobra. Este es el hash en Arbiscan.
+> [Tu agente] El agente consulta a la empresa en el BCRA y su historial en
+> Arbitrum, y le dice cuánto puede pedir y por qué. [Perfil con atrasos] Con
+> atrasos, baja el tope y lo explica.
+> [Subir la factura] Llega una factura: la lee, chequea el CAE, que sea para
+> nuestra empresa, al proveedor y si alcanza la plata. Todo en verde.
+> [Financiar] Deja la garantía en Morpho, pide los pesos y el proveedor cobra.
+> Este es el hash en Arbiscan.
 
-**2:00 a 2:35 · El negocio**
+**1:40 a 2:10 · El negocio**
 
 > No prestamos plata propia: el crédito sale de un mercado abierto de Morpho.
-> Cobramos a la empresa que llega: 1% por abrir el crédito y 0,3% por cada pago
-> a un proveedor con la factura validada.
-> El mercado: 1.158 empresas chilenas le vendieron a Argentina en 2024, y Chile
-> tiene unos US$ 6.500 millones invertidos acá. Y el RIGI ya aprobó casi
-> US$ 50.000 millones en proyectos que traen empresas de afuera con cientos de
-> proveedores locales.
+> Cobramos a la empresa: 1% por abrir el crédito y 0,3% por cada pago a un
+> proveedor con la factura validada. Hay 1.158 empresas chilenas que ya le
+> venden a Argentina, y el RIGI aprobó casi US$ 50.000 millones en proyectos
+> que traen empresas de afuera.
 
-**2:35 a 3:00 · Por qué ahora y cierre**
+**2:10 a 2:30 · Cierre**
 
-> Las stablecoins locales de Twin ya existen en siete monedas, y Morpho y
-> Curve ya están en Arbitrum. Faltaba la capa que entiende a la empresa y a
-> Argentina: el agente. Arrancamos con Chile a Argentina; con las siete
-> monedas, cada país de la región es el siguiente corredor.
-> Saltar: llegás a Argentina y operás en pesos desde el primer día.
+> Las stablecoins de Twin ya están en siete monedas; faltaba la capa que
+> entiende a la empresa y a Argentina. Arrancamos con Chile; cada país es el
+> siguiente corredor. Saltar: llegás a Argentina y operás en pesos desde el
+> primer día.
 
 ## Demo paso a paso
 
