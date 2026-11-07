@@ -79,6 +79,14 @@ depositadas (octubre 2026).
 
 El interés del crédito es de Morpho y de quien deposita ahí, no nuestro.
 
+**Liquidez para prestar (riesgo principal):** el mercado de Morpho donde se pide
+ARGt tiene unos 155.438 ARGt disponibles (spec del circuito; cerca de US$ 100
+al cambio del dashboard de Twin: 16.000 M ARGt = 9,7 M USDT). El vault Prime
+de ARGt tiene unos US$ 9,7 M. Respuesta para el jurado: hoy la liquidez es
+chica y la demo usa montos chicos; el primer paso comercial es un cupo
+acordado con Twin y el curador del vault, y después depositantes propios. Si
+prestamos con fondos propios, inscripción en el BCRA.
+
 **Ejemplo (supuesto):** una empresa chilena abre en Mendoza, toma el
 equivalente a US$ 100.000 en ARGt (deja unos US$ 167.000 de colateral, al 60%)
 y paga US$ 300.000 en el año a proveedores.

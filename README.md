@@ -17,6 +17,16 @@ resolvemos lo argentino.**
 El interés del crédito es del mercado de Morpho, no nuestro. El proveedor no
 paga nada.
 
+**¿De dónde sale la plata para prestar?** Hoy el mercado de Morpho donde se
+pide ARGt tiene poco disponible (unos 155.000 ARGt, alrededor de US$ 100), así
+que la demo usa montos chicos. El vault «Prime» de ARGt, que alimenta esos
+mercados, tiene unos US$ 9,7 M en ARGt (dashboard de Twin, 7/11/2026). El
+primer paso comercial es acordar con Twin y el curador del vault un cupo para
+este mercado a medida que lleguen empresas; más adelante, sumar depositantes
+propios (por ejemplo, la tesorería de la misma empresa o socios). Si algún día
+prestamos con fondos propios, nos inscribimos como proveedores no financieros
+de crédito en el BCRA.
+
 | Escenario* | Ingreso al año |
 |---|---|
 | Una empresa mediana: US$ 100.000 en ARGt y US$ 300.000 pagados a proveedores | US$ 1.900 |
