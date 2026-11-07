@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Ejemplo de WebMCP</title>
+</head>
+<body>
+  <h1>Ejemplo de WebMCP</h1>
+  <p>Abrila en Chrome con la flag de WebMCP y mirá las herramientas registradas (ver <code>docs/webmcp.md</code>).</p>
+
+  <!-- Datos de la página: las herramientas leen de acá. -->
+  <script type="application/json" id="datos">
+  {
+    "secciones": [
+      { "titulo": "Inicio", "texto": "Bienvenida al proyecto" },
+      { "titulo": "Precios", "texto": "Planes y costos" },
+      { "titulo": "Contacto", "texto": "Escribinos para consultar precios" }
+    ]
+  }
+  </script>
+
+  <!-- Forma declarativa: el navegador llena el formulario y espera que la persona lo mande (sin toolautosubmit). -->
+  <form toolname="buscar_en_pagina"
+        tooldescription="Busca un texto en las secciones de esta página y muestra las que lo contienen."
+        onsubmit="return mostrar(event)">
+    <label>Texto <input name="texto" type="text" toolparamdescription="Texto a buscar"></label>
+    <button type="submit">Buscar</button>
+  </form>
+  <pre id="salida"></pre>
+
+  <script src="webmcp.js"></script>
+  <script>
+    var datos = JSON.parse(document.getElementById("datos").textContent);
+    registrarHerramientas(datos);
+    function mostrar(e) {
+      e.preventDefault();
+      var q = new FormData(e.target).get("texto").toLowerCase();
+      document.getElementById("salida").textContent = datos.secciones
+        .filter(function (s) { return (s.titulo + " " + s.texto).toLowerCase().indexOf(q) !== -1; })
+        .map(function (s) { return s.titulo; }).join("\n");
+      return false;
+    }
+  </script>
+</body>
+</html>

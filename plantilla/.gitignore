@@ -1,0 +1,16 @@
+# Variables de entorno y claves: nunca al repo
+.env
+.env.*
+!.env.example
+
+# Dependencias y builds
+node_modules/
+.next/
+dist/
+build/
+.vercel/
+__pycache__/
+.venv/
+
+# Sistema
+.DS_Store

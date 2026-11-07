@@ -1,0 +1,51 @@
+#!/usr/bin/env bash
+# Prepara un clon de este repo para una persona: correo y nombre locales y
+# dos ramas propias, <yo>/mac y <yo>/pc, desde main. No pushea.
+# Uso: scripts/init --yo <nombre> --email <correo>
+# Portable a bash 3.2 (macOS): sin nada de bash 4 ni edición in situ de GNU.
+set -eu
+
+uso() { echo "uso: scripts/init --yo <nombre> --email <correo>" >&2; }
+error() { echo "init: $*" >&2; exit 1; }
+
+yo="" email=""
+while [ $# -gt 0 ]; do
+  case "$1" in
+    --yo) [ $# -ge 2 ] || error "falta el valor de --yo"; yo="$2"; shift 2 ;;
+    --email) [ $# -ge 2 ] || error "falta el valor de --email"; email="$2"; shift 2 ;;
+    *) uso; error "argumento desconocido: $1" ;;
+  esac
+done
+[ -n "$yo" ] && [ -n "$email" ] || { uso; exit 1; }
+
+git rev-parse --show-toplevel >/dev/null 2>&1 || error "no estás dentro de un repo git"
+for compu in mac pc; do
+  git check-ref-format --branch "$yo/$compu" >/dev/null 2>&1 \
+    || error "'$yo/$compu' no es un nombre de rama válido"
+done
+
+if git show-ref --verify --quiet refs/heads/main; then
+  base=main
+elif git show-ref --verify --quiet refs/remotes/origin/main; then
+  base=origin/main
+else
+  error "no encuentro la rama main"
+fi
+
+git config --local user.name "$yo"
+git config --local user.email "$email"
+
+for compu in mac pc; do
+  rama="$yo/$compu"
+  if git show-ref --verify --quiet "refs/heads/$rama"; then
+    printf 'ya existe %s: no la toco\n' "$rama"
+  else
+    git branch "$rama" "$base"
+    printf 'creada %s desde %s\n' "$rama" "$base"
+  fi
+done
+
+printf '\nCorreo local: %s. Para publicar tus ramas (lo hacés vos):\n' "$email"
+printf '  git push -u origin %s/mac\n' "$yo"
+printf '  git push -u origin %s/pc\n' "$yo"
+printf 'A main se llega sólo por PR (ver REPARTO.md).\n'
