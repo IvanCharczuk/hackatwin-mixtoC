@@ -21,4 +21,5 @@ transacción onchain real con hash verificable. Los detalles están en la consig
 ## Contacto
 Bri: araceliaponte2007@gmail.com
 Ivan: ivancharczuk@gmail.com
+Steven Molina: stevmolina.me@gmail.com
 
