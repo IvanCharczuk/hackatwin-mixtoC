@@ -22,7 +22,7 @@
       body {
         min-height: 100svh; position: relative; overflow-x: hidden;
         display: flex; flex-direction: column; align-items: center;
-        padding: 24px 16px 0;
+        padding: 0 16px;
         background: linear-gradient(180deg, #161c45 0%, #2b3470 45%, #8a7fa6 70%, #f3c98a 90%, #f6ddb0 100%);
         color: var(--navy); font: 15px/1.55 "Montserrat", system-ui, sans-serif;
         -webkit-font-smoothing: antialiased;
@@ -34,12 +34,12 @@
       .sol { position: absolute; left: calc(50% - 160px); bottom: -40px; width: 320px; animation: sube 1.6s cubic-bezier(.2,.7,.2,1) both; }
       .andes { position: absolute; left: 50%; bottom: -140px; width: max(100%, 1440px); transform: translateX(-50%); animation: andes 1.4s cubic-bezier(.2,.7,.2,1) both; }
 
-      header { position: relative; z-index: 2; width: 100%; max-width: 1248px; display: flex; align-items: center; gap: 8px; color: #fff; font-weight: 700; font-size: 17px; }
+      header { position: absolute; z-index: 2; top: 24px; left: 50%; transform: translateX(-50%); width: calc(100% - 32px); max-width: 1248px; display: flex; align-items: center; gap: 8px; color: #fff; font-weight: 700; font-size: 17px; }
       header img { width: 22px; height: 22px; }
       header .chip { margin-left: auto; font-size: 12px; font-weight: 500; color: var(--mist); display: flex; align-items: center; gap: 6px; }
       header .chip::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--live); }
 
-      main { position: relative; z-index: 2; flex: 1; width: 100%; display: flex; align-items: flex-start; justify-content: center; padding: 9vh 0 260px; }
+      main { position: relative; z-index: 2; flex: 1; width: 100%; display: flex; align-items: center; justify-content: center; padding: 80px 0; }
       .card {
         width: 100%; max-width: 440px; background: var(--paper); border: 1px solid var(--edge); border-radius: 20px;
         padding: 30px 28px 26px; box-shadow: 0 24px 60px #0d123866; animation: arriba .9s cubic-bezier(.2,.7,.2,1) .2s both;
@@ -66,7 +66,7 @@
       @keyframes andes { from { transform: translate(-50%, 120px); } to { transform: translateX(-50%); } }
       @keyframes arriba { from { transform: translateY(24px); opacity: 0; } to { transform: none; opacity: 1; } }
       @media (max-width: 640px) {
-        main { padding-top: 5vh; padding-bottom: 200px; }
+        main { padding: 72px 0; }
         .card { padding: 26px 22px 22px; }
         h1 { font-size: 21px; }
         .sol { width: 220px; left: calc(50% - 110px); bottom: -30px; }
