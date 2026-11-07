@@ -2,6 +2,47 @@
 
 Proyecto del equipo Mixto C para la HackaTwin (7 de noviembre de 2026).
 
+## Modelo de negocio
+
+**Cobramos a la empresa de afuera que llega a operar en Argentina. No prestamos
+nosotros: la conectamos con el crédito onchain que ya existe (Morpho) y le
+resolvemos lo argentino.**
+
+| Ingreso | Precio* | Qué recibe la empresa |
+|---|---|---|
+| Apertura del crédito en ARGt | 1% del monto | Pesos desde el día uno, sin banco ni historial local |
+| Pago a proveedor con factura validada | 0,3% del pago | Factura y proveedor revisados, impuestos en regla y comprobante de pagada |
+| Plan para empresas grandes | mensual, a definir | Reporte de compras locales y control de muchos proveedores |
+
+El interés del crédito es del mercado de Morpho, no nuestro. El proveedor no
+paga nada.
+
+| Escenario* | Ingreso al año |
+|---|---|
+| Una empresa mediana: US$ 100.000 en ARGt y US$ 300.000 pagados a proveedores | US$ 1.900 |
+| 100 empresas medianas | US$ 190.000 |
+| Una empresa grande de un proyecto RIGI con US$ 100 M de compras locales | US$ 300.000 |
+
+**Mercado:** 1.158 empresas chilenas le exportaron a Argentina en 2024 y Chile
+tiene unos US$ 6.500 M invertidos acá; el RIGI suma US$ 49.766 M aprobados
+(9/9/2026).
+
+**Contra quién competimos:** el banco argentino pide historial local; traer la
+plata de la casa matriz choca con el cepo para empresas; Bitso Business, BVNK
+o Bridge mueven plata pero no prestan en pesos ni validan facturas
+argentinas; Morpho o Aave directo no tienen interfaz ni cumplimiento local.
+Nosotros: fintech adelante, DeFi atrás, para empresas que llegan.
+
+**Regulación:** al no prestar, no nos inscribimos como prestamistas (BCRA);
+las billeteras son del usuario (Privy), sin custodia nuestra; ARGt nunca se
+presenta como algo que rinde. A validar con un abogado antes de vender: la
+parte cambiaria y si la billetera embebida nos deja fuera del registro de PSAV
+de la CNV.
+
+\* Precios y escenarios son supuestos nuestros. Fuentes y detalle:
+[docs/investigacion/negocio.md](docs/investigacion/negocio.md) y
+[docs/investigacion/numeros.md](docs/investigacion/numeros.md).
+
 ## Cómo está armado
 
 Monorepo con workspaces de npm: un solo `npm install` en la raíz.
