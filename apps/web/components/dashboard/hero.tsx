@@ -17,7 +17,7 @@ export function BarraSuperior({ authenticated, mock, login, logout }: { authenti
     <header className="relative z-10 mx-auto flex w-full max-w-[1248px] items-center justify-between gap-3 px-5 py-5 sm:px-6">
       <a href="/" className="flex shrink-0 items-center gap-2 text-[16px] font-bold whitespace-nowrap text-white sm:text-[17px]">
         <img src="/sol-de-mayo.png" alt="" className="size-7 sm:size-8" />
-        Salto
+        Saltar
       </a>
       {authenticated && address ? (
         <div className="flex items-center gap-1.5 sm:gap-2">
