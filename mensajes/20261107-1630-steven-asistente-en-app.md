@@ -12,6 +12,9 @@ https://github.com/IvanCharczuk/hackatwin-mixtoC/pull/14
 - Mismo componente y misma ruta `/api/chat`; no cambia lo que responde.
 - Panel blanco, encabezado plano, sin degradé ni sol girando. Toma los
   colores de cada página (azul en `/app`, azul noche en el dashboard).
+- Nuevo: con sesión dice cuánto puede financiar hoy (CHLt de la wallet +
+  tope del BCRA con el CUIT de pantalla), qué le falta y cómo pagar o
+  devolver. Toca también `api/chat/route.ts` y `lib/asistente/`.
 - Tipos en verde y probado en el navegador en `/app` y en `/`. Capturas y
   video en el PR.
 
