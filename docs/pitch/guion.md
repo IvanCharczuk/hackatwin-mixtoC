@@ -14,9 +14,10 @@ día uno.»**
 
 El problema, sin detalle técnico.
 
-> Hoy hay 13 mineras con proyectos aprobados en Argentina por 25 billions de
-> dólares, y otros 20 de minería y petróleo esperando. Cuando llegan,
-> tienen que pagarles desde el primer día a cientos de proveedores locales.
+> Hoy hay 13 proyectos mineros aprobados en Argentina por 25 billions de
+> dólares, y otros 20 de minería y petróleo esperando. Las empresas que
+> llegan tienen que pagarles desde el primer día a cientos de proveedores
+> locales.
 > Pero el banco no las conoce, traer dólares es lento por el cepo y vender lo
 > que tienen las deja sin respaldo. Saltar les da pesos desde el día uno, con
 > su propia plata como garantía, y revisa cada factura antes de pagar.
@@ -48,7 +49,7 @@ sueltas, nada de frases largas) y Ivan cuenta. El video no tiene voz.
 
 | Tiempo | En pantalla (video) | Lo que decís |
 |---|---|---|
-| 0:00 a 0:14 | **Problema.** Amanece sobre la cordillera. Contadores: «13 mineras · US$ 25B» y «+20 en espera». Después caen tres cruces: «Banco» ✗ «Cepo» ✗ «Vender» ✗. | «13 mineras ya tienen aprobados 25 billions de dólares en el RIGI, y hay 20 proyectos más esperando. Para arrancar necesitan pesos, pero el banco no las conoce y el cepo frena los dólares.» |
+| 0:00 a 0:14 | **Problema.** Amanece sobre la cordillera. Contadores: «13 proyectos mineros · US$ 25B» y «+20 en espera». Después caen tres cruces: «Banco» ✗ «Cepo» ✗ «Vender» ✗. | «Hay 13 proyectos mineros aprobados en el RIGI por 25 billions de dólares, y 20 más esperando. Para arrancar, esas empresas necesitan pesos, pero el banco no las conoce y el cepo frena los dólares.» |
 | 0:14 a 0:22 | **Propuesta.** Aparece el logo de Saltar sobre un riel que se despeja. Texto: «Operá desde el día uno». | «Con Saltar agilizamos los rieles para que arranquen a operar en Argentina con financiación desde el día uno.» |
 | 0:22 a 0:32 | **Solución.** Los rieles se destraban: CHLt entra a una bóveda y sale ARGt; una factura recibe un check verde. Texto: «Día uno». | «Dejan su garantía en stablecoins y reciben ARGt, pesos digitales, desde el día uno. Y nuestro agente revisa cada factura antes de pagar.» |
 | 0:32 a 0:44 | **Mercado.** «7.500 pymes proveedoras» se llenan de puntos; el mapa se enciende país por país: «7 monedas». | «Detrás de cada proyecto hay cientos de proveedores: más de 7.500 pymes sólo en Vaca Muerta. Y con las siete monedas de Twin, cada país es un corredor.» |
