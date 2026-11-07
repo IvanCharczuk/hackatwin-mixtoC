@@ -39,8 +39,10 @@ Es factoring inverso (riesgo del comprador), onchain y transfronterizo.
 ## Adopción
 
 - Se entra por la empresa grande: una trae a todos sus proveedores.
-- A la empresa le damos: pago desde afuera sin banco intermedio y un registro
-  trazable de compras locales para el reporte del RIGI.
+- A la empresa le damos: pago desde afuera sin banco intermedio, y proveedores
+  que cobran antes y pueden cotizarle mejor. El registro de compras locales para
+  el RIGI es un extra: el 20% no tiene sanción clara y el Súper RIGI lo
+  eliminaría, así que la adopción no puede depender de esa regla.
 - Al proveedor: cobra antes y más barato. Alta una vez, con KYB.
 
 ## Moat

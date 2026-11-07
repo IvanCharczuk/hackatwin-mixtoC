@@ -15,7 +15,10 @@ fuente. Lo marcado como **a verificar** viene de una sola fuente secundaria.
 
 **Cuenta (supuesto):** 20% de US$ 49.766 M da hasta unos **US$ 10.000 M** de
 compras a proveedores locales a lo largo de la construcción de lo ya aprobado.
-Es un techo: el 20% aplica sobre bienes y obras, no sobre el total. Sólo
+Es una referencia, no un piso firme: el 20% aplica sobre bienes y obras (no
+sobre el total), no tiene sanción clara y el Súper RIGI lo eliminaría. Las
+obras compran local igual (catering, construcción, transporte), pero no hay
+un dato público de cuánto. Sólo
 Vicuña: hasta unos **US$ 1.900 M**.
 
 ## Escenario de ingresos (supuesto)
