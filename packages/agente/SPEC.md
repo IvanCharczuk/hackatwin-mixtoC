@@ -110,6 +110,20 @@ factura:
 |---|---|---|
 | V8 Vínculo | El `id` de la factura no tiene un adelanto previo y, si es de crédito, no está cedida ni negociada | Rechaza: factura ya financiada |
 
+### Dos documentos por factura: la factura a pagar y el comprobante de pagada
+
+- **Entrada, la factura a pagar:** la que manda el proveedor; arranca todo.
+- **Salida, el comprobante de pagada:** cuando la factura se cancela (por el
+  contrato al vencimiento, o por pagos parciales que la completan), el agente
+  genera un comprobante atado al mismo `id`: datos del comprobante original,
+  total, retenciones, neto, adelanto, comisión, fecha de cancelación y el hash
+  de cada transacción con su link al explorador. Le sirve al proveedor para
+  emitir su recibo y a la empresa para su contabilidad; si la factura es de
+  crédito electrónica, es lo que respalda informar la cancelación en ARCA.
+- **Si se pagó por fuera** (transferencia bancaria), la empresa o el proveedor
+  sube el comprobante de pago; el agente lo concilia con la factura (mismo
+  CUIT, monto y número) y recién ahí libera el colateral de esa factura.
+
 ### Repago y liberación del colateral, factura por factura
 
 Cada factura es una posición propia, con su deuda y su colateral. El agente
@@ -179,6 +193,10 @@ Stack recomendado: TypeScript con Node, para compartirlo con el front.
   se calcula sobre el neto después de retenciones, y el registro exportado
   tiene cada movimiento con el `id` de su factura.
   `npm test -- vinculo`
+- **CA-10** — Al cancelarse una factura de ejemplo, el agente genera el
+  comprobante de pagada con el mismo `id`, los montos y los hashes; y un pago
+  por fuera que no coincide en CUIT, monto o número no libera el colateral.
+  `npm test -- pagada`
 - **CA-6** — Con una factura de ejemplo, el agente extrae CUIT, monto, CAE y
   vencimiento, consulta la Central de Deudores del BCRA por ese CUIT y
   devuelve el perfil junto con la decisión.
