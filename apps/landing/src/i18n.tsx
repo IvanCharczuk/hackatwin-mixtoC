@@ -39,20 +39,20 @@ const es = {
     no: "No",
     yes: "Sí",
     rows: [
-      { k: "Crédito", today: "El banco argentino no conoce tu empresa", withUs: "Tu garantía en CHLt define cuánto ARGt recibís" },
-      { k: "Pesos", today: "Para tener pesos tenés que vender tus stablecoins", withUs: "Recibís ARGt, 1 a 1 con el peso, y tus CHLt quedan de garantía" },
+      { k: "Crédito", today: "El banco argentino no conoce tu empresa", withUs: "Tu garantía define cuántos pesos recibís" },
+      { k: "Pesos", today: "Para tener pesos tenés que vender tu moneda digital", withUs: "Recibís pesos digitales, 1 a 1 con el peso, y tu moneda queda de garantía" },
       { k: "Condiciones", today: "Las conocés del todo recién al firmar", withUs: "Ves monto, costo, garantía y devolución antes" },
     ],
   },
   how: {
     eyebrow: "Cómo funciona",
     title: "De tu plan a operar en Argentina",
-    intro: "Los ARGt salen de un mercado abierto de Morpho. Saltar conecta tu garantía con ese mercado.",
+    intro: "Los pesos salen de un mercado abierto de préstamos. Saltar conecta tu garantía con ese mercado.",
     steps: [
       { title: "Contanos tu expansión", desc: (_p: number) => "Dónde abrís, qué ponés en marcha y cuántos pesos necesitás los primeros meses." },
-      { title: "Revisamos tu empresa", desc: (_p: number) => "Un agente revisa la documentación y consulta a tu empresa en el BCRA." },
-      { title: "Dejás CHLt de garantía", desc: (p: number) => `Pedís hasta el ${p}% de su valor. Ves el costo antes de firmar.` },
-      { title: "Recibís ARGt para operar", desc: (_p: number) => "Pagás en pesos alquiler, equipos y sueldos. Devolvés lo pedido más el costo y recuperás tu garantía." },
+      { title: "Revisamos tu empresa", desc: (_p: number) => "Una IA revisa la documentación y consulta a tu empresa en el Banco Central." },
+      { title: "Dejás tu moneda de garantía", desc: (p: number) => `Pedís hasta el ${p}% de su valor. Ves el costo antes de firmar.` },
+      { title: "Recibís pesos para operar", desc: (_p: number) => "Pagás en pesos alquiler, equipos y sueldos. Devolvés lo pedido más el costo y recuperás tu garantía." },
     ],
   },
   calc: {
@@ -69,9 +69,9 @@ const es = {
     youGet: "Recibís",
     oneToOne: "1 ARGt = 1 peso",
     yourCollateral: "Tu garantía",
-    stays: "Queda en Morpho hasta que devolvés",
+    stays: "Queda guardada hasta que devolvés",
     cost: "Costo",
-    variableRate: "Tasa variable de Morpho",
+    variableRate: "Tasa variable del mercado",
     seeBefore: "La ves antes de confirmar",
     cta: "Evaluar mi expansión",
     disclaimer: "Números ilustrativos. Si tu garantía pierde valor, puede que tengas que sumar más.",
@@ -80,7 +80,7 @@ const es = {
     eyebrow: "Ejemplo ilustrativo",
     title: "Una empresa minera de Antofagasta suma una operación en San Juan",
     body: (name: string) =>
-      `Sigue operando en Chile, abre una base en San Juan y necesita pesos para el galpón, los equipos y los primeros sueldos. Con ${name} deja CHLt de garantía y recibe ARGt para operar.`,
+      `Sigue operando en Chile, abre una base en San Juan y necesita pesos para el galpón, los equipos y los primeros sueldos. Con ${name} deja pesos chilenos digitales de garantía y recibe pesos argentinos digitales para operar.`,
     alt: "Un equipo descarga herramientas frente a un galpón nuevo en San Juan, con la cordillera de fondo, al amanecer",
     needs: "Pesos que necesita",
     gets: "Recibe",
@@ -97,12 +97,12 @@ const es = {
     intro: "Cuánto recibís, cuánto cuesta y cómo se devuelve, antes de firmar.",
     items: [
       {
-        q: "¿Para qué sirven los ARGt?",
+        q: "¿Para qué sirven los pesos digitales?",
         a: "Para operar en Argentina: alquiler, equipos, sueldos e impuestos. Cada ARGt vale un peso. Tu empresa devuelve lo pedido más los costos, según lo acordado.",
       },
       {
         q: "¿De dónde salen los pesos?",
-        a: "De un mercado abierto de Morpho, financiado por quienes ponen liquidez en él. Saltar conecta tu garantía con ese mercado.",
+        a: "De un mercado abierto de préstamos, con dinero de quienes prestan en él. Saltar conecta tu garantía con ese mercado.",
       },
       {
         q: "¿Qué pasa con la garantía?",
@@ -135,7 +135,7 @@ const es = {
   footer: {
     project: "Proyecto de HackaTwin 2026, equipo Mixto C",
     legal:
-      "Los ARGt salen de un mercado abierto de Morpho. El financiamiento requiere garantía, tiene costos y puede implicar la pérdida de los activos comprometidos. Las monedas de Twin son un medio de pago, no una inversión.",
+      "Los pesos digitales (ARGt) salen de Morpho, un mercado abierto de préstamos. El financiamiento requiere garantía, tiene costos y podés perder la garantía. Las monedas de Twin son un medio de pago, no una inversión.",
   },
 };
 
@@ -174,20 +174,20 @@ const en: Dict = {
     no: "No",
     yes: "Yes",
     rows: [
-      { k: "Credit", today: "Argentine banks don't know your company", withUs: "Your CHLt collateral sets how much ARGt you receive" },
-      { k: "Pesos", today: "To get pesos you have to sell your stablecoins", withUs: "You receive ARGt, 1 to 1 with the peso, and your CHLt stay as collateral" },
+      { k: "Credit", today: "Argentine banks don't know your company", withUs: "Your collateral sets how many pesos you receive" },
+      { k: "Pesos", today: "To get pesos you have to sell your digital currency", withUs: "You receive digital pesos, 1 to 1 with the peso, and your currency stays as collateral" },
       { k: "Terms", today: "You only learn them fully when you sign", withUs: "You see amount, cost, collateral and repayment up front" },
     ],
   },
   how: {
     eyebrow: "How it works",
     title: "From your plan to operating in Argentina",
-    intro: "The ARGt comes from an open Morpho market. Saltar connects your collateral to it.",
+    intro: "The pesos come from an open lending market. Saltar connects your collateral to it.",
     steps: [
       { title: "Tell us about your expansion", desc: () => "Where you're opening, what you're launching and how many pesos you need for the first months." },
-      { title: "We review your company", desc: () => "An agent reviews your documents and checks your company with the BCRA." },
-      { title: "Post CHLt as collateral", desc: (p) => `Borrow up to ${p}% of its value. You see the cost before you sign.` },
-      { title: "Receive ARGt to operate", desc: () => "Pay rent, equipment and salaries in pesos. Repay what you borrowed plus the cost and get your collateral back." },
+      { title: "We review your company", desc: () => "An AI reviews your documents and checks your company with the Central Bank." },
+      { title: "Leave your currency as collateral", desc: (p) => `Borrow up to ${p}% of its value. You see the cost before you sign.` },
+      { title: "Receive pesos to operate", desc: () => "Pay rent, equipment and salaries in pesos. Repay what you borrowed plus the cost and get your collateral back." },
     ],
   },
   calc: {
@@ -204,9 +204,9 @@ const en: Dict = {
     youGet: "You receive",
     oneToOne: "1 ARGt = 1 peso",
     yourCollateral: "Your collateral",
-    stays: "Stays in Morpho until you repay",
+    stays: "Held until you repay",
     cost: "Cost",
-    variableRate: "Morpho variable rate",
+    variableRate: "Variable market rate",
     seeBefore: "You see it before you confirm",
     cta: "Assess my expansion",
     disclaimer: "Illustrative numbers. If your collateral loses value, you may have to add more.",
@@ -215,7 +215,7 @@ const en: Dict = {
     eyebrow: "Illustrative example",
     title: "A mining company from Antofagasta adds an operation in San Juan",
     body: (name) =>
-      `It keeps operating in Chile, opens a base in San Juan and needs pesos for the warehouse, equipment and the first salaries. With ${name} it posts CHLt as collateral and receives ARGt to operate.`,
+      `It keeps operating in Chile, opens a base in San Juan and needs pesos for the warehouse, equipment and the first salaries. With ${name} it leaves digital Chilean pesos as collateral and receives digital Argentine pesos to operate.`,
     alt: "A crew unloads tools in front of a new warehouse in San Juan, with the Andes in the background, at dawn",
     needs: "Pesos it needs",
     gets: "Receives",
@@ -232,12 +232,12 @@ const en: Dict = {
     intro: "How much you receive, what it costs and how it is repaid, before you sign.",
     items: [
       {
-        q: "What are ARGt for?",
+        q: "What are the digital pesos for?",
         a: "To operate in Argentina: rent, equipment, salaries and taxes. Each ARGt is worth one peso. Your company repays what it borrowed plus costs, as agreed.",
       },
       {
         q: "Where do the pesos come from?",
-        a: "From an open Morpho market, funded by those who supply liquidity to it. Saltar connects your collateral to it.",
+        a: "From an open lending market, with money from the people who lend in it. Saltar connects your collateral to it.",
       },
       {
         q: "What happens to the collateral?",
@@ -270,7 +270,7 @@ const en: Dict = {
   footer: {
     project: "HackaTwin 2026 project, team Mixto C",
     legal:
-      "The ARGt comes from an open Morpho market. Financing requires collateral, has costs and may mean losing the assets pledged. Twin coins are a means of payment, not an investment.",
+      "The digital pesos (ARGt) come from Morpho, an open lending market. Financing requires collateral, has costs and you may lose the collateral. Twin coins are a means of payment, not an investment.",
   },
 };
 
@@ -307,20 +307,20 @@ const pt: Dict = {
     no: "Não",
     yes: "Sim",
     rows: [
-      { k: "Crédito", today: "O banco argentino não conhece a sua empresa", withUs: "Sua garantia em CHLt define quanto ARGt você recebe" },
-      { k: "Pesos", today: "Para ter pesos, você precisa vender suas stablecoins", withUs: "Você recebe ARGt, 1 para 1 com o peso, e seus CHLt ficam como garantia" },
+      { k: "Crédito", today: "O banco argentino não conhece a sua empresa", withUs: "Sua garantia define quantos pesos você recebe" },
+      { k: "Pesos", today: "Para ter pesos, você precisa vender sua moeda digital", withUs: "Você recebe pesos digitais, 1 para 1 com o peso, e sua moeda fica como garantia" },
       { k: "Condições", today: "Você só as conhece por completo na hora de assinar", withUs: "Você vê valor, custo, garantia e devolução antes" },
     ],
   },
   how: {
     eyebrow: "Como funciona",
     title: "Do seu plano a operar na Argentina",
-    intro: "Os ARGt saem de um mercado aberto da Morpho. A Saltar conecta sua garantia a esse mercado.",
+    intro: "Os pesos saem de um mercado aberto de empréstimos. A Saltar conecta sua garantia a esse mercado.",
     steps: [
       { title: "Conte sobre a sua expansão", desc: () => "Onde você vai abrir, o que vai colocar em marcha e quantos pesos precisa nos primeiros meses." },
-      { title: "Analisamos a sua empresa", desc: () => "Um agente revisa a documentação e consulta a sua empresa no BCRA." },
-      { title: "Você deixa CHLt como garantia", desc: (p) => `Você pede até ${p}% do valor dela. Vê o custo antes de assinar.` },
-      { title: "Você recebe ARGt para operar", desc: () => "Pague em pesos aluguel, equipamentos e salários. Devolva o valor pedido mais o custo e recupere a sua garantia." },
+      { title: "Analisamos a sua empresa", desc: () => "Uma IA revisa a documentação e consulta a sua empresa no Banco Central." },
+      { title: "Você deixa sua moeda como garantia", desc: (p) => `Você pede até ${p}% do valor dela. Vê o custo antes de assinar.` },
+      { title: "Você recebe pesos para operar", desc: () => "Pague em pesos aluguel, equipamentos e salários. Devolva o valor pedido mais o custo e recupere a sua garantia." },
     ],
   },
   calc: {
@@ -337,9 +337,9 @@ const pt: Dict = {
     youGet: "Você recebe",
     oneToOne: "1 ARGt = 1 peso",
     yourCollateral: "Sua garantia",
-    stays: "Fica na Morpho até você devolver",
+    stays: "Fica guardada até você devolver",
     cost: "Custo",
-    variableRate: "Taxa variável da Morpho",
+    variableRate: "Taxa variável do mercado",
     seeBefore: "Você vê antes de confirmar",
     cta: "Avaliar minha expansão",
     disclaimer: "Números ilustrativos. Se a sua garantia perder valor, talvez você precise reforçá-la.",
@@ -348,7 +348,7 @@ const pt: Dict = {
     eyebrow: "Exemplo ilustrativo",
     title: "Uma mineradora de Antofagasta abre uma operação em San Juan",
     body: (name) =>
-      `Ela segue operando no Chile, abre uma base em San Juan e precisa de pesos para o galpão, os equipamentos e os primeiros salários. Com a ${name}, deixa CHLt como garantia e recebe ARGt para operar.`,
+      `Ela segue operando no Chile, abre uma base em San Juan e precisa de pesos para o galpão, os equipamentos e os primeiros salários. Com a ${name}, deixa pesos chilenos digitais como garantia e recebe pesos argentinos digitais para operar.`,
     alt: "Uma equipe descarrega ferramentas em frente a um galpão novo em San Juan, com a cordilheira ao fundo, ao amanhecer",
     needs: "Pesos de que precisa",
     gets: "Recebe",
@@ -365,12 +365,12 @@ const pt: Dict = {
     intro: "Quanto você recebe, quanto custa e como se devolve, antes de assinar.",
     items: [
       {
-        q: "Para que servem os ARGt?",
+        q: "Para que servem os pesos digitais?",
         a: "Para operar na Argentina: aluguel, equipamentos, salários e impostos. Cada ARGt vale um peso. Sua empresa devolve o valor pedido mais os custos, conforme combinado.",
       },
       {
         q: "De onde vêm os pesos?",
-        a: "De um mercado aberto da Morpho, financiado por quem coloca liquidez nele. A Saltar conecta sua garantia a esse mercado.",
+        a: "De um mercado aberto de empréstimos, com dinheiro de quem empresta nele. A Saltar conecta sua garantia a esse mercado.",
       },
       {
         q: "O que acontece com a garantia?",
@@ -403,7 +403,7 @@ const pt: Dict = {
   footer: {
     project: "Projeto da HackaTwin 2026, equipe Mixto C",
     legal:
-      "Os ARGt saem de um mercado aberto da Morpho. O financiamento exige garantia, tem custos e pode implicar a perda dos ativos comprometidos. As moedas da Twin são um meio de pagamento, não um investimento.",
+      "Os pesos digitais (ARGt) saem da Morpho, um mercado aberto de empréstimos. O financiamento exige garantia, tem custos e você pode perder a garantia. As moedas da Twin são um meio de pagamento, não um investimento.",
   },
 };
 
