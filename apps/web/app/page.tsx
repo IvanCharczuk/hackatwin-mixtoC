@@ -1,8 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { usePrivy } from "@privy-io/react-auth";
-import { formatUnits, isAddress, parseUnits } from "viem";
+import { formatUnits, isAddress, keccak256, parseUnits, toHex } from "viem";
 import {
   useAccount,
   useBalance,
@@ -11,12 +10,13 @@ import {
   useWaitForTransactionReceipt,
   useWriteContract,
 } from "wagmi";
+import { useAuth } from "@/lib/auth";
 import { CHAIN_ID, EXPLORER_TX, TOKENS, TOKEN_KEYS, erc20Abi, type TokenKey } from "@/lib/tokens";
 
 type Stage = "idle" | "confirming" | "pending" | "success" | "error";
 
 export default function Page() {
-  const { ready, authenticated, login, logout } = usePrivy();
+  const { ready, authenticated, login, logout, mock } = useAuth();
   const { address, chainId } = useAccount();
   const { switchChainAsync, isPending: switching } = useSwitchChain();
   const onArbitrum = chainId === CHAIN_ID;
@@ -58,6 +58,14 @@ export default function Page() {
     setStage("confirming");
     setError("");
     setHash(undefined);
+    if (mock) {
+      // Modo demo: no sale nada a la red, sólo se simula el recorrido.
+      await new Promise((ok) => setTimeout(ok, 800));
+      setHash(keccak256(toHex(`${to}:${amount}:${Date.now()}`)));
+      setStage("pending");
+      setTimeout(() => setStage("success"), 1200);
+      return;
+    }
     try {
       if (!onArbitrum) await switchChainAsync({ chainId: CHAIN_ID });
       const txHash = await writeContractAsync({
@@ -87,6 +95,13 @@ export default function Page() {
           <button onClick={login} className="rounded bg-neutral-900 px-3 py-1.5 text-sm text-white">Entrar</button>
         )}
       </header>
+
+      {mock && (
+        <p className="rounded border border-amber-300 bg-amber-50 p-3 text-xs text-amber-900">
+          Modo demo: sin Privy. La wallet es simulada, los saldos son reales en Arbitrum y las
+          transferencias no salen a la red.
+        </p>
+      )}
 
       {authenticated && address && (
         <>
@@ -132,7 +147,12 @@ export default function Page() {
               <button onClick={send} disabled={!canSend} className="rounded bg-neutral-900 px-3 py-2 text-white disabled:opacity-40">
                 {stage === "confirming" ? "Confirmá en la wallet…" : stage === "pending" ? "Esperando la red…" : `Enviar ${token}`}
               </button>
-              {hash && (
+              {hash && mock && (
+                <p className="break-all text-neutral-600">
+                  {stage === "success" ? "Simulada" : "Simulando…"}: {hash}
+                </p>
+              )}
+              {hash && !mock && (
                 <a href={`${EXPLORER_TX}${hash}`} target="_blank" rel="noreferrer" className="break-all underline">
                   {stage === "success" ? "Confirmada" : stage === "error" ? "Revertida" : "Enviada"}: {hash}
                 </a>
