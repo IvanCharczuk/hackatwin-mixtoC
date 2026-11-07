@@ -26,7 +26,7 @@ export function Pagar({
   titulo?: string;
   textoBoton?: string;
   textoListo?: string;
-  onListo?: () => void;
+  onListo?: (hashes: Record<string, `0x${string}`>) => void;
 }) {
   const [fijos] = useState(pasos); // el plan no cambia mientras se paga
   const { stages, hashes, errores, hechos, firmarTodos, listo } = usePasos(fijos, simular);
@@ -35,9 +35,9 @@ export function Pagar({
 
   async function pagar() {
     setCorriendo(true);
-    const ok = await firmarTodos();
+    const r = await firmarTodos();
     setCorriendo(false);
-    if (ok) onListo?.();
+    if (r) onListo?.(r);
   }
 
   return (
