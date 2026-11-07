@@ -51,55 +51,48 @@ function Autorizar({ datos }: { datos: Datos }) {
 		}
 	}
 
-	const quien = (
-		<p>
-			<b>{datos.cliente}</b> quiere usar el MCP de Mixto C con tu usuario. El acceso se envía a <b>{datos.destino}</b>.
-		</p>
-	);
-	const avisoLocal = datos.destinoLocal ? (
-		<p className="aviso">Va a una app de tu compu (localhost). Seguí sólo si la abriste vos.</p>
-	) : null;
+	// "Claude Code (mixtoc)" se lee mejor como "Claude Code".
+	const app = datos.cliente.replace(/\s*\(.*\)\s*$/, "") || datos.cliente;
+	const avisoLocal = datos.destinoLocal ? <p className="pie">Seguí sólo si abriste {app} en esta compu.</p> : null;
 
-	if (!ready) return <p>Cargando Privy…</p>;
+	if (!ready) return <p className="cargando">Cargando…</p>;
 
 	if (!authenticated) {
 		return (
 			<>
-				<h1>Entrar al MCP de Mixto C</h1>
-				{quien}
+				<h1>Conectar {app}</h1>
+				<p>Entrá con tu cuenta de Saltar.</p>
+				<button onClick={login}>Entrar</button>
 				{avisoLocal}
-				<button onClick={login}>Entrar con Privy</button>
 			</>
 		);
 	}
 
-	const email = user?.email?.address ?? null;
+	const nombre = user?.google?.email ?? user?.email?.address ?? user?.google?.name ?? (wallet ? corta(wallet) : "Tu cuenta");
+	const ocupado = estado !== "listo";
 	return (
 		<>
-			<h1>Autorizar acceso</h1>
-			{quien}
-			{avisoLocal}
-			<p>
-				Entraste como <b>{email ?? user?.id}</b>
-				{wallet ? (
-					<>
-						{" "}con la wallet <code>{wallet}</code>
-					</>
-				) : null}
-				.
+			<h1>Conectar {app}</h1>
+			<p>Va a poder ver tus saldos y tu posición. No puede mover tu plata.</p>
+			<p className="cuenta">
+				<span>{nombre}</span>
+				<button className="link" onClick={logout} disabled={ocupado}>
+					Cambiar
+				</button>
 			</p>
-			{!wallet && esperoWallet ? <p>Creando tu wallet…</p> : null}
-			{!wallet && !esperoWallet ? <p className="aviso">Tu usuario no tiene wallet todavía: las herramientas de saldos no van a andar.</p> : null}
-			<p>Sólo lectura: el MCP no firma ni manda transacciones.</p>
+			{!wallet && !esperoWallet ? <p className="aviso">Tu cuenta todavía no tiene wallet.</p> : null}
 			{error ? <p className="aviso">{error}</p> : null}
-			<button onClick={autorizar} disabled={estado !== "listo" || (!wallet && esperoWallet)}>
-				{estado === "listo" ? `Autorizar a ${datos.cliente}` : estado === "enviando" ? "Autorizando…" : "Volviendo a tu app…"}
+			<button onClick={autorizar} disabled={ocupado || (!wallet && esperoWallet)}>
+				{estado === "listo" ? "Conectar" : estado === "enviando" ? "Conectando…" : "Volviendo a tu app…"}
 			</button>
-			<button className="secundario" onClick={logout} disabled={estado !== "listo"}>
-				Usar otra cuenta
-			</button>
+			{avisoLocal}
 		</>
 	);
+}
+
+/** 0xB036…B2f3 */
+function corta(direccion: string): string {
+	return `${direccion.slice(0, 6)}…${direccion.slice(-4)}`;
 }
 
 function App() {
@@ -107,7 +100,7 @@ function App() {
 	if (!datos) {
 		return (
 			<>
-				<h1>MCP de Mixto C</h1>
+				<h1>Saltar para tu asistente</h1>
 				<p>Esta página se abre sola cuando conectás el MCP desde Claude, Claude Code o Cursor.</p>
 			</>
 		);
@@ -116,8 +109,8 @@ function App() {
 		<PrivyProvider
 			appId={datos.appId}
 			config={{
-				// Google está apagado en el dashboard de Privy de la app "hacka".
-				loginMethods: ["email", "wallet"],
+				// Misma app de Privy que apps/web, donde Google ya está habilitado.
+				loginMethods: ["google", "email", "wallet"],
 				defaultChain: arbitrum,
 				supportedChains: [arbitrum],
 				embeddedWallets: { ethereum: { createOnLogin: "users-without-wallets" } },

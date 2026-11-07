@@ -38,3 +38,26 @@
 .brillo-sol {
   box-shadow: 0 10px 30px #f2ae2e59;
 }
+
+/* Tema de /app: la paleta de Medicus sobre nuestros mismos tokens.
+   Redefinir las variables alcanza: los componentes que se reusan (Plan, TxButton) la toman solos. */
+.tema-medicus {
+  --color-navy: #002564;
+  --color-navy-deep: #002564;
+  --color-ink-2: #4d6693;
+  --color-paper: #f3f6fb;
+  --color-cream: #eaf0f9;
+  --color-cream-2: #e1e8f4;
+  --color-line: #dbe2ee;
+  --color-sun: #6399f8;
+  --color-sun-soft: #c9dbfd;
+  --color-sun-ink: #0f4cb6;
+  --color-lavender: #6399f8;
+  --color-lavender-soft: #e3ecfd;
+  --color-ok: #17795a;
+  --color-bad: #bc1723;
+  --color-live: #1fbf6a;
+}
+.tema-medicus .brillo-sol {
+  box-shadow: none;
+}

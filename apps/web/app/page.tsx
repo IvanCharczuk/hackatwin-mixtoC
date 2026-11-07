@@ -29,7 +29,7 @@ export default function Dashboard() {
 
   return (
     <main className="flex min-h-screen flex-col">
-      <Paisaje>
+      <Paisaje llenar={!(ready && authenticated && address)}>
         <BarraSuperior authenticated={authenticated} mock={mock} login={login} logout={logout} />
         {ready && authenticated && address ? (
           <Hero credito={credito} cargando={isLoading} onPedir={pedir} />

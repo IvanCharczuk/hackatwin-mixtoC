@@ -1,7 +1,7 @@
 # mcp
 
 MCP remoto del equipo en Cloudflare Workers. Se agrega por URL en Claude,
-Claude Code o Cursor; el login es Privy (email o wallet), el mismo usuario y la
+Claude Code o Cursor; el login es Privy (Google, email o wallet), el mismo usuario y la
 misma wallet que la web. Todas las herramientas son de lectura: ninguna firma
 ni manda transacciones (regla 4 de `AGENTS.md`).
 
