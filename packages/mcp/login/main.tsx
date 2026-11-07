@@ -53,7 +53,7 @@ function Autorizar({ datos }: { datos: Datos }) {
 
 	const quien = (
 		<p>
-			<b>{datos.cliente}</b> quiere usar el MCP de Mixto C con tu usuario. El acceso se envía a <b>{datos.destino}</b>.
+			<b>{datos.cliente}</b> quiere leer tu cuenta de Saltar. El acceso se envía a <b>{datos.destino}</b>.
 		</p>
 	);
 	const avisoLocal = datos.destinoLocal ? (
@@ -65,7 +65,8 @@ function Autorizar({ datos }: { datos: Datos }) {
 	if (!authenticated) {
 		return (
 			<>
-				<h1>Entrar al MCP de Mixto C</h1>
+				<p className="eyebrow">Conectar asistente</p>
+				<h1>Entrá a Saltar</h1>
 				{quien}
 				{avisoLocal}
 				<button onClick={login}>Entrar con Privy</button>
@@ -76,7 +77,8 @@ function Autorizar({ datos }: { datos: Datos }) {
 	const email = user?.email?.address ?? null;
 	return (
 		<>
-			<h1>Autorizar acceso</h1>
+			<p className="eyebrow">Conectar asistente</p>
+				<h1>Autorizar acceso</h1>
 			{quien}
 			{avisoLocal}
 			<p>
@@ -90,7 +92,7 @@ function Autorizar({ datos }: { datos: Datos }) {
 			</p>
 			{!wallet && esperoWallet ? <p>Creando tu wallet…</p> : null}
 			{!wallet && !esperoWallet ? <p className="aviso">Tu usuario no tiene wallet todavía: las herramientas de saldos no van a andar.</p> : null}
-			<p>Sólo lectura: el MCP no firma ni manda transacciones.</p>
+			<p className="nota">Sólo lectura: ve tus saldos y tu posición, pero no firma ni manda transacciones.</p>
 			{error ? <p className="aviso">{error}</p> : null}
 			<button onClick={autorizar} disabled={estado !== "listo" || (!wallet && esperoWallet)}>
 				{estado === "listo" ? `Autorizar a ${datos.cliente}` : estado === "enviando" ? "Autorizando…" : "Volviendo a tu app…"}
@@ -107,7 +109,7 @@ function App() {
 	if (!datos) {
 		return (
 			<>
-				<h1>MCP de Mixto C</h1>
+				<h1>Saltar para tu asistente</h1>
 				<p>Esta página se abre sola cuando conectás el MCP desde Claude, Claude Code o Cursor.</p>
 			</>
 		);
