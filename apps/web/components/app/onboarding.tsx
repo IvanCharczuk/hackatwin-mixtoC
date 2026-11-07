@@ -61,8 +61,13 @@ export function Onboarding({ wallet, simular, onListo }: { wallet: `0x${string}`
           </fieldset>
           <div className="flex flex-col gap-2">
             <label htmlFor="ob-id" className="text-[14px] font-semibold text-navy">{pais.idNombre} de la empresa en {pais.nombre}</label>
-            <input id="ob-id" value={idLocal} onChange={(e) => setIdLocal(e.target.value)} autoFocus placeholder={pais.ejemplo} spellCheck={false} aria-invalid={Boolean(idLocal) && !idOk} className={cn("rounded-full border bg-white px-5 py-3 font-mono text-[16px] text-navy outline-none focus-visible:border-sun", idLocal && !idOk ? "border-bad" : "border-line")} />
-            <p className={cn("text-[13px]", idLocal && !idOk ? "text-bad" : "text-ink-2")}>{idLocal && !idOk ? `Ese ${pais.idNombre} no es válido.` : `Por ejemplo ${pais.ejemplo}.`}</p>
+            <input id="ob-id" value={idLocal} onChange={(e) => setIdLocal(e.target.value.replace(/[^0-9A-Za-zÑñ&.\-\/]/g, ""))} autoFocus placeholder={pais.ejemplo} spellCheck={false} aria-invalid={Boolean(idLocal) && !idOk} className={cn("rounded-full border bg-white px-5 py-3 font-mono text-[16px] text-navy outline-none focus-visible:border-sun", idLocal && !idOk ? "border-bad" : "border-line")} />
+            <p className={cn("text-[13px]", idLocal && !idOk ? "text-bad" : "text-ink-2")}>
+              {idLocal && !idOk ? `Ese ${pais.idNombre} no es válido. ` : ""}
+              <button type="button" onClick={() => setIdLocal(pais.ejemplo)} className="font-semibold text-sun-ink underline underline-offset-2 hover:text-navy">
+                Usar el de ejemplo
+              </button>
+            </p>
           </div>
           {idOk && !local && (
             <section aria-label={`Antecedentes en ${pais.nombre}`} className="flex flex-col gap-1 rounded-[16px] bg-paper px-4 py-3">
@@ -81,8 +86,13 @@ export function Onboarding({ wallet, simular, onListo }: { wallet: `0x${string}`
           {!local && idOk && (
             <div className="flex flex-col gap-2">
               <label htmlFor="ob-cuit" className="text-[14px] font-semibold text-navy">CUIT de tu filial en Argentina</label>
-              <input id="ob-cuit" value={cuitFilial} onChange={(e) => setCuitFilial(e.target.value)} inputMode="numeric" placeholder="30-99999902-3" className="rounded-full border border-line bg-white px-5 py-3 font-mono text-[16px] text-navy outline-none focus-visible:border-sun" />
-              <p className="text-[13px] text-ink-2">Es a quien le llegan las facturas. Para la demo: 30-99999902-3.</p>
+              <input id="ob-cuit" value={cuitFilial} onChange={(e) => setCuitFilial(e.target.value.replace(/[^\d-]/g, ""))} inputMode="numeric" placeholder="30-99999902-3" className="rounded-full border border-line bg-white px-5 py-3 font-mono text-[16px] text-navy outline-none focus-visible:border-sun" />
+              <p className="text-[13px] text-ink-2">
+                Es a quien le llegan las facturas.{" "}
+                <button type="button" onClick={() => setCuitFilial("30-99999902-3")} className="font-semibold text-sun-ink underline underline-offset-2 hover:text-navy">
+                  Usar el de ejemplo
+                </button>
+              </p>
             </div>
           )}
           {valido && (
@@ -92,7 +102,7 @@ export function Onboarding({ wallet, simular, onListo }: { wallet: `0x${string}`
                 <span className="text-[14px] text-ink-2">Buscando en el BCRA…</span>
               ) : bcra?.ok ? (
                 <span className="flex flex-col">
-                  <span className="text-[15px] font-semibold text-navy">{bcra.denominacion ?? "Empresa registrada"}</span>
+                  <span className="text-[15px] font-semibold text-navy">{bcra.denominacion ?? `CUIT ${digitos(cuit).replace(/^(\d{2})(\d{8})(\d)$/, "$1-$2-$3")}`}</span>
                   <span className="inline-flex items-center gap-1 text-[13px] text-ok"><BadgeCheck className="size-3.5" aria-hidden="true" />{bcra.situacionMax ? `Situación ${bcra.situacionMax} en el BCRA` : "Sin deudas en el BCRA"}</span>
                 </span>
               ) : (
