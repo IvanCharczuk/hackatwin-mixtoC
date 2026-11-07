@@ -32,7 +32,7 @@ mañana mismo tenés tu préstamo.** Tiene que ser el titular del pitch.
 respaldo» · «Cada pago revisado».
 
 **En la demo:** el préstamo sale en vivo y se ve el hash en Arbiscan. Esa es
-la prueba de la velocidad; decilo: «esto que vieron tardó un minuto».
+la prueba de la velocidad. Cronometrá la demo en el ensayo y decí el tiempo real («esto que vieron tardó X»).
 
 ## Cuidados
 
