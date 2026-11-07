@@ -14,8 +14,8 @@ día uno.»**
 
 El problema, sin detalle técnico.
 
-> Hoy hay 13 proyectos mineros aprobados en Argentina por 25 billions de
-> dólares, y otros 20 de minería y petróleo esperando. Las empresas que
+> Hoy hay más de 25 billions de dólares aprobados en proyectos mineros en
+> Argentina, y 7 proyectos mineros más esperando. Las empresas que
 > llegan tienen que pagarles desde el primer día a cientos de proveedores
 > locales.
 > Pero el banco no las conoce y conseguir pesos desde afuera lleva tiempo y
@@ -55,7 +55,7 @@ sueltas, nada de frases largas) y Ivan cuenta. El video no tiene voz.
 
 | Tiempo | En pantalla (video) | Lo que decís |
 |---|---|---|
-| 0:00 a 0:14 | **El mercado.** Un contador sube de «US$ 56B» a «US$ 160B+». Después, un camión con el nombre «Excon» cruza de Chile hacia «San Juan». | «Hoy hay 56 billions de dólares aprobados para grandes proyectos en Argentina, y con los que esperan aprobación puede pasar los 160 billions. Contratistas chilenas como Excon ya analizan entrar a San Juan.» |
+| 0:00 a 0:14 | **El mercado minero.** Un contador sube hasta «US$ 25B+ en minería» y aparece «+7 proyectos esperando». Después, un camión con el nombre «Excon» cruza de Chile hacia «San Juan». | «Hoy hay más de 25 billions de dólares aprobados en proyectos mineros en Argentina, y 7 proyectos más esperando. Contratistas chilenas como Excon ya analizan entrar a San Juan.» |
 | 0:14 a 0:22 | **El problema.** Una solicitud de crédito se sella: «Sin historial en Argentina». | «Para arrancar necesitan pesos desde el primer día, pero en Argentina no tienen historial para pedir crédito.» |
 | 0:22 a 0:32 | **Los beneficios.** El logo de Saltar despeja el riel; aparecen tres checks: «Día uno» ✓ «Con su garantía» ✓ «Factura revisada» ✓. | «Saltar agiliza los rieles para que tengan pesos desde el día uno, con su propia garantía y cada factura revisada antes de pagar.» |
 | 0:32 a 0:44 | **Las alternativas.** Dos columnas que se tachan: «Banco» ✗, «Casa matriz» ✗; aparece «Saltar» ✓. | «Hoy les queda el banco, que pide historial, o traer plata de la casa matriz, con tiempo y trámites. Saltar resuelve las dos cosas.» |
@@ -167,9 +167,12 @@ USDT0: el CHLt se cambia en Curve. También puede dejar USDC o USDT0 directo.
 - [ ] El video de 1 minuto (spec 0135): es la primera mitad del pitch.
 - [ ] Ensayar la demo dos veces con el cronómetro.
 
-Inversión del RIGI: 24 proyectos aprobados por US$ 56.198 M (octubre 2026) y
-unos US$ 110.883 M en evaluación (fecha anterior, a verificar); suma más de
-US$ 160.000 M. Fuentes en el mensaje de Franco de las 15:34.
+Minería (el pitch habla sólo de minería): US$ 25.230 M en 13 proyectos
+mineros aprobados (Minería y Desarrollo, oct 2026) y US$ 27.624 M según
+Economis/IIEP (31/10/2026); por eso «más de 25 billions». 7 proyectos mineros
+en evaluación (DF Sud y Chequeado, ago 2026). El dato oficial del total del
+RIGI (Ministerio de Economía vía Chequeado, 2/10/2026) es 23 proyectos por
+US$ 49.700 M, 12 mineros: no se dice en el minuto.
 
 San Juan y Catamarca (proyectos mineros aprobados en el RIGI): Vicuña US$ 9.737 M,
 Los Azules US$ 2.672 M y Veladero US$ 436 M en San Juan; MARA US$ 6.394 M en
