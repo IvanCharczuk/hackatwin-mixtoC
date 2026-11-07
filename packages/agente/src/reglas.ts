@@ -39,6 +39,9 @@ export type Entrada = {
   colateralExtraUsdt0?: number;
   /** ARGt que quiere pedir; si falta, se informa el máximo. */
   pedidoArgt?: number;
+  /** Tope que impone otra verificación (la de solvencia en el país de origen). Se usa el menor. */
+  topeMaximo?: number;
+  motivoTopeMaximo?: string;
 };
 
 export type Decision = {
@@ -108,7 +111,13 @@ export function topePorPerfil(bcra: Bcra): { tope: number; motivos: string[] } {
 }
 
 export function decidir(e: Entrada): Decision {
-  const { tope, motivos } = topePorPerfil(e.bcra);
+  const perfil = topePorPerfil(e.bcra);
+  const motivos = perfil.motivos;
+  let tope = perfil.tope;
+  if (e.topeMaximo !== undefined && e.topeMaximo < tope) {
+    tope = e.topeMaximo;
+    motivos.push(e.motivoTopeMaximo ?? `La verificación en el país de origen limita el tope al ${Math.round(tope * 100)}%.`);
+  }
   const colateralUsdt0 = e.posicion.colateralUsdt0 + (e.colateralExtraUsdt0 ?? 0);
   const colateralEnArgt = colateralUsdt0 * e.mercado.precioArgtPorUsdt0;
   const maxPorColateralArgt = Math.max(0, colateralEnArgt * tope - e.posicion.deudaArgt);

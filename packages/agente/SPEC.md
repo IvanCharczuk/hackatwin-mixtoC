@@ -68,6 +68,30 @@ del lado del servidor (la clave de Claude nunca llega al navegador).
   `npm test -w packages/agente` (pago.test.ts) y
   `npm run -s -w packages/agente perfil -- 30546689979 0x000000000000000000000000000000000000dEaD --colateral 10 --factura-cuit 30500010912 --factura-monto 12000 | grep -q plata-suficiente`
 
+### Solvencia en el país de origen (receta abstracta, una implementación por país)
+
+Una empresa que recién llega no tiene historia en el BCRA: su solvencia está en
+su país. La **receta** (`src/solvencia/receta.ts`) dice **qué** se verifica y
+es igual para todos: identidad, situación tributaria, deuda financiera,
+morosidad comercial, insolvencia, sanciones, capacidad, Argentina local y
+onchain. Cada **país** (`src/solvencia/<pais>.ts`) dice **dónde y cómo**: su
+id fiscal y su fuente por paso, con el tipo de acceso (API pública, consulta
+manual, con consentimiento de la empresa). El **veredicto** no sabe de qué
+país viene: alerta grave → 0; algún paso obligatorio pendiente → 40%; alerta
+leve → 50%; todo verificado → 60%. «Sin dato» baja el tope, nunca lo sube. El
+agente usa el menor entre este tope y el del BCRA.
+
+- **Chile, caso base** (el país con más inversión minera hacia Argentina): RUT
+  validado de verdad; SII, Registro de Empresas, CMF, Equifax o Boletín
+  Comercial, Boletín Concursal y listas de sanciones como fuentes, cada una
+  con su acceso. En la demo, `simular: true` marca los pasos como ejemplo.
+- **Argentina:** envuelve la consulta real al BCRA (deuda y cheques).
+- **Sumar un país** (Perú, Brasil, Canadá, Australia): un archivo con su
+  `Pais` y su `Verificador`, y una línea en `src/solvencia/index.ts`.
+- Entrada: `origen: { pais: "CL", idFiscal: "<RUT>", simular? }` en
+  `evaluar()`, en el comando (`--pais CL --id-fiscal <RUT> [--simular-origen]`)
+  y en `POST /api/agente`.
+
 Lo que sigue más abajo (factura, niveles por historial, repago por factura,
 vínculo factura y plata) es para después de la demo.
 

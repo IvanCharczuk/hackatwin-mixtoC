@@ -21,6 +21,7 @@ const opt: Record<string, string | boolean> = {};
 for (let i = 0; i < args.length; i++) {
   const a = args[i];
   if (a === "--sin-explicacion") opt.sinExplicacion = true;
+  else if (a === "--simular-origen") opt["simular-origen"] = true;
   else if (a.startsWith("--")) opt[a.slice(2)] = args[++i];
   else pos.push(a);
 }
@@ -38,6 +39,7 @@ try {
     colateralUsdt0: opt.colateral as string | undefined as any,
     pedidoArgt: opt.pedido as string | undefined as any,
     conExplicacion: !opt.sinExplicacion,
+    origen: opt["pais"] ? { pais: String(opt["pais"]), idFiscal: String(opt["id-fiscal"] ?? ""), simular: Boolean(opt["simular-origen"]) } : undefined,
     factura: opt["factura-cuit"]
       ? { cuitProveedor: String(opt["factura-cuit"]), montoArs: Number(opt["factura-monto"]), numero: opt["factura-numero"] as string | undefined }
       : undefined,

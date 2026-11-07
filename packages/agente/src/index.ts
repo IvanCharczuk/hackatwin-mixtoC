@@ -7,11 +7,13 @@ import { leerOnchain, normalizarWallet, type Onchain } from "./onchain";
 import { decidir, type Bcra, type Decision } from "./reglas";
 import { planearPago, alertasProveedor, armarChecks, type PlanPago, type Alertas, type Check } from "./pago";
 import { explicar } from "./explicar";
+import { verificarSolvencia, type Solvencia } from "./solvencia/index";
 
 export type { Bcra, Decision, Onchain, PlanPago, Alertas, Check };
 export { decidir, topePorPerfil } from "./reglas";
 export { planearPago, alertasProveedor, armarChecks } from "./pago";
 export { leerFactura, validarFacturaLeida, type FacturaLeida, type FacturaValidada } from "./leerFactura";
+export { verificarSolvencia, PAISES, validarRut, validarCuit, combinar, type Solvencia } from "./solvencia/index";
 
 type BcraSimulado = { situacion: number | null; chequesRechazados?: number };
 
@@ -38,6 +40,8 @@ export type Pedido = {
   bcraSimulado?: BcraSimulado;
   /** Factura a pagar con ARGt: suma el perfil del proveedor y el plan de pago. */
   factura?: Factura;
+  /** Empresa de afuera: verifica su solvencia en su país de origen (receta por país). */
+  origen?: { pais: string; idFiscal: string; simular?: boolean };
 };
 
 export type Pago = {
@@ -52,6 +56,7 @@ export type Resultado = {
   perfil: { bcra: Bcra; onchain: Onchain };
   decision: Decision;
   pago: Pago | null;
+  solvencia: Solvencia | null;
   explicacion: { texto: string; fuente: "claude" | "armada"; error?: string };
   consultadoEn: string;
 };
@@ -103,15 +108,26 @@ export async function evaluar(p: Pedido): Promise<Resultado> {
 
   const empresaSim = p.bcraSimulado ? perfilSimulado(p.bcraSimulado, "Empresa de ejemplo") : null;
   const proveedorSim = p.factura?.bcraSimulado ? perfilSimulado(p.factura.bcraSimulado, "Proveedor de ejemplo") : null;
-  const [bcra, onchain, proveedor] = await Promise.all([
+  const [bcra, onchain, proveedor, solvencia] = await Promise.all([
     empresaSim ?? consultarBcra(cuit),
     leerOnchain(wallet),
     factura ? (proveedorSim ?? consultarBcra(factura.cuitProveedor)) : Promise.resolve(null),
+    p.origen ? verificarSolvencia(p.origen.pais, p.origen.idFiscal, { simular: p.origen.simular }) : Promise.resolve(null),
   ]);
   // Con factura y sin pedido explícito, lo que se pide es lo que falta después de usar el saldo.
   const pedidoEfectivo =
     pedidoArgt ?? (factura ? Math.max(0, factura.montoArs - onchain.saldos.ARGt) : undefined);
-  const decision = decidir({ bcra, mercado: onchain.mercado, posicion: onchain.posicion, colateralExtraUsdt0, pedidoArgt: pedidoEfectivo });
+  const decision = decidir({
+    bcra,
+    mercado: onchain.mercado,
+    posicion: onchain.posicion,
+    colateralExtraUsdt0,
+    pedidoArgt: pedidoEfectivo,
+    topeMaximo: solvencia?.veredicto.tope,
+    motivoTopeMaximo: solvencia
+      ? `Verificación en ${solvencia.pais}: ${solvencia.veredicto.nivel}${solvencia.veredicto.faltan.length ? ` (falta: ${solvencia.veredicto.faltan.join(", ")})` : ""}; tope ${Math.round(solvencia.veredicto.tope * 100)}%.`
+      : undefined,
+  });
 
   let pago: Pago | null = null;
   if (factura && proveedor) {
@@ -135,5 +151,5 @@ export async function evaluar(p: Pedido): Promise<Resultado> {
     p.conExplicacion === false
       ? { texto: "", fuente: "armada" as const }
       : await explicar(decision, bcra, onchain, pago);
-  return { perfil: { bcra, onchain }, decision, pago, explicacion, consultadoEn: new Date().toISOString() };
+  return { perfil: { bcra, onchain }, decision, pago, solvencia, explicacion, consultadoEn: new Date().toISOString() };
 }
