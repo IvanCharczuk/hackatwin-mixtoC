@@ -39,4 +39,18 @@ Ver `apps/web/README.md` y `packages/circuito/README.md` hasta que lo pase acá.
 
 ## Bri
 
-Sin estado todavía.
+Actualizado: 7/11/2026 19:25. Trabaja con ALIS (IA de Bri).
+
+- **Hecho:** sumada al equipo. Zona: modelo de negocio, competencia, números y
+  pitch. Revisión de datos del pitch con fuentes en
+  [investigacion/verificacion-pitch-7-11.md](investigacion/verificacion-pitch-7-11.md).
+  Confirmado el DNU 736/2026 (crédito en dólares a empresas sin exportaciones).
+- **Hallazgo principal:** el RIGI del repo no coincide con la fuente oficial
+  (Chequeado, octubre: 23 aprobados por US$ 49.700 M, 12 mineros). Ver mensaje
+  de las 19:25.
+- **En qué estoy:** verificar los datos sin fuente del guion (plazo de 6 y 120
+  días, liquidez de Morpho, tasa, Xepelin) y abrir los links de Meta Project y
+  Reliper.
+- **Necesito de otros:** Ivan, si usamos el dato de Chequeado en el guion y el
+  video. Steven, el link del 27 / US$ 76.173 M. Franco, la norma de los 6 y
+  120 días y acceso para mirar la liquidez de Morpho.
