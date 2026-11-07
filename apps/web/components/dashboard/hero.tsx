@@ -1,11 +1,12 @@
 "use client";
 
-import { ArrowDown, ArrowRight, LogOut } from "lucide-react";
+import { ArrowDown, ArrowRight, LogOut, Wallet } from "lucide-react";
 import { useAccount, useSwitchChain } from "wagmi";
 import { SlidingNumber } from "@/components/animate-ui/primitives/texts/sliding-number";
 import { CHAIN_ID } from "@/lib/tokens";
 import { corta, fmt, pct } from "@/lib/formato";
 import type { Credito } from "@/lib/credito";
+import { useSaldos } from "@/lib/hooks/use-factura";
 
 const EYEBROW = "text-[12px] font-semibold uppercase tracking-[2px] lg:text-[13px]";
 
@@ -13,6 +14,8 @@ export function BarraSuperior({ authenticated, mock, login, logout }: { authenti
   const { address, chainId } = useAccount();
   const { switchChain, isPending } = useSwitchChain();
   const enArbitrum = chainId === CHAIN_ID;
+  const saldos = useSaldos(authenticated ? address : undefined);
+  const monto = (v: number | undefined) => (v === undefined ? "…" : fmt(v));
   return (
     <header className="relative z-10 mx-auto flex w-full max-w-[1248px] items-center justify-between gap-3 px-5 py-5 sm:px-6">
       <a href="/" className="flex shrink-0 items-center gap-2 text-[16px] font-bold whitespace-nowrap text-white sm:text-[17px]">
@@ -28,8 +31,18 @@ export function BarraSuperior({ authenticated, mock, login, logout }: { authenti
             className="flex items-center gap-2 rounded-full border border-white/20 bg-white/8 px-3 py-2 text-[13px] whitespace-nowrap text-white disabled:cursor-default sm:px-3.5"
           >
             <span className={`size-2 rounded-full ${enArbitrum ? "bg-live" : "bg-sun"}`} aria-hidden="true" />
-            <span className="font-mono">{corta(address)}</span>
-            <span className="hidden text-lavender-soft sm:inline">· {enArbitrum ? "Arbitrum" : "Cambiar a Arbitrum"}</span>
+            {enArbitrum ? (
+              <span className="font-mono font-semibold tabular-nums">
+                {monto(saldos.argt)} <span className="font-sans font-medium text-lavender-soft">ARGt</span>
+                <span className="hidden sm:inline">
+                  {" "}· {monto(saldos.chlt)} <span className="font-sans font-medium text-lavender-soft">CHLt</span>
+                </span>
+              </span>
+            ) : (
+              <span className="font-semibold text-sun-soft">Cambiar a Arbitrum</span>
+            )}
+            <span className="hidden h-4 w-px bg-white/20 sm:block" aria-hidden="true" />
+            <span className="hidden font-mono text-lavender-soft sm:inline">{corta(address)}</span>
             {mock && <span className="rounded-full bg-sun px-2 py-0.5 text-[11px] font-bold text-navy-deep">demo</span>}
           </button>
           <button type="button" onClick={logout} aria-label="Salir" className="flex size-9 items-center justify-center rounded-full border border-white/20 text-lavender-soft hover:text-white">
@@ -37,8 +50,13 @@ export function BarraSuperior({ authenticated, mock, login, logout }: { authenti
           </button>
         </div>
       ) : (
-        <button type="button" onClick={login} className="rounded-full border-[1.5px] border-white/60 px-5 py-2 text-sm font-semibold text-white hover:bg-white/10">
-          Entrar
+        <button
+          type="button"
+          onClick={login}
+          className="brillo-sol inline-flex items-center gap-2 rounded-full bg-sun px-5 py-2.5 text-[14px] font-bold text-navy-deep transition-transform duration-200 hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white motion-reduce:hover:translate-y-0"
+        >
+          <Wallet className="size-4" aria-hidden="true" />
+          Conectar
         </button>
       )}
     </header>
@@ -57,14 +75,17 @@ function PillMoneda({ logo, etiqueta, monto }: { logo: string; etiqueta: string;
   );
 }
 
-// `llenar`: sin sesión el paisaje crece hasta el footer (las montañas y el sol están anclados abajo).
+// El paisaje es una columna de al menos una pantalla: el contenido se centra en el cielo (CIELO deja libre el alto
+// de las montañas, que escala con el ancho). `llenar`: sin sesión además crece hasta el footer.
+export const CIELO = "flex-1 justify-center pb-[200px] lg:pb-[max(190px,min(21vw,400px))]";
+
 export function Paisaje({ children, llenar = false }: { children: React.ReactNode; llenar?: boolean }) {
   return (
-    <section className={`amanecer relative overflow-hidden${llenar ? " flex-1" : ""}`}>
+    <section className={`amanecer relative flex min-h-[100dvh] flex-col overflow-hidden${llenar ? " flex-1" : ""}`}>
       <div className="estrellas pointer-events-none absolute inset-0" aria-hidden="true" />
       <img src="/sol-de-mayo.png" alt="" aria-hidden="true" className="pointer-events-none absolute bottom-[70px] left-[58%] w-[260px] -translate-x-1/2 lg:bottom-[20px] lg:left-[60%] lg:w-[340px]" />
       <img src="/andes.png" alt="" aria-hidden="true" className="pointer-events-none absolute -bottom-[40px] left-1/2 w-[900px] lg:-bottom-[90px] max-w-none -translate-x-1/2 lg:w-[max(1440px,100%)]" />
-      <div className="relative">{children}</div>
+      <div className="relative flex flex-1 flex-col">{children}</div>
     </section>
   );
 }
@@ -72,7 +93,7 @@ export function Paisaje({ children, llenar = false }: { children: React.ReactNod
 export function Hero({ credito, cargando, onPedir }: { credito: Credito | undefined; cargando: boolean; onPedir: () => void }) {
   const vacio = !cargando && credito && !credito.tienePosicion;
   return (
-    <div className="mx-auto grid w-full max-w-[1248px] gap-8 px-6 pt-6 pb-[200px] lg:grid-cols-[1fr_auto] lg:items-end lg:gap-12 lg:pt-14 lg:pb-[190px]">
+    <div className={`mx-auto grid w-full max-w-[1248px] content-center gap-10 px-6 pt-8 lg:grid-cols-[1fr_auto] lg:items-center lg:gap-16 lg:pt-10 ${CIELO}`}>
       <div className="flex flex-col items-start gap-5">
         <p className={`${EYEBROW} flex items-center gap-3 text-sun`}>
           Pagá hoy en Argentina, devolvé después
@@ -81,11 +102,11 @@ export function Hero({ credito, cargando, onPedir }: { credito: Credito | undefi
         {cargando || !credito ? (
           <div className="h-[84px] w-[min(560px,100%)] animate-pulse rounded-2xl bg-white/10 lg:h-[144px]" />
         ) : vacio ? (
-          <h1 className="max-w-[640px] text-[38px] leading-[1.06] font-semibold tracking-[-1px] text-white lg:text-[64px] lg:tracking-[-1.8px]">
+          <h1 className="max-w-[780px] text-[38px] leading-[1.06] font-semibold tracking-[-1px] text-white lg:text-[56px] lg:tracking-[-1.6px]">
             Todavía no financiaste ningún pago
           </h1>
         ) : (
-          <h1 className="text-[38px] leading-[1.06] font-semibold tracking-[-1px] text-white lg:text-[68px] lg:tracking-[-1.8px]">
+          <h1 className="text-[38px] leading-[1.06] font-semibold tracking-[-1px] text-white lg:text-[60px] lg:tracking-[-1.6px]">
             <span className="flex items-baseline gap-3">
               <SlidingNumber number={Math.floor(credito.disponibleArgt)} thousandSeparator="." className="tabular-nums" />
               <span>ARGt</span>
@@ -107,7 +128,7 @@ export function Hero({ credito, cargando, onPedir }: { credito: Credito | undefi
       </div>
 
       {credito && !cargando && (
-        <div className="flex flex-col items-start gap-2 lg:mb-2 lg:items-stretch">
+        <div className="flex flex-col items-start gap-2 lg:items-stretch">
           <PillMoneda logo="/tokens/CHLt.svg" etiqueta={vacio ? "Dejás de respaldo" : "Tu respaldo"} monto={vacio ? "CHLt" : `≈ ${fmt(credito.chltCongelado)} CHLt`} />
           <ArrowDown className="ml-7 size-4 text-sun" aria-hidden="true" />
           <PillMoneda logo="/tokens/ARGt.svg" etiqueta={vacio ? "Le pagamos" : "Financiado"} monto={vacio ? "ARGt" : `${fmt(credito.deudaArgt)} ARGt`} />
