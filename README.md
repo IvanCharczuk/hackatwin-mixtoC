@@ -8,31 +8,6 @@ Proyecto del equipo Mixto C para la HackaTwin (7 de noviembre de 2026).
 - **Demo:** https://hackatwin-mixtoc-web.vercel.app
 - **Landing:** https://hackatwin-mixtoc-landing.vercel.app
 
-## MCP: Saltar en Claude, Claude Code o Cursor
-
-`saltarg` es un MCP remoto: la empresa le habla a Saltar desde su asistente de
-IA, con el mismo login (Privy) y la misma wallet que la web. Todas las
-herramientas son de lectura: ninguna firma ni manda transacciones.
-
-- **URL:** `https://saltarg-mcp.stevenmolina.workers.dev/mcp`
-- **Claude (web o desktop):** Configuración, Conectores, Agregar conector
-  personalizado, pegar la URL.
-- **Claude Code:** `claude mcp add --transport http saltarg https://saltarg-mcp.stevenmolina.workers.dev/mcp`
-  y después `/mcp` para entrar.
-- **Cursor:** en `mcp.json`, `{"saltarg": {"url": "https://saltarg-mcp.stevenmolina.workers.dev/mcp"}}`.
-
-| Herramienta | Qué hace |
-|---|---|
-| `quien_soy` | Tu usuario de Privy y tu wallet |
-| `saldos` | ETH, ARGt, CHLt y USDT0 de tu wallet en Arbitrum One |
-| `mercado_y_posicion` | Mercado ARGt/USDT0 de Morpho y tu colateral y deuda ahí |
-| `cuanto_puedo_pedir` | Cuánto ARGt podés pedir hoy (tope 60%, BCRA, liquidez). Simula, no pide |
-| `evaluar_factura` | Valida la factura (BCRA de empresa y proveedor, Morpho, solvencia) y sugiere cuánto pedir |
-| `preparar_adelanto` | Arma las transacciones (CHLt → USDT0 en Curve, colateral y préstamo en Morpho) y devuelve el link a la web para firmar |
-
-El prompt `pedir_adelanto` guía el flujo entero, de la factura al link de
-firma. Detalle técnico y cómo desplegarlo: [packages/mcp/README.md](packages/mcp/README.md).
-
 ## Modelo de negocio
 
 **Cobramos a la empresa de afuera que llega a operar en Argentina. No prestamos
@@ -103,6 +78,31 @@ mensajes/             canal entre las IAs del equipo
 ```
 
 Las reglas para trabajar (personas e IAs) están en [AGENTS.md](AGENTS.md).
+
+## MCP: Saltar en Claude, Claude Code o Cursor
+
+`saltarg` es un MCP remoto: la empresa le habla a Saltar desde su asistente de
+IA, con el mismo login (Privy) y la misma wallet que la web. Todas las
+herramientas son de lectura: ninguna firma ni manda transacciones.
+
+- **URL:** `https://saltarg-mcp.stevenmolina.workers.dev/mcp`
+- **Claude (web o desktop):** Configuración, Conectores, Agregar conector
+  personalizado, pegar la URL.
+- **Claude Code:** `claude mcp add --transport http saltarg https://saltarg-mcp.stevenmolina.workers.dev/mcp`
+  y después `/mcp` para entrar.
+- **Cursor:** en `mcp.json`, `{"saltarg": {"url": "https://saltarg-mcp.stevenmolina.workers.dev/mcp"}}`.
+
+| Herramienta | Qué hace |
+|---|---|
+| `quien_soy` | Tu usuario de Privy y tu wallet |
+| `saldos` | ETH, ARGt, CHLt y USDT0 de tu wallet en Arbitrum One |
+| `mercado_y_posicion` | Mercado ARGt/USDT0 de Morpho y tu colateral y deuda ahí |
+| `cuanto_puedo_pedir` | Cuánto ARGt podés pedir hoy (tope 60%, BCRA, liquidez). Simula, no pide |
+| `evaluar_factura` | Valida la factura (BCRA de empresa y proveedor, Morpho, solvencia) y sugiere cuánto pedir |
+| `preparar_adelanto` | Arma las transacciones (CHLt → USDT0 en Curve, colateral y préstamo en Morpho) y devuelve el link a la web para firmar |
+
+El prompt `pedir_adelanto` guía el flujo entero, de la factura al link de
+firma. Detalle técnico y cómo desplegarlo: [packages/mcp/README.md](packages/mcp/README.md).
 
 ## Material previo al evento
 
