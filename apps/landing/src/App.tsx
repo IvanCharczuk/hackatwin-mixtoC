@@ -1,4 +1,4 @@
-import { useState, type FormEvent, type ReactNode } from "react";
+import { useEffect, useRef, useState, type FormEvent, type ReactNode } from "react";
 import {
   ArrowRight,
   Check,
@@ -20,6 +20,7 @@ const NAME = "[Nombre]";
 export function App() {
   return (
     <div className="overflow-x-clip">
+      <SiteHeader />
       <Hero />
       <main>
         <Problem />
@@ -119,22 +120,25 @@ const STARS: [number, number, number][] = [
   [980, 80, 2],
 ];
 
-function Hero() {
-  return (
-    <header className="hero-sky relative flex h-[800px] flex-col items-center overflow-hidden px-6 pt-5 lg:h-[980px] lg:px-24 lg:pt-7">
-      <div className="hero-glow absolute bottom-[-60px] left-1/2 h-[400px] w-[640px] -translate-x-1/2 rounded-full lg:h-[520px] lg:w-[900px]" />
-      <SolDeMayo className="sun-rise bottom-[-20px] left-[calc(50%-120px)] z-[1] w-[240px] lg:bottom-0 lg:left-[calc(50%-210px)] lg:w-[420px]" />
-      <Andes className="bottom-[-226px] z-[2] lg:bottom-[-46px]" />
-      {STARS.map(([x, y, s], i) => (
-        <span
-          key={i}
-          aria-hidden
-          className="absolute rounded-full bg-white/70"
-          style={{ left: `${(x / 1440) * 100}%`, top: y, width: s, height: s }}
-        />
-      ))}
+/* The header is fixed: clear over the hero sky, navy with blur once the page scrolls. */
+function SiteHeader() {
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
-      <nav className="relative z-10 flex w-full max-w-[1248px] items-center justify-between">
+  return (
+    <header
+      className={`fixed inset-x-0 top-0 z-50 flex justify-center px-6 transition-[background-color,box-shadow,padding] duration-300 lg:px-24 ${
+        scrolled
+          ? "bg-navy-deep/85 py-3 shadow-[0_8px_30px_#1b225033] backdrop-blur-md lg:py-3.5"
+          : "bg-transparent py-5 lg:py-7"
+      }`}
+    >
+      <nav className="flex w-full max-w-[1248px] items-center justify-between">
         <a href="#" aria-label={`${NAME}, inicio`}>
           <Logo size={16} />
         </a>
@@ -143,19 +147,80 @@ function Hero() {
           <a className="transition-colors hover:text-white" href="#calculadora">Calculadora</a>
           <a className="transition-colors hover:text-white" href="#preguntas">Preguntas frecuentes</a>
         </div>
-        <div className="hidden items-center gap-4 lg:flex">
-          <span className="text-sm font-medium text-mist">ES / EN</span>
+        <div className="flex items-center gap-4">
+          <span className="hidden text-sm font-medium text-mist lg:inline">ES / EN</span>
           <a
             href="#contacto"
-            className="rounded-full px-[22px] py-3 text-[15px] font-medium text-white ring-[1.5px] ring-white/50 ring-inset transition-colors hover:bg-white/10"
+            className="rounded-full px-4 py-2 text-[13px] font-medium text-white ring-[1.5px] ring-white/50 ring-inset transition-colors hover:bg-white/10 lg:px-[22px] lg:py-3 lg:text-[15px]"
           >
-            Evaluar mi expansión
+            <span className="lg:hidden">Evaluar</span>
+            <span className="hidden lg:inline">Evaluar mi expansión</span>
           </a>
         </div>
       </nav>
+    </header>
+  );
+}
 
-      <div className="relative z-10 flex flex-col items-center">
-        <p className="flex items-center gap-2 pt-12 pb-4 lg:pt-[72px] lg:pb-6">
+/*
+ * Hero parallax: scroll progress through the hero (0 to 1) is written to --p on the
+ * section, and each layer moves at its own depth. Far layers (stars, sun) sink
+ * fastest, the Andes barely move, the copy lifts and fades. Off with reduced motion.
+ */
+function useHeroParallax() {
+  const ref = useRef<HTMLElement>(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    let frame = 0;
+    const update = () => {
+      frame = 0;
+      const p = Math.min(Math.max(window.scrollY / el.offsetHeight, 0), 1);
+      el.style.setProperty("--p", p.toFixed(4));
+    };
+    const onScroll = () => {
+      if (!frame) frame = requestAnimationFrame(update);
+    };
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
+  }, []);
+  return ref;
+}
+
+function Hero() {
+  const ref = useHeroParallax();
+  return (
+    <section
+      ref={ref}
+      className="hero-sky relative flex h-[800px] flex-col items-center overflow-hidden px-6 pt-14 lg:h-[980px] lg:px-24 lg:pt-[76px]"
+    >
+      <div className="parallax-layer intro-fade absolute inset-0" style={{ ["--depth" as string]: 0.55 }} aria-hidden>
+        {STARS.map(([x, y, s], i) => (
+          <span
+            key={i}
+            className="twinkle absolute rounded-full bg-white/70"
+            style={{ left: `${(x / 1440) * 100}%`, top: y, width: s, height: s, animationDelay: `${i * 0.37}s` }}
+          />
+        ))}
+      </div>
+      <div className="parallax-layer absolute inset-0" style={{ ["--depth" as string]: 0.4 }} aria-hidden>
+        <div className="hero-glow absolute bottom-[-60px] left-1/2 h-[400px] w-[640px] -translate-x-1/2 rounded-full lg:h-[520px] lg:w-[900px]" />
+        <SolDeMayo className="sun-rise bottom-[-20px] left-[calc(50%-120px)] w-[240px] lg:bottom-0 lg:left-[calc(50%-210px)] lg:w-[420px]" />
+      </div>
+      <div className="parallax-layer absolute inset-0 z-[2]" style={{ ["--depth" as string]: 0.12 }} aria-hidden>
+        <div className="andes-rise absolute inset-0">
+          <Andes className="bottom-[-226px] lg:bottom-[-46px]" />
+        </div>
+      </div>
+
+      <div className="parallax-copy relative z-10 flex flex-col items-center">
+        <p className="intro-up flex items-center gap-2 pt-12 pb-4 lg:pt-[72px] lg:pb-6" style={{ animationDelay: "0.1s" }}>
           <span className="size-[7px] rounded-full bg-live lg:size-2" aria-hidden />
           <span className="text-[13px] text-mist lg:hidden">Para empresas de Chile que llegan a Argentina</span>
           <span className="hidden text-sm text-lavender-soft lg:inline">
@@ -163,26 +228,29 @@ function Hero() {
           </span>
         </p>
 
-        <h1 className="max-w-[1120px] text-center text-[34px] leading-[38px] font-semibold tracking-[-1px] text-white lg:text-[60px] lg:leading-[66px] lg:tracking-[-1.6px]">
+        <h1
+          className="intro-up max-w-[1120px] text-center text-[34px] leading-[38px] font-semibold tracking-[-1px] text-white lg:text-[60px] lg:leading-[66px] lg:tracking-[-1.6px]"
+          style={{ animationDelay: "0.25s" }}
+        >
           Tu próximo cliente está en Argentina.{" "}
           <span className="text-sun">¿Cómo pagás el primer paso?</span>
         </h1>
 
-        <p className="pt-4 pb-6 text-center text-[17px] leading-[25px] text-mist lg:hidden">
+        <p className="intro-up pt-4 pb-6 text-center text-[17px] leading-[25px] text-mist lg:hidden" style={{ animationDelay: "0.4s" }}>
           Proveedores, equipos y puesta en marcha: los primeros pagos llegan antes que los primeros cobros.
         </p>
 
-        <div className="flex items-center gap-2.5 lg:gap-5 lg:pt-8 lg:pb-7">
+        <div className="intro-up flex items-center gap-2.5 lg:gap-5 lg:pt-8 lg:pb-7" style={{ animationDelay: "0.45s" }}>
           <EquationPill t="CHLt" label="Dejás de garantía" value="CHLt" />
           <ArrowRight className="size-5 text-sun lg:size-7" aria-hidden />
           <EquationPill t="ARGt" label="Tu proveedor cobra en" value="ARGt" />
         </div>
 
-        <p className="hidden text-center text-xl font-medium text-mist lg:block">
+        <p className="intro-up hidden text-center text-xl font-medium text-mist lg:block" style={{ animationDelay: "0.55s" }}>
           Proveedores, equipos y puesta en marcha: los primeros pagos llegan antes que los primeros cobros.
         </p>
 
-        <div className="w-full pt-5 lg:w-auto lg:pt-7">
+        <div className="intro-up w-full pt-5 lg:w-auto lg:pt-7" style={{ animationDelay: "0.65s" }}>
           <a
             href="#contacto"
             className="flex items-center justify-center gap-2.5 rounded-full bg-sun px-[34px] py-4 text-base font-bold text-navy-deep shadow-[0_10px_30px_#f2ae2e59] transition-transform hover:-translate-y-0.5 lg:py-[18px] lg:text-[17px]"
@@ -191,11 +259,14 @@ function Hero() {
             <ArrowRight size={18} aria-hidden />
           </a>
         </div>
-        <p className="max-w-[340px] pt-4 text-center text-xs leading-[18px] font-medium text-white [text-shadow:0_1px_10px_#1b2250] lg:max-w-none lg:text-[13px]">
+        <p
+          className="intro-up max-w-[340px] pt-4 text-center text-xs leading-[18px] font-medium text-white [text-shadow:0_1px_10px_#1b2250] lg:max-w-none lg:text-[13px]"
+          style={{ animationDelay: "0.75s" }}
+        >
           Piloto para empresas de Chile. Sujeto a evaluación, garantía y fondos disponibles.
         </p>
       </div>
-    </header>
+    </section>
   );
 }
 

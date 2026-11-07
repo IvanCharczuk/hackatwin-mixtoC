@@ -53,6 +53,23 @@ body {
   height: auto;
 }
 
+/* Anchors land below the fixed header. */
+section[id] {
+  scroll-margin-top: 72px;
+}
+
+/* Hero parallax: --p (0 to 1) comes from useHeroParallax, --depth is per layer. */
+.parallax-layer {
+  transform: translate3d(0, calc(var(--p, 0) * var(--depth, 0) * 100vh), 0);
+  will-change: transform;
+}
+
+.parallax-copy {
+  transform: translate3d(0, calc(var(--p, 0) * -18vh), 0);
+  opacity: calc(1 - var(--p, 0) * 1.6);
+  will-change: transform, opacity;
+}
+
 @keyframes rise {
   from { transform: translateY(40px); opacity: 0; }
   to { transform: translateY(0); opacity: 1; }
@@ -62,7 +79,50 @@ body {
   animation: rise 1.6s cubic-bezier(0.2, 0.7, 0.2, 1) both;
 }
 
+/* Intro: the Andes come up, the sun follows, the copy arrives line by line. */
+@keyframes andes-in {
+  from { transform: translateY(120px); }
+  to { transform: translateY(0); }
+}
+
+@keyframes up {
+  from { transform: translateY(24px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+
+.andes-rise {
+  animation: andes-in 1.4s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+.intro-up {
+  animation: up 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+.intro-fade {
+  animation: fade 2s ease-out both;
+}
+
+.twinkle {
+  animation: twinkle 4s ease-in-out infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .sun-rise { animation: none; }
+  .sun-rise,
+  .andes-rise,
+  .intro-up,
+  .intro-fade,
+  .twinkle { animation: none; }
+  .parallax-layer,
+  .parallax-copy { transform: none; opacity: 1; }
 }
