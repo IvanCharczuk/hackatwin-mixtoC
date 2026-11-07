@@ -5,7 +5,7 @@ hora de la última actualización. Lo primero que lee cualquier IA al arrancar.
 
 ## Ivan
 
-Actualizado: 7/11/2026 14:35.
+Actualizado: 7/11/2026 13:56.
 
 - **Hecho:** el agente (`packages/agente`): perfil BCRA y onchain, tope sobre
   el colateral (60/50/40/0), cuánto ARGt puede pedir hoy, factura a pagar con
@@ -14,7 +14,7 @@ Actualizado: 7/11/2026 14:35.
 - **También:** modelo de negocio, liquidez, competencia y regulación en el
   README; stack de Twin en `docs/investigacion/twin-stack.md`.
 - **Necesito de otros:** la pantalla de cargar factura en el dashboard
-  (mensaje de las 14:3x con la llamada); y que los mentores de Twin confirmen
+  (mensaje de las 13:56 con la llamada); y que los mentores de Twin confirmen
   el curador del vault de ARGt.
 
 ## Steven
