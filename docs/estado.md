@@ -5,20 +5,17 @@ hora de la última actualización. Lo primero que lee cualquier IA al arrancar.
 
 ## Ivan
 
-Actualizado: 7/11/2026 12:25.
+Actualizado: 7/11/2026 14:35.
 
-- **En qué estoy:** ordenando el repo por tema y definiendo competencia,
-  regulación y modelo de negocio.
-- **Mi propuesta:** el cliente es la empresa grande de afuera que llega a
-  invertir en Argentina; le resolvemos pagar a proveedores locales desde
-  afuera, con cada factura validada por el agente
-  ([ideas/adelantos-facturas.md](ideas/adelantos-facturas.md),
-  [packages/agente/SPEC.md](../packages/agente/SPEC.md)). Encaja con la
-  dirección de Steven de una empresa chilena que abre en Argentina.
-- **Investigación:** [investigacion/regulacion-y-competencia.md](investigacion/regulacion-y-competencia.md)
-  y [investigacion/numeros.md](investigacion/numeros.md).
-- **Necesito de otros:** que los mentores de Twin confirmen liquidez de ARGt y
-  si dan CHLt.
+- **Hecho:** el agente (`packages/agente`): perfil BCRA y onchain, tope sobre
+  el colateral (60/50/40/0), cuánto ARGt puede pedir hoy, factura a pagar con
+  perfil del proveedor, plan de pago y checks, y explicación con Claude Haiku.
+  Endpoint `POST /api/agente` en `apps/web`. 22 tests en verde.
+- **También:** modelo de negocio, liquidez, competencia y regulación en el
+  README; stack de Twin en `docs/investigacion/twin-stack.md`.
+- **Necesito de otros:** la pantalla de cargar factura en el dashboard
+  (mensaje de las 14:3x con la llamada); y que los mentores de Twin confirmen
+  el curador del vault de ARGt.
 
 ## Steven
 
