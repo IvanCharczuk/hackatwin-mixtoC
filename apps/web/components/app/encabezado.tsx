@@ -1,6 +1,6 @@
 "use client";
 
-import { BadgeCheck, CircleAlert, CircleHelp, LogOut } from "lucide-react";
+import { BadgeCheck, CircleAlert, CircleHelp, LogOut, Wallet } from "lucide-react";
 import { useAccount, useSwitchChain } from "wagmi";
 import { CHAIN_ID } from "@/lib/tokens";
 import { corta, fmt } from "@/lib/formato";
@@ -77,8 +77,9 @@ function Barra({ sesion, dentro }: { sesion: Sesion; dentro: boolean }) {
           </button>
         </div>
       ) : (
-        <button type="button" onClick={sesion.login} disabled={!sesion.ready} className="rounded-full bg-sun px-6 py-2.5 text-[14px] font-semibold text-navy transition-colors hover:bg-sun-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-navy disabled:opacity-60">
-          {sesion.ready ? "Entrar" : "Cargando…"}
+        <button type="button" onClick={sesion.login} disabled={!sesion.ready} className="inline-flex items-center gap-2 rounded-full bg-navy px-5 py-2.5 text-[14px] font-semibold text-white transition-colors hover:bg-sun-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sun disabled:opacity-60">
+          <Wallet className="size-4" aria-hidden="true" />
+          {sesion.ready ? "Conectar" : "Cargando…"}
         </button>
       )}
     </div>
@@ -127,12 +128,14 @@ export function Encabezado({
             {dentro ? <Situacion bcra={bcra} cargando={cargandoBcra} /> : <span className="text-[14px] text-ink-2">Con tu sesión leemos tu perfil en el BCRA y tus saldos en Arbitrum.</span>}
           </div>
         </div>
-        <dl className="grid grid-cols-4 gap-x-7 gap-y-2 rounded-[20px] bg-paper px-6 py-4" aria-label="Saldos en Arbitrum">
-          <Saldo token="CHLt" valor={dentro ? saldos.chlt : undefined} />
-          <Saldo token="ARGt" valor={dentro ? saldos.argt : undefined} />
-          <Saldo token="USDT0" valor={dentro ? saldos.usdt0 : undefined} d={2} />
-          <Saldo token="ETH" valor={dentro ? saldos.eth : undefined} d={4} />
-        </dl>
+        {dentro ? (
+          <dl className="grid grid-cols-4 gap-x-7 gap-y-2 rounded-[20px] bg-paper px-6 py-4" aria-label="Saldos en Arbitrum">
+            <Saldo token="CHLt" valor={saldos.chlt} />
+            <Saldo token="ARGt" valor={saldos.argt} />
+            <Saldo token="USDT0" valor={saldos.usdt0} d={2} />
+            <Saldo token="ETH" valor={saldos.eth} d={4} />
+          </dl>
+        ) : null}
       </div>
     </header>
   );
