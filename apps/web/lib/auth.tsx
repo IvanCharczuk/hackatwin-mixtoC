@@ -1,8 +1,9 @@
 "use client";
 
 // Una sola forma de preguntar "¿quién está adentro?", con Privy o en modo demo.
-import { createContext, useContext } from "react";
-import { usePrivy } from "@privy-io/react-auth";
+import { createContext, useContext, useEffect } from "react";
+import { usePrivy, useWallets } from "@privy-io/react-auth";
+import { useSetActiveWallet } from "@privy-io/wagmi";
 import { useAccount, useConnect, useDisconnect } from "wagmi";
 import { mockConnector } from "@/lib/wagmi";
 
@@ -18,6 +19,15 @@ export function useAuth() {
 
 export function PrivyAuth({ children }: { children: React.ReactNode }) {
   const { ready, authenticated, login, logout } = usePrivy();
+  const { wallets } = useWallets();
+  const { setActiveWallet } = useSetActiveWallet();
+  const { address } = useAccount();
+  // Si el navegador tiene una wallet inyectada (MetaMask, Rabby…), wagmi la toma como activa y
+  // todas las cuentas ven la misma dirección. La wallet de la cuenta es la embebida de Privy.
+  const embebida = wallets.find((w) => w.walletClientType === "privy");
+  useEffect(() => {
+    if (authenticated && embebida && address?.toLowerCase() !== embebida.address.toLowerCase()) void setActiveWallet(embebida);
+  }, [authenticated, embebida, address, setActiveWallet]);
   return (
     <AuthContext.Provider value={{ ready, authenticated, login, logout: () => void logout(), mock: false }}>
       {children}
