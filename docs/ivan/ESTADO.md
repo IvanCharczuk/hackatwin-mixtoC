@@ -2,7 +2,9 @@
 
 Actualizado: 7/11/2026 10:52.
 
-- **En qué estoy:** validando la idea con los mentores. Propuesta en
+- **En qué estoy (11:45):** la idea quedó validada por un mentor. Armo el
+  agente que valida y compara el adelanto:
+  [spec-agente-validacion.md](spec-agente-validacion.md). Propuesta en
   [idea.md](idea.md), números en [numeros.md](numeros.md), fuentes en
   [investigacion.md](investigacion.md).
 - **Decidido:** colateral en stablecoin para la demo; acciones tokenizadas
