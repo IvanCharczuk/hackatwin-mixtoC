@@ -61,6 +61,11 @@ los adelantos (no incluido acá).
 
 ## ARGt hoy
 
+- **Dato directo de Twin (7/11/2026):** todas sus monedas suman 10,2 M USDT
+  en circulación, 394 holders y 44,0 M USDT transferidos desde el lanzamiento;
+  casi todo el ARGt (unos 9,7 M USDT) está en el vault de Morpho. Ver
+  `twin-stack.md`. Reemplaza al dato de DIA de abajo.
+
 - Oferta de stablecoins del peso: unos US$ 19,5 M en total; ARGt figura con
   16.200 M de tokens en Arbitrum y Base (dato de DIA; la unidad es a
   verificar). Es un mercado chico: espacio para crecer y poca liquidez.
