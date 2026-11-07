@@ -47,7 +47,7 @@ const es = {
   how: {
     eyebrow: "Cómo funciona",
     title: "De tu plan a operar en Argentina",
-    intro: "No prestamos capital propio. El préstamo sale de un mercado de Morpho, un protocolo abierto de préstamos.",
+    intro: "Los ARGt salen de un mercado abierto de Morpho. Saltar conecta tu garantía con ese mercado.",
     steps: [
       { title: "Contanos tu expansión", desc: (_p: number) => "Dónde abrís, qué ponés en marcha y cuántos pesos necesitás los primeros meses." },
       { title: "Revisamos tu empresa", desc: (_p: number) => "Un agente revisa la documentación y consulta a tu empresa en el BCRA." },
@@ -101,8 +101,8 @@ const es = {
         a: "Para operar en Argentina: alquiler, equipos, sueldos e impuestos. Cada ARGt vale un peso. Tu empresa devuelve lo pedido más los costos, según lo acordado.",
       },
       {
-        q: "¿Quién presta la plata?",
-        a: "No prestamos capital propio. El préstamo sale de un mercado de Morpho, financiado por quienes ponen liquidez en él.",
+        q: "¿De dónde salen los pesos?",
+        a: "De un mercado abierto de Morpho, financiado por quienes ponen liquidez en él. Saltar conecta tu garantía con ese mercado.",
       },
       {
         q: "¿Qué pasa con la garantía?",
@@ -135,7 +135,7 @@ const es = {
   footer: {
     project: "Proyecto de HackaTwin 2026, equipo Mixto C",
     legal:
-      "No prestamos capital propio: el préstamo sale de un mercado de Morpho. El financiamiento requiere garantía, tiene costos y puede implicar la pérdida de los activos comprometidos. Las monedas de Twin son un medio de pago, no una inversión.",
+      "Los ARGt salen de un mercado abierto de Morpho. El financiamiento requiere garantía, tiene costos y puede implicar la pérdida de los activos comprometidos. Las monedas de Twin son un medio de pago, no una inversión.",
   },
 };
 
@@ -182,7 +182,7 @@ const en: Dict = {
   how: {
     eyebrow: "How it works",
     title: "From your plan to operating in Argentina",
-    intro: "We don't lend our own capital. The loan comes from a Morpho market, an open lending protocol.",
+    intro: "The ARGt comes from an open Morpho market. Saltar connects your collateral to it.",
     steps: [
       { title: "Tell us about your expansion", desc: () => "Where you're opening, what you're launching and how many pesos you need for the first months." },
       { title: "We review your company", desc: () => "An agent reviews your documents and checks your company with the BCRA." },
@@ -236,8 +236,8 @@ const en: Dict = {
         a: "To operate in Argentina: rent, equipment, salaries and taxes. Each ARGt is worth one peso. Your company repays what it borrowed plus costs, as agreed.",
       },
       {
-        q: "Who lends the money?",
-        a: "We don't lend our own capital. The loan comes from a Morpho market, funded by those who supply liquidity to it.",
+        q: "Where do the pesos come from?",
+        a: "From an open Morpho market, funded by those who supply liquidity to it. Saltar connects your collateral to it.",
       },
       {
         q: "What happens to the collateral?",
@@ -270,7 +270,7 @@ const en: Dict = {
   footer: {
     project: "HackaTwin 2026 project, team Mixto C",
     legal:
-      "We don't lend our own capital: the loan comes from a Morpho market. Financing requires collateral, has costs and may mean losing the assets pledged. Twin coins are a means of payment, not an investment.",
+      "The ARGt comes from an open Morpho market. Financing requires collateral, has costs and may mean losing the assets pledged. Twin coins are a means of payment, not an investment.",
   },
 };
 
@@ -315,7 +315,7 @@ const pt: Dict = {
   how: {
     eyebrow: "Como funciona",
     title: "Do seu plano a operar na Argentina",
-    intro: "Não emprestamos capital próprio. O empréstimo sai de um mercado da Morpho, um protocolo aberto de empréstimos.",
+    intro: "Os ARGt saem de um mercado aberto da Morpho. A Saltar conecta sua garantia a esse mercado.",
     steps: [
       { title: "Conte sobre a sua expansão", desc: () => "Onde você vai abrir, o que vai colocar em marcha e quantos pesos precisa nos primeiros meses." },
       { title: "Analisamos a sua empresa", desc: () => "Um agente revisa a documentação e consulta a sua empresa no BCRA." },
@@ -369,8 +369,8 @@ const pt: Dict = {
         a: "Para operar na Argentina: aluguel, equipamentos, salários e impostos. Cada ARGt vale um peso. Sua empresa devolve o valor pedido mais os custos, conforme combinado.",
       },
       {
-        q: "Quem empresta o dinheiro?",
-        a: "Não emprestamos capital próprio. O empréstimo sai de um mercado da Morpho, financiado por quem coloca liquidez nele.",
+        q: "De onde vêm os pesos?",
+        a: "De um mercado aberto da Morpho, financiado por quem coloca liquidez nele. A Saltar conecta sua garantia a esse mercado.",
       },
       {
         q: "O que acontece com a garantia?",
@@ -403,7 +403,7 @@ const pt: Dict = {
   footer: {
     project: "Projeto da HackaTwin 2026, equipe Mixto C",
     legal:
-      "Não emprestamos capital próprio: o empréstimo sai de um mercado da Morpho. O financiamento exige garantia, tem custos e pode implicar a perda dos ativos comprometidos. As moedas da Twin são um meio de pagamento, não um investimento.",
+      "Os ARGt saem de um mercado aberto da Morpho. O financiamento exige garantia, tem custos e pode implicar a perda dos ativos comprometidos. As moedas da Twin são um meio de pagamento, não um investimento.",
   },
 };
 

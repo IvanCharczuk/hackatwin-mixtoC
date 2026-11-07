@@ -11,6 +11,7 @@ import { BarraSeguridad, Tarjetas } from "@/components/dashboard/resumen";
 import { AntesDePedir, type Modo } from "@/components/dashboard/antes-de-pedir";
 import { Movimientos } from "@/components/dashboard/movimientos";
 import { Agente } from "@/components/dashboard/agente";
+import { Asistente } from "@/components/asistente";
 
 export default function Dashboard() {
   const { ready, authenticated, login, logout, mock } = useAuth();
@@ -74,6 +75,7 @@ export default function Dashboard() {
           <span>Construido con las monedas de Twin · <a href="/factura" className="underline underline-offset-2">Pagar una factura</a> · <a href="/transferir" className="underline underline-offset-2">Transferir</a></span>
         </div>
       </footer>
+      <Asistente endpoint="/api/chat" wallet={authenticated ? (address ?? null) : null} idioma="es" />
     </main>
   );
 }
