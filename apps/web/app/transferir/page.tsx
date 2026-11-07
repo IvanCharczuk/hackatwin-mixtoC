@@ -11,11 +11,14 @@ import {
   useWriteContract,
 } from "wagmi";
 import { useAuth } from "@/lib/auth";
+import { useT, SelectorIdioma } from "@/lib/i18n";
+import { getLocale } from "@/lib/formato";
 import { CHAIN_ID, EXPLORER_TX, TOKENS, TOKEN_KEYS, erc20Abi, type TokenKey } from "@/lib/tokens";
 
 type Stage = "idle" | "confirming" | "pending" | "success" | "error";
 
 export default function Page() {
+  const { t } = useT();
   const { ready, authenticated, login, logout, mock } = useAuth();
   const { address, chainId } = useAccount();
   const { switchChainAsync, isPending: switching } = useSwitchChain();
@@ -79,27 +82,29 @@ export default function Page() {
       setStage("pending");
     } catch (e) {
       setStage("error");
-      setError(e instanceof Error ? e.message.split("\n")[0] : "falló la transacción");
+      setError(e instanceof Error ? e.message.split("\n")[0] : t.falloTx);
     }
   }
 
-  if (!ready) return <main className="p-6">Cargando…</main>;
+  if (!ready) return <main className="p-6">{t.cargando}</main>;
 
   return (
     <main className="mx-auto flex max-w-md flex-col gap-6 p-6">
       <header className="flex items-center justify-between">
-        <h1 className="text-xl font-semibold">Mixto C · pagos en ARGt</h1>
-        {authenticated ? (
-          <button onClick={logout} className="text-sm underline">Salir</button>
-        ) : (
-          <button onClick={login} className="rounded bg-neutral-900 px-3 py-1.5 text-sm text-white">Entrar</button>
-        )}
+        <h1 className="text-xl font-semibold">{t.tTitulo}</h1>
+        <div className="flex items-center gap-3">
+          <SelectorIdioma tono="claro" />
+          {authenticated ? (
+            <button onClick={logout} className="text-sm underline">{t.salir}</button>
+          ) : (
+            <button onClick={login} className="rounded bg-neutral-900 px-3 py-1.5 text-sm text-white">{t.entrar}</button>
+          )}
+        </div>
       </header>
 
       {mock && (
         <p className="rounded border border-amber-300 bg-amber-50 p-3 text-xs text-amber-900">
-          Modo demo: sin Privy. La wallet es simulada, los saldos son reales en Arbitrum y las
-          transferencias no salen a la red.
+          {t.tDemo}
         </p>
       )}
 
@@ -109,27 +114,27 @@ export default function Page() {
             <div className="font-mono break-all">{address}</div>
             <div className="mt-2 flex items-center gap-2">
               <span className={`inline-block h-2 w-2 rounded-full ${onArbitrum ? "bg-green-600" : "bg-amber-500"}`} />
-              {onArbitrum ? "Arbitrum (42161)" : `Fuera de Arbitrum (chain ${chainId ?? "?"})`}
+              {onArbitrum ? "Arbitrum (42161)" : t.fueraArbitrum(String(chainId ?? "?"))}
               {!onArbitrum && (
                 <button
                   onClick={() => switchChainAsync({ chainId: CHAIN_ID })}
                   disabled={switching}
                   className="ml-auto rounded border px-2 py-1 text-xs"
                 >
-                  {switching ? "Cambiando…" : "Cambiar a Arbitrum"}
+                  {switching ? t.cambiando : t.cambiarArbitrum}
                 </button>
               )}
             </div>
           </section>
 
           <section className="rounded border bg-white p-4 text-sm">
-            <h2 className="mb-2 font-medium">Saldos en Arbitrum</h2>
+            <h2 className="mb-2 font-medium">{t.saldosEn}</h2>
             <table className="w-full tabular-nums">
               <tbody>
-                <tr><td>ETH (gas)</td><td className="text-right">{eth.data ? Number(formatUnits(eth.data.value, 18)).toFixed(5) : "…"}</td></tr>
+                <tr><td>{t.ethGas}</td><td className="text-right">{eth.data ? Number(formatUnits(eth.data.value, 18)).toFixed(5) : "…"}</td></tr>
                 {TOKEN_KEYS.map((k, i) => {
                   const r = balances.data?.[i];
-                  const v = r?.status === "success" ? Number(formatUnits(r.result as bigint, TOKENS[k].decimals)).toLocaleString("es-AR", { maximumFractionDigits: 2 }) : r ? "error" : "…";
+                  const v = r?.status === "success" ? Number(formatUnits(r.result as bigint, TOKENS[k].decimals)).toLocaleString(getLocale(), { maximumFractionDigits: 2 }) : r ? t.errorGenerico : "…";
                   return <tr key={k}><td>{k}</td><td className="text-right">{v}</td></tr>;
                 })}
               </tbody>
@@ -137,24 +142,24 @@ export default function Page() {
           </section>
 
           <section className="rounded border bg-white p-4 text-sm">
-            <h2 className="mb-2 font-medium">Transferir</h2>
+            <h2 className="mb-2 font-medium">{t.transferir}</h2>
             <div className="flex flex-col gap-2">
               <select id="token" value={token} onChange={(e) => setToken(e.target.value as TokenKey)} className="rounded border p-2">
                 {TOKEN_KEYS.map((k) => <option key={k}>{k}</option>)}
               </select>
-              <input id="to" value={to} onChange={(e) => setTo(e.target.value.trim())} placeholder="0x… destino" className="rounded border p-2 font-mono" />
-              <input id="amount" value={amount} onChange={(e) => setAmount(e.target.value)} placeholder="monto" inputMode="decimal" className="rounded border p-2" />
+              <input id="to" value={to} onChange={(e) => setTo(e.target.value.trim())} placeholder={t.destino} className="rounded border p-2 font-mono" />
+              <input id="amount" value={amount} onChange={(e) => setAmount(e.target.value)} placeholder={t.monto} inputMode="decimal" className="rounded border p-2" />
               <button onClick={send} disabled={!canSend} className="rounded bg-neutral-900 px-3 py-2 text-white disabled:opacity-40">
-                {stage === "confirming" ? "Confirmá en la wallet…" : stage === "pending" ? "Esperando la red…" : `Enviar ${token}`}
+                {stage === "confirming" ? t.confirmaEnWallet : stage === "pending" ? t.esperandoRed : t.enviar(token)}
               </button>
               {hash && mock && (
                 <p className="break-all text-neutral-600">
-                  {stage === "success" ? "Simulada" : "Simulando…"}: {hash}
+                  {stage === "success" ? t.simuladaM : t.simulando}: {hash}
                 </p>
               )}
               {hash && !mock && (
                 <a href={`${EXPLORER_TX}${hash}`} target="_blank" rel="noreferrer" className="break-all underline">
-                  {stage === "success" ? "Confirmada" : stage === "error" ? "Revertida" : "Enviada"}: {hash}
+                  {stage === "success" ? t.confirmada : stage === "error" ? t.revertidaM : t.enviada}: {hash}
                 </a>
               )}
               {error && <p className="text-red-700">{error}</p>}

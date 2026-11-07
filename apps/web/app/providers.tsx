@@ -8,10 +8,15 @@ import { arbitrum } from "viem/chains";
 import { mockWagmiConfig, wagmiConfig } from "@/lib/wagmi";
 import { MOCK, PRIVY_APP_ID } from "@/lib/mock";
 import { MockAuth, PrivyAuth } from "@/lib/auth";
+import { LangProvider } from "@/lib/i18n";
 
 const queryClient = new QueryClient();
 
 export function Providers({ children }: { children: React.ReactNode }) {
+  return <LangProvider><Inner>{children}</Inner></LangProvider>;
+}
+
+function Inner({ children }: { children: React.ReactNode }) {
   if (MOCK || !PRIVY_APP_ID) {
     return (
       <PlainWagmiProvider config={mockWagmiConfig}>
