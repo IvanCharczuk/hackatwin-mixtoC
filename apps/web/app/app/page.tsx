@@ -14,7 +14,7 @@ import { Subir } from "@/components/app/subir";
 import { Panel } from "@/components/app/panel";
 import { Pagar } from "@/components/app/pagar";
 import { Onboarding } from "@/components/app/onboarding";
-import { borrarOnboarding, guardarOnboarding, leerOnboarding } from "@/lib/onboarding";
+import { borrarOnboarding, guardarOnboarding, leerOnboarding, type Onboarding } from "@/lib/onboarding";
 
 export default function App() {
   const sesion = useAuth();
@@ -24,7 +24,7 @@ export default function App() {
 
   const [cuit, setCuitEstado] = useState("");
   // Primera vez por wallet: undefined = todavía no leído, null = falta el onboarding.
-  const [ob, setOb] = useState<{ cuit: string } | null | undefined>(undefined);
+  const [ob, setOb] = useState<Onboarding | null | undefined>(undefined);
   useEffect(() => {
     if (!wallet) return setOb(undefined);
     const o = leerOnboarding(wallet);
