@@ -14,17 +14,19 @@ const SPAN = 100_000n;
 const VENTANAS = 4;
 
 const EVENTOS = {
-  SupplyCollateral: { titulo: "Respaldo depositado", token: "USDT0", decimals: 6, signo: "+" },
-  Borrow: { titulo: "Pago financiado", token: "ARGt", decimals: 18, signo: "+" },
-  Repay: { titulo: "Pago de tu saldo", token: "ARGt", decimals: 18, signo: "−" },
-  WithdrawCollateral: { titulo: "Respaldo liberado", token: "USDT0", decimals: 6, signo: "−" },
+  SupplyCollateral: { token: "USDT0", decimals: 6, signo: "+" },
+  Borrow: { token: "ARGt", decimals: 18, signo: "+" },
+  Repay: { token: "ARGt", decimals: 18, signo: "−" },
+  WithdrawCollateral: { token: "USDT0", decimals: 6, signo: "−" },
 } as const;
-type Evento = keyof typeof EVENTOS;
+export type Evento = keyof typeof EVENTOS;
 
 export type Movimiento = {
   hash: `0x${string}`;
-  titulo: string;
-  monto: string;
+  clave: Evento;
+  signo: "+" | "−";
+  valor: number;
+  token: string;
   timestamp: number;
 };
 
@@ -58,8 +60,10 @@ export function useMovimientos(address: `0x${string}` | undefined, enabled = tru
           const assets = (log.args as { assets?: bigint }).assets ?? 0n;
           out.push({
             hash: log.transactionHash!,
-            titulo: e.titulo,
-            monto: `${e.signo}${Number(formatUnits(assets, e.decimals)).toLocaleString("es-AR", { maximumFractionDigits: 2 })} ${e.token}`,
+            clave: name,
+            signo: e.signo,
+            valor: Number(formatUnits(assets, e.decimals)),
+            token: e.token,
             blockNumber: log.blockNumber!,
           });
         }

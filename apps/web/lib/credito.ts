@@ -3,6 +3,8 @@
 // chequear/planear, se cambian acá y la UI queda igual.
 import { encodeFunctionData, erc20Abi, formatUnits, parseUnits, type Hex, type PublicClient } from "viem";
 import { TOKENS } from "@/lib/tokens";
+import { fmt as fmtL } from "@/lib/formato";
+import type { Dict } from "@/lib/i18n";
 import {
   GAS_MINIMO_ETH,
   MARKET_ID,
@@ -126,7 +128,6 @@ export type Chequeo = { id: "C1" | "C2" | "C3" | "C4" | "C5" | "C6"; titulo: str
 export type Paso = { id: string; titulo: string; detalle: string; tx: { to: `0x${string}`; data: Hex } };
 export type Resultado = { ok: boolean; chequeos: Chequeo[]; pasos: Paso[] };
 
-const fmt = (n: number, d = 0) => n.toLocaleString("es-AR", { maximumFractionDigits: d, minimumFractionDigits: d });
 
 const approve = (spender: `0x${string}`, monto: bigint) =>
   encodeFunctionData({ abi: erc20Abi, functionName: "approve", args: [spender, monto] });
@@ -139,7 +140,10 @@ export async function chequear(
   argt: number,
   // ponytail: Morpho manda el ARGt prestado a `receiver`; así le pagamos directo al proveedor (BNPL).
   pagarA: `0x${string}` = wallet,
+  t: Dict,
+  loc: string,
 ): Promise<Resultado> {
+  const fmt = (n: number, d = 0) => fmtL(n, d, loc);
   const dx = parseUnits(String(chlt), 18);
   const argtRaw = parseUnits(String(argt), 18);
   const [saldoChlt, eth, dy, poolUsdt0, po, allowChlt, allowUsdt0] = await Promise.all([
@@ -166,72 +170,46 @@ export async function chequear(
   const aprobaciones = Number(allowChlt < dx) + Number(allowUsdt0 < minDy);
 
   const chequeos: Chequeo[] = [
-    {
-      id: "C1",
-      titulo: "Tenés los CHLt",
-      ok: faltaChlt <= 0,
-      detalle: faltaChlt <= 0 ? `${fmt(num(saldoChlt, 18))} CHLt en tu wallet` : `Te faltan ${fmt(faltaChlt)} CHLt`,
-    },
-    {
-      id: "C2",
-      titulo: "Hay gas para firmar",
-      ok: ethNum >= GAS_MINIMO_ETH,
-      detalle: ethNum >= GAS_MINIMO_ETH ? `${fmt(ethNum, 4)} ETH en Arbitrum` : `Te faltan ${fmt(GAS_MINIMO_ETH - ethNum, 4)} ETH en Arbitrum`,
-    },
-    {
-      id: "C3",
-      titulo: "El cambio a USDT0 rinde",
-      ok: poolUsdt0 >= dy * 2n && impacto < 0.03 && dy > 0n,
-      detalle: `Recibís ${fmt(usdt0, 2)} USDT0, impacto ${fmt(Math.max(0, impacto) * 100, 1)} %`,
-    },
-    {
-      id: "C4",
-      titulo: "Hay fondos para financiarte",
-      ok: credito.liquidezArgt >= argt * 1.1,
-      detalle: `${fmt(credito.liquidezArgt)} ARGt disponibles en Morpho`,
-    },
+    { id: "C1", titulo: t.c1, ok: faltaChlt <= 0, detalle: faltaChlt <= 0 ? t.c1ok(fmt(num(saldoChlt, 18))) : t.c1no(fmt(faltaChlt)) },
+    { id: "C2", titulo: t.c2, ok: ethNum >= GAS_MINIMO_ETH, detalle: ethNum >= GAS_MINIMO_ETH ? t.c2ok(fmt(ethNum, 4)) : t.c2no(fmt(GAS_MINIMO_ETH - ethNum, 4)) },
+    { id: "C3", titulo: t.c3, ok: poolUsdt0 >= dy * 2n && impacto < 0.03 && dy > 0n, detalle: t.c3d(fmt(usdt0, 2), fmt(Math.max(0, impacto) * 100, 1)) },
+    { id: "C4", titulo: t.c4, ok: credito.liquidezArgt >= argt * 1.1, detalle: t.c4d(fmt(credito.liquidezArgt)) },
     {
       id: "C5",
-      titulo: "Entra en tu límite",
+      titulo: t.c5,
       ok: deudaNueva <= tope,
-      detalle:
-        deudaNueva <= tope
-          ? `Tu saldo queda en ${fmt(deudaNueva)} de un límite de ${fmt(tope)} ARGt`
-          : `Te pasás por ${fmt(deudaNueva - tope)} ARGt: tu límite es ${fmt(tope)}`,
+      detalle: deudaNueva <= tope ? t.c5ok(fmt(deudaNueva), fmt(tope)) : t.c5no(fmt(deudaNueva - tope), fmt(tope)),
     },
-    {
-      id: "C6",
-      titulo: "Permisos de los tokens",
-      ok: true,
-      detalle: aprobaciones === 0 ? "Ya están dados" : `Se suma${aprobaciones > 1 ? "n" : ""} ${aprobaciones} ${aprobaciones > 1 ? "aprobaciones" : "aprobación"} al plan`,
-    },
+    { id: "C6", titulo: t.c6, ok: true, detalle: aprobaciones === 0 ? t.c6ya : t.c6suma(aprobaciones) },
   ];
 
   const pasos: Paso[] = [];
   if (allowChlt < dx)
-    pasos.push({ id: "approve-chlt", titulo: "Aprobar CHLt", detalle: `Permite al pool de Curve usar ${fmt(chlt)} CHLt`, tx: { to: TOKENS.CHLt.address, data: approve(POOL_CHLT_USDT0, dx) } });
-  pasos.push({ id: "exchange", titulo: "Pasar tus CHLt a dólares", detalle: `Cambia ${fmt(chlt)} CHLt por al menos ${fmt(num(minDy, 6), 2)} USDT0`, tx: { to: POOL_CHLT_USDT0, data: encodeFunctionData({ abi: curveAbi, functionName: "exchange", args: [0n, 1n, dx, minDy] }) } });
+    pasos.push({ id: "approve-chlt", titulo: t.aprobarChlt, detalle: t.aprobarChltD(fmt(chlt)), tx: { to: TOKENS.CHLt.address, data: approve(POOL_CHLT_USDT0, dx) } });
+  pasos.push({ id: "exchange", titulo: t.pasarADolares, detalle: t.pasarADolaresD(fmt(chlt), fmt(num(minDy, 6), 2)), tx: { to: POOL_CHLT_USDT0, data: encodeFunctionData({ abi: curveAbi, functionName: "exchange", args: [0n, 1n, dx, minDy] }) } });
   if (allowUsdt0 < minDy)
-    pasos.push({ id: "approve-usdt0", titulo: "Aprobar USDT0", detalle: "Permite a Morpho tomar tu respaldo", tx: { to: TOKENS.USDT0.address, data: approve(MORPHO, minDy) } });
-  pasos.push({ id: "supply", titulo: "Dejar tu respaldo", detalle: `${fmt(num(minDy, 6), 2)} USDT0 quedan en Morpho a tu nombre`, tx: { to: MORPHO, data: encodeFunctionData({ abi: morphoAbi, functionName: "supplyCollateral", args: [MARKET_PARAMS, minDy, wallet, "0x"] }) } });
+    pasos.push({ id: "approve-usdt0", titulo: t.aprobarUsdt0, detalle: t.aprobarUsdt0D, tx: { to: TOKENS.USDT0.address, data: approve(MORPHO, minDy) } });
+  pasos.push({ id: "supply", titulo: t.dejarRespaldo, detalle: t.dejarRespaldoD(fmt(num(minDy, 6), 2)), tx: { to: MORPHO, data: encodeFunctionData({ abi: morphoAbi, functionName: "supplyCollateral", args: [MARKET_PARAMS, minDy, wallet, "0x"] }) } });
   const aProveedor = pagarA.toLowerCase() !== wallet.toLowerCase();
-  pasos.push({ id: "borrow", titulo: aProveedor ? "Pagarle a tu proveedor" : "Recibir ARGt", detalle: aProveedor ? `${fmt(argt)} ARGt van a ${pagarA.slice(0, 6)}…${pagarA.slice(-4)}, el saldo queda a tu nombre` : `${fmt(argt)} ARGt llegan a tu wallet`, tx: { to: MORPHO, data: encodeFunctionData({ abi: morphoAbi, functionName: "borrow", args: [MARKET_PARAMS, argtRaw, 0n, wallet, pagarA] }) } });
+  pasos.push({ id: "borrow", titulo: aProveedor ? t.pagarleProveedor : t.recibirArgt, detalle: aProveedor ? t.pagarleProveedorD(fmt(argt), `${pagarA.slice(0, 6)}…${pagarA.slice(-4)}`) : t.recibirArgtD(fmt(argt)), tx: { to: MORPHO, data: encodeFunctionData({ abi: morphoAbi, functionName: "borrow", args: [MARKET_PARAMS, argtRaw, 0n, wallet, pagarA] }) } });
 
   return { ok: chequeos.every((c) => c.ok), chequeos, pasos };
 }
 
 /** Repago entero por shares (cierra la deuda con la comisión corrida), pasos 6 y 7 de la SPEC. */
-export function planRepago(credito: Credito, wallet: `0x${string}`): Paso[] {
+export function planRepago(credito: Credito, wallet: `0x${string}`, t: Dict, loc: string): Paso[] {
+  const fmt = (n: number, d = 0) => fmtL(n, d, loc);
   const margen = (credito.raw.deuda * 101n) / 100n;
   return [
-    { id: "approve-argt", titulo: "Aprobar ARGt", detalle: `Permite a Morpho cobrar hasta ${fmt(num(margen, 18), 2)} ARGt`, tx: { to: TOKENS.ARGt.address, data: approve(MORPHO, margen) } },
-    { id: "repay", titulo: "Pagar tu saldo", detalle: `Cancelás ${fmt(credito.deudaArgt, 2)} ARGt, costo de financiación incluido`, tx: { to: MORPHO, data: encodeFunctionData({ abi: morphoAbi, functionName: "repay", args: [MARKET_PARAMS, 0n, credito.raw.borrowShares, wallet, "0x"] }) } },
+    { id: "approve-argt", titulo: t.aprobarArgt, detalle: t.aprobarArgtD(fmt(num(margen, 18), 2)), tx: { to: TOKENS.ARGt.address, data: approve(MORPHO, margen) } },
+    { id: "repay", titulo: t.pagarTuSaldo, detalle: t.pagarTuSaldoD(fmt(credito.deudaArgt, 2)), tx: { to: MORPHO, data: encodeFunctionData({ abi: morphoAbi, functionName: "repay", args: [MARKET_PARAMS, 0n, credito.raw.borrowShares, wallet, "0x"] }) } },
   ];
 }
 
 /** Retiro de la garantía, paso 8 de la SPEC. Solo con la deuda en cero. */
-export function planRecuperar(credito: Credito, wallet: `0x${string}`): Paso[] {
+export function planRecuperar(credito: Credito, wallet: `0x${string}`, t: Dict, loc: string): Paso[] {
+  const fmt = (n: number, d = 0) => fmtL(n, d, loc);
   return [
-    { id: "withdraw", titulo: "Liberar tu respaldo", detalle: `${fmt(credito.garantiaUsdt0, 2)} USDT0 vuelven a tu wallet`, tx: { to: MORPHO, data: encodeFunctionData({ abi: morphoAbi, functionName: "withdrawCollateral", args: [MARKET_PARAMS, credito.raw.collateral, wallet, wallet] }) } },
+    { id: "withdraw", titulo: t.liberarTuRespaldo, detalle: t.liberarTuRespaldoD(fmt(credito.garantiaUsdt0, 2)), tx: { to: MORPHO, data: encodeFunctionData({ abi: morphoAbi, functionName: "withdrawCollateral", args: [MARKET_PARAMS, credito.raw.collateral, wallet, wallet] }) } },
   ];
 }

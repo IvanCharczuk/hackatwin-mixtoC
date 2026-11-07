@@ -5,6 +5,7 @@ import { keccak256, toHex } from "viem";
 import { useConfig, useSendTransaction, useSwitchChain, useAccount } from "wagmi";
 import { waitForTransactionReceipt } from "wagmi/actions";
 import { useQueryClient } from "@tanstack/react-query";
+import { useT } from "@/lib/i18n";
 import { CHAIN_ID } from "@/lib/tokens";
 import { agregarTx, marcarTx } from "@/lib/sesion";
 import type { Paso } from "@/lib/credito";
@@ -16,6 +17,7 @@ import type { TxButtonStage } from "@/components/tx-button";
  * En modo demo no sale nada a la red: se simula el recorrido con un hash falso.
  */
 export function usePasos(pasos: Paso[], simular: boolean) {
+  const { t } = useT();
   const config = useConfig();
   const queryClient = useQueryClient();
   const { chainId } = useAccount();
@@ -49,11 +51,11 @@ export function usePasos(pasos: Paso[], simular: boolean) {
       else ok = (await waitForTransactionReceipt(config, { hash, chainId: CHAIN_ID })).status === "success";
       marcarTx(hash, ok ? "ok" : "fallo");
       set(paso.id, ok ? "success" : "error");
-      if (!ok) setErrores((e) => ({ ...e, [paso.id]: "La transacción se revirtió." }));
+      if (!ok) setErrores((e) => ({ ...e, [paso.id]: t.txRevertida }));
       void queryClient.invalidateQueries();
     } catch (err) {
       set(paso.id, "error");
-      setErrores((e) => ({ ...e, [paso.id]: err instanceof Error ? err.message.split("\n")[0] : "Falló la firma." }));
+      setErrores((e) => ({ ...e, [paso.id]: err instanceof Error ? err.message.split("\n")[0] : t.fallaFirma }));
     }
   }
 

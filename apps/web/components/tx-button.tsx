@@ -3,13 +3,14 @@
 // Adaptado de tx-button.tsx de Faro: mismo ciclo de vida, con la pill de Amanecer.
 import { Check, Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useT } from "@/lib/i18n";
 
 /** reposo → firma → en curso → éxito/error. `error` deja el click vivo como reintento. */
 export type TxButtonStage = "idle" | "confirming" | "pending" | "success" | "error";
 
 export function TxButton({
   label,
-  successLabel = "Listo",
+  successLabel,
   stage,
   onClick,
   disabled = false,
@@ -22,6 +23,7 @@ export function TxButton({
   disabled?: boolean;
   className?: string;
 }) {
+  const { t } = useT();
   const busy = stage === "confirming" || stage === "pending";
   return (
     <button
@@ -40,13 +42,13 @@ export function TxButton({
       {busy && <Loader2 className="size-4 animate-spin motion-reduce:animate-none" aria-hidden="true" />}
       {stage === "success" && <Check className="size-4" aria-hidden="true" />}
       {stage === "confirming"
-        ? "Confirmá en tu wallet…"
+        ? t.confirmaWallet
         : stage === "pending"
-          ? "Esperando la red…"
+          ? t.esperandoRed
           : stage === "success"
-            ? successLabel
+            ? (successLabel ?? t.listo.replace(/\.$/, ""))
             : stage === "error"
-              ? "Falló · Reintentar"
+              ? t.fallo
               : label}
     </button>
   );
