@@ -10,6 +10,7 @@ import { leerOnchain } from "../../agente/src/onchain";
 import { consultarBcra } from "../../agente/src/bcra";
 import { decidir, type Bcra } from "../../agente/src/reglas";
 import type { Env, Props } from "./tipos";
+import { registrarFlujo } from "./flujo";
 
 const erc20 = parseAbi(["function balanceOf(address) view returns (uint256)"]);
 
@@ -117,5 +118,6 @@ export function crearServidor(env: Env, props: Props | undefined) {
 		},
 	);
 
+	registrarFlujo(server, env, props);
 	return server;
 }
