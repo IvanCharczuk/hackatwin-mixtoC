@@ -14,6 +14,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import {
+
   COUNTRIES,
   FROZEN_SHARE,
   REPAY_SHARE,
@@ -24,6 +25,9 @@ import {
   tokenSrc,
   type Ticker,
 } from "./data";
+
+// La demo con wallet (apps/web). VITE_APP_URL la pisa en otro deploy.
+const APP_URL = import.meta.env.VITE_APP_URL ?? "https://hackatwin-mixtoc-web.vercel.app";
 
 const NAME = "[Nombre]";
 
@@ -431,12 +435,12 @@ function Calculator() {
           </ResultRow>
         </dl>
 
-        <button
-          type="button"
+        <a
+          href={APP_URL}
           className="mt-0 flex items-center justify-center gap-2.5 rounded-full bg-navy p-4 text-[15px] font-semibold text-white transition-colors hover:bg-navy-deep lg:p-[18px] lg:text-base"
         >
           Pedí tu préstamo <ArrowRight size={18} aria-hidden />
-        </button>
+        </a>
         <p className="pt-3 text-center text-xs leading-[17px] text-ink-2 lg:pt-3.5 lg:text-[13px]">
           Números ilustrativos. El límite depende de tus ventas reales en ARGt.
         </p>
