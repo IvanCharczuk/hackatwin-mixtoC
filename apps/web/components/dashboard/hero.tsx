@@ -4,7 +4,7 @@ import { ArrowDown, ArrowRight, LogOut, Wallet } from "lucide-react";
 import { useAccount, useSwitchChain } from "wagmi";
 import { SlidingNumber } from "@/components/animate-ui/primitives/texts/sliding-number";
 import { CHAIN_ID } from "@/lib/tokens";
-import { corta, fmt, pct } from "@/lib/formato";
+import { fmt, pct } from "@/lib/formato";
 import type { Credito } from "@/lib/credito";
 import { SelectorIdioma, useT } from "@/lib/i18n";
 import { useSaldos } from "@/lib/hooks/use-factura";
@@ -45,8 +45,6 @@ export function BarraSuperior({ authenticated, mock, login, logout }: { authenti
             ) : (
               <span className="font-semibold text-sun-soft">{t.cambiarArbitrum}</span>
             )}
-            <span className="hidden h-4 w-px bg-white/20 sm:block" aria-hidden="true" />
-            <span className="hidden font-mono text-lavender-soft sm:inline">{corta(address)}</span>
             {mock && <span className="rounded-full bg-sun px-2 py-0.5 text-[11px] font-bold text-navy-deep">{t.demo}</span>}
           </button>
           <button type="button" onClick={logout} aria-label={t.salir} className="flex size-9 items-center justify-center rounded-full border border-white/20 text-lavender-soft hover:text-white">
