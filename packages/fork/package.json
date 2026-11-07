@@ -1,0 +1,17 @@
+{
+  "name": "fork",
+  "private": true,
+  "type": "commonjs",
+  "scripts": {
+    "node": "hardhat node --hostname 127.0.0.1 --port 8545",
+    "fondear": "tsx fondear.mts",
+    "probar": "tsx probar-circuito.mts"
+  },
+  "devDependencies": {
+    "hardhat": "2.22.19",
+    "tsx": "^4.19.2"
+  },
+  "dependencies": {
+    "viem": "^2.57.8"
+  }
+}
