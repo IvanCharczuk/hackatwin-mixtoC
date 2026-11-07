@@ -1,5 +1,12 @@
 # Ideas de Steven: expansión regional de PYMES con Twin
 
+> **Dirección vigente (12:10):** el ejemplo se dio vuelta. La empresa es
+> chilena y abre en Argentina: deja CHLt (cambiados a USDT0) de colateral en
+> Morpho y recibe ARGt, sin contrato propio. Ver
+> `mensajes/20261107-1210-steven-expansion-con-circuito-franco.md` y
+> [packages/circuito/SPEC.md](../../packages/circuito/SPEC.md). Lo de abajo es
+> cómo llegamos.
+
 - **Autor:** Steven Molina
 - **Mail:** stevmolina.me@gmail.com
 - **Estado:** elegida por el equipo, 7/11/2026 a las 12:04 (Buenos Aires).
@@ -62,7 +69,7 @@ lo cubren su historial y sus ventas nuevas.
 | Fondos para prestar | Un fondo propio en el contrato. Pedir a los mentores MEXt o CHLt, ARGt y gas en Arbitrum. |
 | Precio ARGt contra la otra moneda | Pools de Curve (cada token contra USDT0) o API de belo. La API de belo nos dio 403 desde una máquina; probar desde la app. |
 | Si el peso cae | Regla de liquidación: si lo congelado pierde valor y no repone, el contrato se lo queda. |
-| Interés | Cobrarlo como comisión del préstamo, no como rendimiento de ARGt (ver el riesgo con la CNV en `docs/ivan/idea.md`). |
+| Interés | Cobrarlo como comisión del préstamo, no como rendimiento de ARGt (ver el riesgo con la CNV en [adelantos-facturas.md](adelantos-facturas.md)). |
 
 **Preguntas para los mentores:**
 
@@ -99,7 +106,7 @@ redondos.
 
 ## Relación con la idea de Ivan
 
-La propuesta de Ivan (`docs/ivan/idea.md`) también usa colateral en stablecoin
+La propuesta de Ivan ([adelantos-facturas.md](adelantos-facturas.md)) también usa colateral en stablecoin
 y Chile. Diferencia: Ivan pone el riesgo en la empresa grande que paga
 (factoring inverso para proveedores de proyectos RIGI). Esta idea pone el
 foco en la PYME que se expande y repaga con sus ventas. Se pueden combinar.

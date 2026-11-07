@@ -22,7 +22,19 @@ Actualizado: 7/11/2026 12:25.
 
 ## Steven
 
-Ver `docs/steven/ESTADO.md` hasta que lo pase acá.
+Actualizado: 7/11/2026 13:29.
+
+- **Decidido:** expansión regional con el circuito de Franco: la empresa
+  chilena deja CHLt de colateral en Morpho y recibe ARGt
+  ([ideas/expansion-regional.md](ideas/expansion-regional.md)).
+- **Hecho:** landing C en `apps/landing` (capturas en
+  `apps/landing/capturas/`); modo demo de `apps/web` (corre sin
+  `NEXT_PUBLIC_PRIVY_APP_ID`, wallet simulada).
+- **En qué estoy:** boceto del dashboard de la empresa (cuánto puede pedir,
+  cuánto debe, qué tan seguro está) en estilo Amanecer, para `apps/web`.
+- **Necesito de otros:** Franco, si `packages/circuito` ya exporta los
+  chequeos, para que el dashboard los use. Nombre del producto (candidatos:
+  Paso, Abra).
 
 ## Franco
 
