@@ -10,6 +10,7 @@ import { BarraSuperior, Hero, Paisaje } from "@/components/dashboard/hero";
 import { BarraSeguridad, Tarjetas } from "@/components/dashboard/resumen";
 import { AntesDePedir, type Modo } from "@/components/dashboard/antes-de-pedir";
 import { Movimientos } from "@/components/dashboard/movimientos";
+import { Agente } from "@/components/dashboard/agente";
 
 export default function Dashboard() {
   const { ready, authenticated, login, logout, mock } = useAuth();
@@ -61,6 +62,7 @@ export default function Dashboard() {
               </div>
             </section>
           )}
+          <Agente address={address} />
           <AntesDePedir ref={planRef} address={address} credito={credito} simular={mock} modo={modo} setModo={setModo} />
           <Movimientos address={address} ilustrativo={credito.ilustrativo} />
         </>
@@ -69,7 +71,7 @@ export default function Dashboard() {
       <footer className="mt-auto bg-navy-deep">
         <div className="mx-auto flex w-full max-w-[1248px] flex-col gap-2 px-6 py-8 text-[13px] text-lavender-soft sm:flex-row sm:justify-between">
           <span>Proyecto de HackaTwin 2026, equipo Mixto C</span>
-          <span>Construido con las monedas de Twin · <a href="/transferir" className="underline underline-offset-2">Transferir</a></span>
+          <span>Construido con las monedas de Twin · <a href="/factura" className="underline underline-offset-2">Pagar una factura</a> · <a href="/transferir" className="underline underline-offset-2">Transferir</a></span>
         </div>
       </footer>
     </main>
