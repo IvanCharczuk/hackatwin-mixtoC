@@ -2,7 +2,7 @@
 
 // Asistente de Saltar: botón flotante con un chat que responde sobre Saltar,
 // financiamiento y (con sesión) la cuenta de la persona. Habla con /api/chat.
-// El mismo archivo vive en apps/landing/src/Asistente.tsx: si cambiás uno, copialo al otro.
+// Vive sólo en el dashboard (app/page.tsx).
 import { useEffect, useRef, useState, type FormEvent, type ReactNode } from "react";
 
 export type Idioma = "es" | "en" | "pt";
@@ -14,7 +14,7 @@ const TEXTOS = {
     titulo: "Asistente de Saltar",
     sub: "Responde con datos en vivo de Morpho y el BCRA",
     hola: "Hola. Te ayudo con cómo funciona Saltar, cuánta garantía necesitás y cómo financiar tu llegada a Argentina.",
-    holaCuenta: "Hola. Veo tu wallet: puedo decirte tus saldos, tu deuda y cuánto podés pedir hoy.",
+    holaCuenta: "Hola. Veo tu wallet: puedo decirte tus saldos, cuánto usás de tu garantía y tu límite disponible hoy.",
     placeholder: "Escribí tu pregunta",
     enviar: "Enviar",
     cerrar: "Cerrar",
@@ -24,39 +24,39 @@ const TEXTOS = {
     sugerencias: [
       "¿Cómo funciona Saltar?",
       "¿Cuánta garantía necesito para 1.000.000 de pesos?",
-      "¿Cuánto cuesta y quién presta la plata?",
+      "¿Cuánto cuesta y de dónde salen los pesos?",
     ],
-    sugerenciasCuenta: ["¿Cuánto puedo pedir hoy?", "¿Cuánto debo y cuánto uso de mi garantía?", "¿Cómo está el mercado hoy?"],
+    sugerenciasCuenta: ["¿Cuál es mi límite disponible hoy?", "¿Cuál es mi saldo y cuánto uso de mi garantía?", "¿Cómo está el mercado hoy?"],
   },
   en: {
     abrir: "Ask Saltar",
     titulo: "Saltar assistant",
     sub: "Answers with live Morpho and BCRA data",
     hola: "Hi. I can help with how Saltar works, how much collateral you need and how to fund your move to Argentina.",
-    holaCuenta: "Hi. I can see your wallet: I can tell you your balances, your debt and how much you can borrow today.",
+    holaCuenta: "Hi. I can see your wallet: I can tell you your balances, how much of your collateral you use and your available limit today.",
     placeholder: "Type your question",
     enviar: "Send",
     cerrar: "Close",
     borrar: "Start over",
     error: "I couldn't answer right now. Please try again.",
     nota: "Read-only: it never signs or moves funds. Not financial advice.",
-    sugerencias: ["How does Saltar work?", "How much collateral do I need for 1,000,000 pesos?", "What does it cost and who lends the money?"],
-    sugerenciasCuenta: ["How much can I borrow today?", "How much do I owe?", "How is the market today?"],
+    sugerencias: ["How does Saltar work?", "How much collateral do I need for 1,000,000 pesos?", "What does it cost and where do the pesos come from?"],
+    sugerenciasCuenta: ["What is my available limit today?", "What is my balance?", "How is the market today?"],
   },
   pt: {
     abrir: "Pergunte à Saltar",
     titulo: "Assistente da Saltar",
     sub: "Responde com dados ao vivo do Morpho e do BCRA",
     hola: "Olá. Posso ajudar com como a Saltar funciona, quanta garantia você precisa e como financiar sua chegada à Argentina.",
-    holaCuenta: "Olá. Vejo sua wallet: posso dizer seus saldos, sua dívida e quanto você pode pedir hoje.",
+    holaCuenta: "Olá. Vejo sua wallet: posso dizer seus saldos, quanto da sua garantia você usa e seu limite disponível hoje.",
     placeholder: "Escreva sua pergunta",
     enviar: "Enviar",
     cerrar: "Fechar",
     borrar: "Recomeçar",
     error: "Não consegui responder agora. Tente de novo.",
     nota: "Só lê dados: não assina nem move fundos. Não é aconselhamento financeiro.",
-    sugerencias: ["Como a Saltar funciona?", "Quanta garantia preciso para 1.000.000 de pesos?", "Quanto custa e quem empresta o dinheiro?"],
-    sugerenciasCuenta: ["Quanto posso pedir hoje?", "Quanto devo?", "Como está o mercado hoje?"],
+    sugerencias: ["Como a Saltar funciona?", "Quanta garantia preciso para 1.000.000 de pesos?", "Quanto custa e de onde vêm os pesos?"],
+    sugerenciasCuenta: ["Qual é meu limite disponível hoje?", "Qual é meu saldo?", "Como está o mercado hoje?"],
   },
 } satisfies Record<Idioma, unknown>;
 

@@ -12,10 +12,11 @@ import { AntesDePedir, type Modo } from "@/components/dashboard/antes-de-pedir";
 import { Movimientos } from "@/components/dashboard/movimientos";
 import { Agente } from "@/components/dashboard/agente";
 import { useT } from "@/lib/i18n";
+import { Asistente } from "@/components/asistente";
 
 export default function Dashboard() {
   const { ready, authenticated, login, logout, mock } = useAuth();
-  const { t } = useT();
+  const { t, lang } = useT();
   const { address } = useAccount();
   const { data: credito, isLoading, error } = useCredito(authenticated ? address : undefined);
   const [modo, setModo] = useState<Modo | null>(null);
@@ -76,6 +77,7 @@ export default function Dashboard() {
           <span>{t.footerConstruido} · <a href="/factura" className="underline underline-offset-2">{t.pagarFactura}</a> · <a href="/transferir" className="underline underline-offset-2">{t.transferir}</a></span>
         </div>
       </footer>
+      <Asistente endpoint="/api/chat" wallet={authenticated ? (address ?? null) : null} idioma={lang} />
     </main>
   );
 }
