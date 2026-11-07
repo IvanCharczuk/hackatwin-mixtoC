@@ -2,7 +2,7 @@
 
 - **Autor:** Steven Molina
 - **Mail:** stevmolina.me@gmail.com
-- **Estado:** propuesta en discusión, 7/11/2026 a las 11:12 (Buenos Aires).
+- **Estado:** elegida por el equipo, 7/11/2026 a las 12:04 (Buenos Aires).
 - **Origen:** charla de Steven con su IA (Claude). Este archivo resume el camino y
   la idea a la que llegamos.
 
