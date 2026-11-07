@@ -1,13 +1,17 @@
 import type { Metadata } from "next";
+import { JetBrains_Mono, Montserrat } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
 
-export const metadata: Metadata = { title: "Mixto C · HackaTwin" };
+const montserrat = Montserrat({ subsets: ["latin"], weight: ["300", "400", "500", "600", "700"], variable: "--font-montserrat" });
+const jetbrains = JetBrains_Mono({ subsets: ["latin"], variable: "--font-jetbrains" });
+
+export const metadata: Metadata = { title: "[Nombre] · tu crédito en Argentina" };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="es">
-      <body className="min-h-screen bg-neutral-50 text-neutral-900 antialiased">
+    <html lang="es" className={`${montserrat.variable} ${jetbrains.variable}`}>
+      <body className="min-h-screen bg-cream font-sans text-navy antialiased">
         <Providers>{children}</Providers>
       </body>
     </html>
