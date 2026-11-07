@@ -55,6 +55,14 @@ test("el check de plata suficiente dice que el mercado no alcanza cuando el tope
   assert.ok(c.detalle.includes("mercado"));
 });
 
+test("si el perfil de la empresa no permite pedir, el check lo dice en vez de pedir colateral", () => {
+  const plan = planearPago({ montoArgt: 8_500, saldoArgt: 0, maxPorColateralArgt: 0, liquidezUsableArgt: 141_000, argtPorUsdt0DeTope: 0 });
+  const c = armarChecks({ proveedor: limpio, empresa: limpio, tope: 0, plan }).find((x) => x.id === "plata-suficiente")!;
+  assert.equal(c.ok, false);
+  assert.ok(c.detalle.includes("perfil"));
+  assert.ok(!c.detalle.includes("USDT0 más"));
+});
+
 test("proveedor en situación 3 o peor: alerta grave, no bloquea (decide la empresa)", () => {
   const a = alertasProveedor({ ...limpio, situacionMax: 4 });
   assert.equal(a.nivel, "grave");
