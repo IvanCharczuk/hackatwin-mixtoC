@@ -22,6 +22,7 @@ para operar acá, con transacciones reales en Morpho y Curve (ver
 | `packages/circuito/` | Circuito CHLt → colateral en Morpho → ARGt → repago (`SPEC.md`) | Franco |
 | `packages/contratos/` | Contrato que guarda el pago comprometido | a definir |
 | `packages/comun/` | Direcciones de tokens, redes y tipos compartidos | quien lo necesite primero, con aviso |
+| `packages/mcp/` | MCP remoto con login Privy | Steven |
 | `docs/estado.md` | Estado del equipo: una sección por persona | cada uno su sección |
 | `docs/ideas/` | Ideas en discusión, un archivo por idea | quien la propone |
 | `docs/investigacion/` | Regulación, competencia, números y consigna (`research.md`, `sources/`) | todos, con fuentes |
