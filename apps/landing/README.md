@@ -1,6 +1,6 @@
 # landing
 
-Landing de Salto: empresas de Chile que llegan a Argentina dejan CHLt de
+Landing de Saltar: empresas de Chile que llegan a Argentina dejan CHLt de
 garantía y pagan a sus proveedores en ARGt. Copy tomado de la página de Notion
 «Llegar a Argentina · Copy y estrategia» (7/11). Es el diseño **C · Amanecer** de `design/expandir-hackatwin.pen` (desktop y mobile).
 
