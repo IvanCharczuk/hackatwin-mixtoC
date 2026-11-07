@@ -55,7 +55,7 @@ sueltas, nada de frases largas) y Ivan cuenta. El video no tiene voz.
 
 | Tiempo | En pantalla (video) | Lo que decís |
 |---|---|---|
-| 0:00 a 0:14 | **El mercado y el caso.** Contadores que suben: «13 proyectos mineros · US$ 25B» y «+20 esperando». Después, un camión con el nombre «Excon» cruza de Chile hacia «San Juan». | «Hay 13 proyectos mineros aprobados en el RIGI por 25 billions de dólares, y 20 más esperando. Contratistas chilenas como Excon ya analizan entrar a San Juan.» |
+| 0:00 a 0:14 | **El mercado.** Un contador sube de «US$ 56B» a «US$ 160B+». Después, un camión con el nombre «Excon» cruza de Chile hacia «San Juan». | «Hoy hay 56 billions de dólares de inversión aprobada en el RIGI, y con lo que espera aprobación puede pasar los 160. Contratistas chilenas como Excon ya analizan entrar a San Juan.» |
 | 0:14 a 0:22 | **El problema.** Una solicitud de crédito se sella: «Sin historial en Argentina». | «Para arrancar necesitan pesos desde el primer día, pero en Argentina no tienen historial para pedir crédito.» |
 | 0:22 a 0:32 | **Los beneficios.** El logo de Saltar despeja el riel; aparecen tres checks: «Día uno» ✓ «Con su garantía» ✓ «Factura revisada» ✓. | «Saltar agiliza los rieles para que tengan pesos desde el día uno, con su propia garantía y cada factura revisada antes de pagar.» |
 | 0:32 a 0:44 | **Por qué los demás no alcanzan.** Cuatro columnas: «Banco» ✗, «Bitso · BVNK» ✗, «Lemon · Ripio» ✗, «Saltar» ✓. | «El banco pide historia, Bitso o BVNK mueven plata pero no prestan pesos, y Lemon o Ripio son para ahorro personal. Saltar resuelve las tres cosas.» |
@@ -166,6 +166,10 @@ USDT0: el CHLt se cambia en Curve. También puede dejar USDC o USDT0 directo.
       los mentores de Twin.
 - [ ] El video de 1 minuto (spec 0135): es la primera mitad del pitch.
 - [ ] Ensayar la demo dos veces con el cronómetro.
+
+Inversión del RIGI: 24 proyectos aprobados por US$ 56.198 M (octubre 2026) y
+unos US$ 110.883 M en evaluación (fecha anterior, a verificar); suma más de
+US$ 160.000 M. Fuentes en el mensaje de Franco de las 15:34.
 
 Números y fuentes: `docs/investigacion/numeros.md`, `negocio.md` y el
 mensaje de Franco `mensajes/20261107-1534-franco-dato-mineria-petroleo.md`
