@@ -147,7 +147,7 @@ function SecButton({ children, onClick, disabled, activo }: { children: React.Re
   );
 }
 
-function Plan({ titulo, pasos, bloqueado, rojo, simular, onCerrar }: { titulo: string; pasos: Paso[]; bloqueado: boolean; rojo: boolean; simular: boolean; onCerrar: () => void }) {
+export function Plan({ titulo, pasos, bloqueado, rojo, simular, onCerrar }: { titulo: string; pasos: Paso[]; bloqueado: boolean; rojo: boolean; simular: boolean; onCerrar: () => void }) {
   // Congelamos el plan al abrirlo: si los chequeos se releen en el medio, los pasos no cambian.
   const [fijos] = useState(pasos);
   const plan = useMemo(() => (fijos.length ? fijos : pasos), [fijos, pasos]);
