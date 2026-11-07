@@ -55,7 +55,7 @@ sueltas, nada de frases largas) y Ivan cuenta. El video no tiene voz.
 
 | Tiempo | En pantalla (video) | Lo que decís |
 |---|---|---|
-| 0:00 a 0:14 | **El caso.** Amanece sobre la cordillera de San Juan. «Vicuña · US$ 9,7B». Una persona con un calendario: «Lunes: pagar en pesos». | «La gerente de finanzas de un proveedor chileno de Vicuña, un proyecto de casi 10 billions en San Juan, llega a Argentina. El lunes tiene que pagar sueldos y proveedores en pesos.» |
+| 0:00 a 0:14 | **El caso.** Amanece sobre la cordillera de San Juan. Un camión de una contratista chilena cruza hacia «Vicuña · US$ 9,7B». Texto: «Pagar en pesos». | «Una contratista chilena como Excon quiere trabajar en Vicuña, un proyecto de casi 10 billions en San Juan. Para arrancar tiene que pagar sueldos y proveedores en pesos.» |
 | 0:14 a 0:22 | **El muro.** Caen tres cruces, una por palabra: «Banco» ✗ «Tiempo» ✗ «Vender» ✗. | «Pero el banco no la conoce, convertir sus dólares lleva tiempo y vender sus stablecoins la deja sin respaldo.» |
 | 0:22 a 0:32 | **Los beneficios.** El logo de Saltar despeja el riel; aparecen tres checks: «Día uno» ✓ «Sin vender» ✓ «Factura revisada» ✓. | «Saltar agiliza los rieles para que tenga pesos desde el día uno, sin vender su respaldo y con cada factura revisada antes de pagar.» |
 | 0:32 a 0:44 | **Por qué los demás no alcanzan.** Cuatro columnas: «Banco» ✗, «Bitso · BVNK» ✗, «Lemon · Ripio» ✗, «Saltar» ✓. | «El banco pide historia, Bitso o BVNK mueven plata pero no prestan pesos, y Lemon o Ripio son para ahorro personal. Saltar resuelve las tres cosas.» |
