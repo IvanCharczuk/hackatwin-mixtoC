@@ -61,3 +61,22 @@
 .tema-medicus .brillo-sol {
   box-shadow: none;
 }
+
+/* /app: el amanecer de la landing de día (cielo claro, nubes que se mueven despacio). */
+.cielo-claro {
+  background: linear-gradient(180deg, #e6eefb 0%, #eef3fb 35%, #f8eedc 72%, #f6ddb3 100%);
+}
+.nube {
+  filter: drop-shadow(0 6px 14px rgb(0 37 100 / 0.06));
+  animation: deriva 18s ease-in-out infinite alternate;
+}
+@keyframes deriva {
+  to {
+    transform: translateX(40px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .nube {
+    animation: none;
+  }
+}
