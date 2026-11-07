@@ -58,8 +58,8 @@ sueltas, nada de frases largas) y Ivan cuenta. El video no tiene voz.
 | 0:00 a 0:14 | **El mercado.** Un contador sube de «US$ 56B» a «US$ 160B+». Después, un camión con el nombre «Excon» cruza de Chile hacia «San Juan». | «Hoy hay 56 billions de dólares aprobados para grandes proyectos en Argentina, y con los que esperan aprobación puede pasar los 160 billions. Contratistas chilenas como Excon ya analizan entrar a San Juan.» |
 | 0:14 a 0:22 | **El problema.** Una solicitud de crédito se sella: «Sin historial en Argentina». | «Para arrancar necesitan pesos desde el primer día, pero en Argentina no tienen historial para pedir crédito.» |
 | 0:22 a 0:32 | **Los beneficios.** El logo de Saltar despeja el riel; aparecen tres checks: «Día uno» ✓ «Con su garantía» ✓ «Factura revisada» ✓. | «Saltar agiliza los rieles para que tengan pesos desde el día uno, con su propia garantía y cada factura revisada antes de pagar.» |
-| 0:32 a 0:44 | **Por qué los demás no alcanzan.** Cuatro columnas: «Banco» ✗, «Bitso · BVNK» ✗, «Lemon · Ripio» ✗, «Saltar» ✓. | «El banco pide historia, Bitso o BVNK mueven plata pero no prestan pesos, y Lemon o Ripio son para ahorro personal. Saltar resuelve las tres cosas.» |
-| 0:44 a 0:56 | **Tamaño y negocio.** «7.500 pymes proveedoras» se llenan de puntos. Debajo: «1%» y «0,3%». | «Detrás hay 7.500 pymes proveedoras sólo en Vaca Muerta. Cobramos 1% por abrir el crédito y 0,3% por cada pago.» |
+| 0:32 a 0:44 | **Las alternativas.** Dos columnas que se tachan: «Banco» ✗, «Casa matriz» ✗; aparece «Saltar» ✓. | «Hoy les queda el banco, que pide historial, o traer plata de la casa matriz, con tiempo y trámites. Saltar resuelve las dos cosas.» |
+| 0:44 a 0:56 | **Tamaño y negocio.** El mapa marca San Juan y Catamarca: «US$ 19B en minería». Debajo: «1%» y «0,3%». | «Sólo en San Juan y Catamarca hay casi 20 billions en proyectos mineros aprobados, y todos necesitan proveedores locales. Cobramos 1% por abrir y 0,3% por pago.» |
 | 0:56 a 1:00 | **Cierre.** El logo de Saltar sobre el sol: «Financiación desde el día uno». | «Les muestro cómo funciona.» |
 
 ## Demo en vivo: cómo funciona (unos 90 segundos)
@@ -170,6 +170,10 @@ USDT0: el CHLt se cambia en Curve. También puede dejar USDC o USDT0 directo.
 Inversión del RIGI: 24 proyectos aprobados por US$ 56.198 M (octubre 2026) y
 unos US$ 110.883 M en evaluación (fecha anterior, a verificar); suma más de
 US$ 160.000 M. Fuentes en el mensaje de Franco de las 15:34.
+
+San Juan y Catamarca (proyectos mineros aprobados en el RIGI): Vicuña US$ 9.737 M,
+Los Azules US$ 2.672 M y Veladero US$ 436 M en San Juan; MARA US$ 6.394 M en
+Catamarca; suman US$ 19.239 M (tabla que pasó Ivan).
 
 Números y fuentes: `docs/investigacion/numeros.md`, `negocio.md` y el
 mensaje de Franco `mensajes/20261107-1534-franco-dato-mineria-petroleo.md`
