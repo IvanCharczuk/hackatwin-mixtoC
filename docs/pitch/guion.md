@@ -34,8 +34,8 @@ Qué preguntarles después:
 
 Total 2,5 minutos:
 
-1. **Primer minuto, el pitch:** el caso, el muro, los beneficios, por qué los
-   demás no alcanzan y el tamaño. Ivan lo cuenta mientras corre detrás un video de 1 minuto (sin
+1. **Primer minuto, el pitch** (texto de Ivan): el mercado, el problema, la
+   propuesta, el tamaño y el negocio. Ivan lo cuenta mientras corre detrás un video de 1 minuto (sin
    voz, pocas palabras en pantalla).
 2. **Después, la demo en vivo** (unos 90 segundos): cómo funciona, paso a
    paso.
@@ -55,12 +55,12 @@ sueltas, nada de frases largas) y Ivan cuenta. El video no tiene voz.
 
 | Tiempo | En pantalla (video) | Lo que decís |
 |---|---|---|
-| 0:00 a 0:14 | **El mercado minero.** Un contador sube de «US$ 25B» a «US$ 40B» en minería. Después, un camión con el nombre «Excon» cruza de Chile hacia «San Juan». | «Hoy hay más de 25 billions aprobados en minería en Argentina, y con los que esperan puede llegar a casi 40 billions. Contratistas chilenas como Excon ya analizan entrar a San Juan.» |
-| 0:14 a 0:22 | **El problema.** Una solicitud de crédito se sella: «Sin historial en Argentina». | «Para arrancar necesitan pesos desde el primer día, pero en Argentina no tienen historial para pedir crédito.» |
-| 0:22 a 0:32 | **Los beneficios.** El logo de Saltar despeja el riel; aparecen tres checks: «Día uno» ✓ «Con su garantía» ✓ «Factura revisada» ✓. | «Saltar agiliza los rieles para que tengan pesos desde el día uno, con su propia garantía y cada factura revisada antes de pagar.» |
-| 0:32 a 0:44 | **Las alternativas.** Dos columnas que se tachan: «Banco» ✗, «Casa matriz» ✗; aparece «Saltar» ✓. | «Hoy les queda el banco, que pide historial, o traer plata de la casa matriz, con tiempo y trámites. Saltar resuelve las dos cosas.» |
-| 0:44 a 0:56 | **Tamaño y negocio.** El mapa marca San Juan y Catamarca: «US$ 19B en minería». Debajo: «1%» y «0,3%». | «Sólo en San Juan y Catamarca hay casi 20 billions en proyectos mineros aprobados, y todos necesitan proveedores locales. Cobramos 1% por abrir y 0,3% por pago.» |
-| 0:56 a 1:00 | **Cierre.** El logo de Saltar sobre el sol: «Financiación desde el día uno». | «Les muestro cómo funciona.» |
+| 0:00 a 0:15 | **El mercado.** Un contador sube de «US$ 25B» a «US$ 40B» en minería. Después, un camión con el nombre «Excon» cruza de Chile hacia «San Juan». | «Hoy hay más de 25 billions aprobados de proyectos mineros en Argentina, y con los que están en lista de espera llegaría a casi 40 billions. Contratistas chilenas como Excon ya analizan entrar a San Juan.» |
+| 0:15 a 0:24 | **El problema.** Una solicitud de crédito se sella: «Sin historial en Argentina». | «Pero para arrancar necesitan pesos desde el día uno, y en Argentina no tienen historial para pedir ese tipo de créditos.» |
+| 0:24 a 0:31 | **La propuesta.** El logo de Saltar despeja el riel: «Pesos desde el día uno». | «Saltar le permite a tu empresa financiar sus operaciones desde el primer día en moneda local.» |
+| 0:31 a 0:42 | **El tamaño.** El mapa marca San Juan y Catamarca: «US$ 19B en minería», y se llenan de puntos de proveedores. | «Sólo en San Juan y Catamarca hay casi 20 billions en proyectos mineros aprobados, y todos necesitan proveedores locales.» |
+| 0:42 a 0:52 | **El negocio.** «1%» y «0,3%», grandes. | «Nosotros te cobramos un 1% por financiarte y un 0,3% de cada pago a través de la plataforma.» |
+| 0:52 a 1:00 | **Cierre.** El logo de Saltar sobre el sol: «Financiación desde el día uno». | «Les muestro cómo funciona.» |
 
 ## Demo en vivo: cómo funciona (unos 90 segundos)
 
