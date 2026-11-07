@@ -2,6 +2,12 @@
 
 Proyecto del equipo Mixto C para la HackaTwin (7 de noviembre de 2026).
 
+## Video y demo
+
+- **Video del pitch:** https://youtu.be/okWkX84BQI4
+- **Demo:** https://hackatwin-mixtoc-web.vercel.app
+- **Landing:** https://hackatwin-mixtoc-landing.vercel.app
+
 ## Modelo de negocio
 
 **Cobramos a la empresa de afuera que llega a operar en Argentina. No prestamos

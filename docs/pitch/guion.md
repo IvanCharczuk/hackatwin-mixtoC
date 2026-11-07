@@ -30,6 +30,8 @@ Qué preguntarles después:
    prueba?
 3. ¿Qué le falta al pitch para el jurado?
 
+Video del minuto (versión final): https://youtu.be/okWkX84BQI4
+
 ## Formato
 
 Total 2,5 minutos:
