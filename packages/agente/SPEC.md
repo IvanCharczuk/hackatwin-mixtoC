@@ -78,6 +78,38 @@ Después compara el costo para el proveedor:
 Devuelve una decisión en JSON y un texto corto que la explica. No ejecuta
 nada: la transacción la confirma una persona.
 
+### Toda la plata queda atada a una factura
+
+Por seguridad y por la ley impositiva, ningún movimiento existe sin su
+factura:
+
+- **Identificador de la factura:** `id = hash(CUIT emisor, tipo, punto de
+  venta, número, CAE)`. En la cadena va sólo el hash; los datos fiscales
+  quedan fuera de la cadena (el repo y la red son públicos).
+- **Cada movimiento lleva el `id`:** depósito de la empresa, adelanto, pago
+  parcial, repago y liberación. Así cada peso se rastrea hasta su comprobante.
+- **Seguridad:**
+  - Un solo adelanto por factura: un `id` ya adelantado se rechaza (evita
+    financiar dos veces la misma factura).
+  - El adelanto nunca supera el total de la factura.
+  - Sólo cobra la billetera atestada para el CUIT emisor.
+- **Ley impositiva:**
+  - Si una MiPyME le factura a una empresa grande por encima de
+    $ 5.549.862 (desde el 14/4/2026), la ley obliga a emitir **factura de
+    crédito electrónica** (Ley 27.440). Esa factura está registrada en ARCA, se
+    acepta (o queda aceptada a los 25 días) y puede cederse para negociarla.
+    El agente marca si la factura es de crédito y chequea que no esté ya
+    cedida o negociada en otro lado (en la demo, simulado).
+  - Las empresas grandes suelen retener impuestos al pagar: el agente calcula
+    el adelanto sobre el **neto a cobrar** (total menos retenciones
+    configurables), no sobre el total.
+  - Exporta, por proveedor, el registro de movimientos con su `id` y los datos
+    del comprobante, para la contabilidad.
+
+| Chequeo | Regla | Si falla |
+|---|---|---|
+| V8 Vínculo | El `id` de la factura no tiene un adelanto previo y, si es de crédito, no está cedida ni negociada | Rechaza: factura ya financiada |
+
 ### Repago y liberación del colateral, factura por factura
 
 Cada factura es una posición propia, con su deuda y su colateral. El agente
@@ -143,6 +175,10 @@ Stack recomendado: TypeScript con Node, para compartirlo con el front.
   bloquea la liberación de la otra, y el resumen por proveedor cuadra (deuda
   viva + repagado = adelantado + comisión).
   `npm test -- repago`
+- **CA-9** — Una segunda solicitud con la misma factura se rechaza, el adelanto
+  se calcula sobre el neto después de retenciones, y el registro exportado
+  tiene cada movimiento con el `id` de su factura.
+  `npm test -- vinculo`
 - **CA-6** — Con una factura de ejemplo, el agente extrae CUIT, monto, CAE y
   vencimiento, consulta la Central de Deudores del BCRA por ese CUIT y
   devuelve el perfil junto con la decisión.

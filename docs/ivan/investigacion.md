@@ -57,3 +57,18 @@ diga "a verificar" no está confirmado en la fuente oficial.
   premio con categoría FinTech; sirve como salida después del evento.
   [iProUP](https://www.iproup.com/startups/69947-caba-fortalece-su-polo-it-con-16-nuevas-startups-en-el-parque-de-innovacion.amp),
   [Forbes](https://www.forbesargentina.com/negocios/el-talento-startup-tuvo-su-reconocimiento-primera-edicion-premio-ba-parque-innovacion-n64245).
+
+## Factura de crédito electrónica (impacto directo en el producto)
+
+- Si una MiPyME le factura a una empresa grande por encima de $ 5.549.862
+  (desde el 14/4/2026, Resolución 1/2026), tiene que emitir factura de crédito
+  electrónica (Ley 27.440). Queda aceptada sola a los 25 días si no se rechaza,
+  y el emisor puede transferirla al agente de depósito colectivo para
+  negociarla en el mercado de capitales.
+- Consecuencia: la mayoría de las facturas de una pyme a una minera grande van
+  a ser de crédito. El adelanto tiene que chequear que no esté ya cedida o
+  negociada, y a futuro podría operar sobre la misma factura de crédito.
+- Fuentes: [ARCA, micrositio FCE](https://servicioscf.afip.gob.ar/facturadecreditoelectronica/),
+  [monto mínimo 2026](https://contadoresenred.com/factura-de-credito-electronica-mipyme-monto-minimo-a-partir-de-abril-2026/),
+  [Argentina.gob.ar](https://www.argentina.gob.ar/servicio/emitir-una-factura-de-credito-electronica-mipyme).
+  Prórrogas del régimen: las fuentes no coinciden (octubre 2026 o 2027), a verificar.
