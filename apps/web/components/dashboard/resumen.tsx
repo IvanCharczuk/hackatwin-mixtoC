@@ -81,7 +81,7 @@ export function BarraSeguridad({ ltv }: { ltv: number }) {
           <div className="bg-sun" style={{ width: `${(LIQUIDA - TOPE) * 100}%` }} />
           <div className="flex-1 bg-bad" />
         </div>
-        <Tope en={TOPE} titulo="60 %" sub="tope de [Nombre]" lado="izq" />
+        <Tope en={TOPE} titulo="60 %" sub="tope de Saltar" lado="izq" />
         <Tope en={LIQUIDA} titulo="77 %" sub="se liquida" lado="der" />
       </div>
     </div>
