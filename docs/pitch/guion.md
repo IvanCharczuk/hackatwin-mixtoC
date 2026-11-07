@@ -1,63 +1,47 @@
 # Pitch de Saltar
 
-Para Ivan, que presenta. 7/11/2026. Formato del evento: primero 30 segundos y
-demo en vivo; los finalistas hacen un pitch de 2,5 minutos y después
-preguntas. El jurado de Twin puntúa por igual idea, problema, negocio y pitch.
+Para Ivan, que presenta. 7/11/2026. Formato: un video de 1 minuto y después
+la demo en vivo (2,5 minutos en total), y preguntas. El jurado de Twin puntúa por igual idea, problema, negocio y pitch.
 
 Frase que se repite en todo: **«Llegás a Argentina y operás en pesos desde el
 primer día.»**
 
-## Versión de 30 segundos
+## Formato: video de 1 minuto y demo en vivo
 
-> Una empresa de Chile decide abrir en Argentina. Tiene la plata, pero en
-> stablecoins, y para pagar alquiler, sueldos y proveedores necesita pesos. El
-> banco no la conoce y vender lo que tiene la deja sin respaldo.
-> Con Saltar deja sus CHLt de garantía y recibe ARGt, los pesos digitales de
-> Twin, para operar desde el primer día. Y cuando un proveedor le factura,
-> nuestro agente revisa la factura y al proveedor antes de pagar.
-> No prestamos plata propia: el crédito sale de Morpho. Llegás a Argentina y
-> operás en pesos desde el primer día.
+Primero corre el video (cuenta problema, solución, circuito y negocio). Después
+Ivan hace la demo en vivo, unos 90 segundos, y siguen las preguntas.
 
-## Versión de 2,5 minutos
+## Video de 1 minuto (guion para la spec 0135)
 
-**0:00 a 0:25 · El problema**
+Texto en pantalla, con la marca de Saltar. Una idea por escena.
 
-> Una minera de Antofagasta abre una base en San Juan. Tiene la plata, pero en
-> Chile y en stablecoins. Para arrancar necesita pesos: alquiler, sueldos,
-> catering. El banco argentino no la conoce, traer dólares choca con el cepo y
-> vender sus stablecoins es quedarse sin respaldo.
+| Tiempo | Escena | Texto en pantalla |
+|---|---|---|
+| 0:00 a 0:10 | El problema | «Una minera de Chile abre en San Juan.» · «Necesita pesos para operar.» · «El banco no la conoce. Traer dólares choca con el cepo. Vender sus stablecoins la deja sin respaldo.» |
+| 0:10 a 0:22 | La solución | «Saltar» · «Dejás CHLt de garantía → recibís ARGt, pesos digitales de Twin.» · «Operá en pesos desde el primer día.» |
+| 0:22 a 0:40 | El circuito | CHLt → Curve → USDT0 de garantía en Morpho → préstamo en ARGt → el agente revisa la factura → el proveedor cobra → devolvés y recuperás tu garantía. |
+| 0:40 a 0:52 | El negocio | «No prestamos plata propia: el crédito sale de Morpho.» · «1% por abrir el crédito · 0,3% por cada pago validado.» · «1.158 empresas chilenas ya le venden a Argentina.» |
+| 0:52 a 1:00 | Cierre | «Saltar. Llegás a Argentina y operás en pesos desde el primer día.» · Twin · Morpho · Curve · Arbitrum |
 
-**0:25 a 0:40 · La solución**
+## Demo en vivo (unos 90 segundos)
 
-> Con Saltar deja sus CHLt, el peso chileno digital de Twin, de garantía, y
-> recibe ARGt, el peso argentino digital, para operar desde el primer día. Y
-> cuando un proveedor le factura, nuestro agente revisa la factura y al
-> proveedor antes de pagar.
-
-**0:40 a 1:40 · La demo** (ver «Demo paso a paso»)
-
-> [Tu agente] El agente consulta a la empresa en el BCRA y su historial en
-> Arbitrum, y le dice cuánto puede pedir y por qué. [Perfil con atrasos] Con
-> atrasos, baja el tope y lo explica.
-> [Subir la factura] Llega una factura: la lee, chequea el CAE, que sea para
-> nuestra empresa, al proveedor y si alcanza la plata. Todo en verde.
+> [Tu agente] Esta es la empresa. El agente la consultó en el BCRA y en
+> Arbitrum, y le dice cuánto puede pedir y por qué.
+> [Perfil con atrasos] Si tuviera atrasos, baja el tope y lo explica.
+> [Subir la factura] Llega la factura de un proveedor. El agente la lee,
+> chequea el CAE, que sea para nuestra empresa, al proveedor en el BCRA y si
+> alcanza la plata. Todo en verde.
 > [Financiar] Deja la garantía en Morpho, pide los pesos y el proveedor cobra.
-> Este es el hash en Arbiscan.
+> [Arbiscan] Este es el hash: la transacción es real, en Arbitrum.
+> Saltar: llegás a Argentina y operás en pesos desde el primer día.
 
-**1:40 a 2:10 · El negocio**
+## Si piden la versión hablada de 30 segundos
 
-> No prestamos plata propia: el crédito sale de un mercado abierto de Morpho.
-> Cobramos a la empresa: 1% por abrir el crédito y 0,3% por cada pago a un
-> proveedor con la factura validada. Hay 1.158 empresas chilenas que ya le
-> venden a Argentina, y el RIGI aprobó casi US$ 50.000 millones en proyectos
-> que traen empresas de afuera.
-
-**2:10 a 2:30 · Cierre**
-
-> Las stablecoins de Twin ya están en siete monedas; faltaba la capa que
-> entiende a la empresa y a Argentina. Arrancamos con Chile; cada país es el
-> siguiente corredor. Saltar: llegás a Argentina y operás en pesos desde el
-> primer día.
+> Una empresa de Chile abre en Argentina y necesita pesos para operar. El
+> banco no la conoce y vender sus stablecoins la deja sin respaldo. Con Saltar
+> deja sus CHLt de garantía y recibe ARGt, los pesos digitales de Twin. Cuando
+> un proveedor le factura, nuestro agente revisa la factura y al proveedor
+> antes de pagar. No prestamos plata propia: el crédito sale de Morpho.
 
 ## Demo paso a paso
 
@@ -78,8 +62,8 @@ el celu con el plan B.
 Montos chicos: CHLt casi no tiene liquidez (unos US$ 3.000 en Curve) y el
 mercado de ARGt presta hasta unos 141.000 ARGt.
 
-**Plan B si falla la red o Vercel:** el video de un minuto del circuito
-(spec 0135) y capturas de cada paso. Decirlo con calma: «les muestro la
+**Plan B si falla la red o Vercel:** capturas de cada paso de la demo y los
+hashes del servidor de prueba. Decirlo con calma: «les muestro la
 grabación de hace un rato».
 
 ## Preguntas del jurado
@@ -137,7 +121,7 @@ USDT0: el CHLt se cambia en Curve. También puede dejar USDC o USDT0 directo.
 - [ ] `ANTHROPIC_API_KEY` en Vercel y redeploy (Franco).
 - [ ] Una transacción real con hash en Arbiscan, con los fondos de prueba de
       los mentores de Twin.
-- [ ] El video del circuito (spec 0135), si se aprueba.
+- [ ] El video de 1 minuto (spec 0135): es la primera mitad del pitch.
 - [ ] Ensayar la demo dos veces con el cronómetro.
 
 Números y fuentes: `docs/investigacion/numeros.md` y `negocio.md`.
