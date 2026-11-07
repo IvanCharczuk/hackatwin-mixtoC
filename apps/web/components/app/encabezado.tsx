@@ -6,6 +6,7 @@ import { CHAIN_ID } from "@/lib/tokens";
 import { corta, fmt } from "@/lib/formato";
 import { cn } from "@/lib/utils";
 import type { Bcra } from "@/lib/hooks/use-factura";
+import { CopiarDireccion } from "@/components/copiar-direccion";
 
 type Saldos = { chlt?: number; argt?: number; usdt0?: number; eth?: number; cargando: boolean };
 type Sesion = { ready: boolean; authenticated: boolean; mock: boolean; login: () => void; logout: () => void };
@@ -83,6 +84,7 @@ function Barra({ sesion, dentro, saldos }: { sesion: Sesion; dentro: boolean; sa
             <span className="hidden font-mono text-ink-2 sm:inline">{corta(address)}</span>
             {sesion.mock && <span className="rounded-full bg-sun px-2 py-0.5 text-[11px] font-bold text-navy">demo</span>}
           </button>
+          <CopiarDireccion address={address} />
           <button type="button" onClick={sesion.logout} aria-label="Salir" className="flex size-10 items-center justify-center rounded-full border border-line bg-white text-ink-2 hover:text-navy focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sun">
             <LogOut className="size-4" aria-hidden="true" />
           </button>

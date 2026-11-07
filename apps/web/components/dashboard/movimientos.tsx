@@ -38,10 +38,10 @@ export function Movimientos({ address, ilustrativo }: { address: `0x${string}`; 
 
   return (
     <section className="bg-cream">
-      <div className="mx-auto w-full max-w-[1248px] px-6 py-[72px] lg:py-[96px]">
+      <div className="mx-auto w-full max-w-[1248px] px-6 py-[96px] lg:py-[128px]">
         <p className={EYEBROW}>Movimientos</p>
         <h2 className="mt-3 text-[30px] leading-[1.1] font-semibold tracking-[-0.6px] text-navy lg:text-[40px] lg:tracking-[-1px]">Tus pagos y movimientos</h2>
-        <div className="mt-8 rounded-[22px] border border-line bg-paper px-5 lg:px-7">
+        <div className="mt-10 rounded-[22px] border border-line bg-paper px-5 lg:mt-12 lg:px-7">
           {isLoading && !ilustrativo && filas.length === 0 && (
             <p className="flex items-center gap-2 py-8 text-[15px] text-ink-2">
               <Loader2 className="size-4 animate-spin" aria-hidden="true" /> Leyendo Morpho en Arbitrum…

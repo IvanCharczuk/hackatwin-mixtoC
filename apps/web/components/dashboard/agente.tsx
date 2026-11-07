@@ -80,7 +80,7 @@ export function Agente({ address }: { address: `0x${string}` }) {
 
   return (
     <section className="bg-paper">
-      <div className="mx-auto flex w-full max-w-[1248px] flex-col gap-8 px-6 py-[64px] lg:py-[88px]">
+      <div className="mx-auto flex w-full max-w-[1248px] flex-col gap-12 px-6 py-[96px] lg:gap-14 lg:py-[128px]">
         <div className="flex flex-col gap-3">
           <p className={EYEBROW}>Tu agente</p>
           <h2 className="max-w-[760px] text-[30px] leading-[1.1] font-semibold tracking-[-0.6px] text-navy lg:text-[42px]">Tu perfil y cuánto podés pedir hoy</h2>

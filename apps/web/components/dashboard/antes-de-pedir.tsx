@@ -50,7 +50,7 @@ export const AntesDePedir = forwardRef<HTMLElement, {
 
   return (
     <section ref={ref} id="antes-de-pedir" className="scroll-mt-6 bg-paper">
-      <div className="mx-auto grid w-full max-w-[1248px] gap-10 px-6 py-[72px] lg:grid-cols-[380px_1fr] lg:gap-20 lg:py-[96px]">
+      <div className="mx-auto grid w-full max-w-[1248px] gap-12 px-6 py-[96px] lg:grid-cols-[380px_1fr] lg:gap-24 lg:py-[128px]">
         <div className="flex flex-col gap-6">
           <div>
             <p className={EYEBROW}>Antes de financiar</p>

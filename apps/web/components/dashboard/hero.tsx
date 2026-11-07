@@ -7,6 +7,7 @@ import { CHAIN_ID } from "@/lib/tokens";
 import { fmt, pct } from "@/lib/formato";
 import type { Credito } from "@/lib/credito";
 import { useSaldos } from "@/lib/hooks/use-factura";
+import { CopiarDireccion } from "@/components/copiar-direccion";
 
 const EYEBROW = "text-[12px] font-semibold uppercase tracking-[2px] lg:text-[13px]";
 
@@ -43,6 +44,7 @@ export function BarraSuperior({ authenticated, mock, login, logout }: { authenti
             )}
             {mock && <span className="rounded-full bg-sun px-2 py-0.5 text-[11px] font-bold text-navy-deep">demo</span>}
           </button>
+          <CopiarDireccion address={address} oscuro />
           <button type="button" onClick={logout} aria-label="Salir" className="flex size-9 items-center justify-center rounded-full border border-white/20 text-lavender-soft hover:text-white">
             <LogOut className="size-4" aria-hidden="true" />
           </button>
