@@ -11,3 +11,4 @@ cache/
 typechain-types/
 .DS_Store
 .vercel
+*.tsbuildinfo
