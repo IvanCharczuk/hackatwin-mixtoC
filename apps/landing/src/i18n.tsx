@@ -133,6 +133,9 @@ const es = {
   },
   footer: {
     project: "Proyecto de HackaTwin 2026, equipo Mixto C",
+    mcp: "Conectá Saltar a Claude o Cursor (MCP):",
+    copy: "Copiar",
+    copied: "Copiado",
     legal:
       "Los pesos digitales (ARGt) salen de Morpho, un mercado abierto de préstamos. El financiamiento requiere garantía, tiene costos y podés perder la garantía. Las monedas de Twin son un medio de pago, no una inversión.",
   },
@@ -267,6 +270,9 @@ const en: Dict = {
   },
   footer: {
     project: "HackaTwin 2026 project, team Mixto C",
+    mcp: "Connect Saltar to Claude or Cursor (MCP):",
+    copy: "Copy",
+    copied: "Copied",
     legal:
       "The digital pesos (ARGt) come from Morpho, an open lending market. Financing requires collateral, has costs and you may lose the collateral. Twin coins are a means of payment, not an investment.",
   },
@@ -399,6 +405,9 @@ const pt: Dict = {
   },
   footer: {
     project: "Projeto da HackaTwin 2026, equipe Mixto C",
+    mcp: "Conecte a Saltar ao Claude ou Cursor (MCP):",
+    copy: "Copiar",
+    copied: "Copiado",
     legal:
       "Os pesos digitais (ARGt) saem da Morpho, um mercado aberto de empréstimos. O financiamento exige garantia, tem custos e você pode perder a garantia. As moedas da Twin são um meio de pagamento, não um investimento.",
   },

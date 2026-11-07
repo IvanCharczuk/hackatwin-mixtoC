@@ -3,6 +3,7 @@ import {
   ArrowRight,
   Check,
   ChevronDown,
+  Copy,
   Info,
   Lock,
   MountainSnow,
@@ -709,6 +710,37 @@ function Closing() {
   );
 }
 
+const MCP_URL = "https://saltarg-mcp.stevenmolina.workers.dev/mcp";
+
+function McpLink() {
+  const { t } = useT();
+  const [copied, setCopied] = useState(false);
+  const copy = async () => {
+    try {
+      await navigator.clipboard.writeText(MCP_URL);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1600);
+    } catch {
+      /* clipboard blocked: the URL stays visible to select by hand */
+    }
+  };
+  return (
+    <p className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-lavender">
+      <span>{t.footer.mcp}</span>
+      <button
+        type="button"
+        onClick={copy}
+        title={copied ? t.footer.copied : t.footer.copy}
+        className="inline-flex items-center gap-1.5 rounded font-mono text-lavender-soft underline decoration-lavender/40 underline-offset-2 transition-colors hover:text-white focus-visible:outline focus-visible:outline-1 focus-visible:outline-lavender"
+      >
+        <span className="break-all text-left">{MCP_URL.replace("https://", "")}</span>
+        {copied ? <Check size={12} aria-hidden /> : <Copy size={12} aria-hidden />}
+        <span className="sr-only">{copied ? t.footer.copied : t.footer.copy}</span>
+      </button>
+    </p>
+  );
+}
+
 function Footer() {
   const { t } = useT();
   return (
@@ -716,6 +748,7 @@ function Footer() {
       <div className="flex flex-col gap-2">
         <Logo size={17} />
         <p className="text-sm text-lavender-soft">{t.footer.project}</p>
+        <McpLink />
       </div>
       <p className="text-xs leading-[18px] text-lavender lg:w-[560px] lg:text-right lg:text-[13px] lg:leading-5">
         {t.footer.legal}
