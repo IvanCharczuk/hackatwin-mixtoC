@@ -124,9 +124,11 @@ Se pide hasta el 60% y Morpho liquida recién al 77%: hay 17 puntos de margen.
 Si se acerca, la empresa repone garantía o devuelve una parte.
 
 **¿Cómo evalúan a una empresa que recién llega y no figura en el BCRA?**
-Con su garantía y su historial onchain, que trae de afuera. El BCRA sirve
-para los proveedores y para empresas con historia acá. El próximo paso es
-sumar su historial de crédito en Chile y la verificación de empresa (KYB).
+Con una receta de solvencia que es igual para todos los países y se implementa
+país por país; Chile es el primero. Lo público lo consultamos (identidad y
+situación tributaria en el SII); las deudas con bancos y la morosidad
+comercial la empresa nos autoriza a verificarlas o nos entrega sus informes.
+Mientras falte algo, el tope baja: «sin dato» nunca sube el crédito.
 
 **¿Qué hace exactamente la IA?**
 Lee la factura, valida el CAE y que esté hecha a la empresa, consulta al
