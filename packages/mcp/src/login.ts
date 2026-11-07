@@ -15,7 +15,7 @@ function jsonEnScript(v: unknown): string {
 app.get("/", (c) => {
 	const mcp = new URL("/mcp", c.req.url).href;
 	return c.text(
-		`MCP de Mixto C (HackaTwin). Login con Privy.\n\nAgregalo en Claude como conector personalizado con esta URL:\n${mcp}\n`,
+		`MCP de Saltar (saltarg, HackaTwin). Login con Privy.\n\nAgregalo en Claude como conector personalizado con esta URL:\n${mcp}\n`,
 	);
 });
 
@@ -42,7 +42,7 @@ app.get("/authorize", async (c) => {
 	};
 	const html = (await pagina.text()).replace(
 		"</head>",
-		`<script>window.__MIXTOC__=${jsonEnScript(datos)}</script></head>`,
+		`<script>window.__SALTARG__=${jsonEnScript(datos)}</script></head>`,
 	);
 	headers.set("content-type", "text/html; charset=utf-8");
 	return new Response(html, { status: 200, headers });

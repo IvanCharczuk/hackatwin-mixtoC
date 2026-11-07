@@ -1,4 +1,4 @@
-// MCP remoto de Mixto C en Cloudflare Workers. OAuth 2.1 con registro
+// MCP remoto de Saltar (saltarg) en Cloudflare Workers. OAuth 2.1 con registro
 // dinámico de clientes (lo que piden Claude, Claude Code y Cursor para
 // agregarlo por URL); el login es Privy.
 import OAuthProvider from "@cloudflare/workers-oauth-provider";

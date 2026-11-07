@@ -1,5 +1,5 @@
 // Página de login del MCP: entrar con Privy y autorizar al cliente MCP.
-// El Worker la sirve en /authorize con window.__MIXTOC__ (app id de Privy,
+// El Worker la sirve en /authorize con window.__SALTARG__ (app id de Privy,
 // handle del consentimiento y a quién se le da acceso).
 import { PrivyProvider, usePrivy } from "@privy-io/react-auth";
 import { useEffect, useState } from "react";
@@ -10,7 +10,7 @@ type Datos = { appId: string; handle: string; cliente: string; destino: string; 
 
 declare global {
 	interface Window {
-		__MIXTOC__?: Datos;
+		__SALTARG__?: Datos;
 	}
 }
 
@@ -51,7 +51,7 @@ function Autorizar({ datos }: { datos: Datos }) {
 		}
 	}
 
-	// "Claude Code (mixtoc)" se lee mejor como "Claude Code".
+	// "Claude Code (saltarg)" se lee mejor como "Claude Code".
 	const app = datos.cliente.replace(/\s*\(.*\)\s*$/, "") || datos.cliente;
 	const avisoLocal = datos.destinoLocal ? <p className="pie">Seguí sólo si abriste {app} en esta compu.</p> : null;
 
@@ -96,7 +96,7 @@ function corta(direccion: string): string {
 }
 
 function App() {
-	const datos = window.__MIXTOC__;
+	const datos = window.__SALTARG__;
 	if (!datos) {
 		return (
 			<>

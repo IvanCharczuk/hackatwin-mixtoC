@@ -1,12 +1,12 @@
-# mcp
+# mcp (saltarg)
 
-MCP remoto del equipo en Cloudflare Workers. Se agrega por URL en Claude,
+MCP remoto de Saltar, llamado `saltarg`, en Cloudflare Workers. Se agrega por URL en Claude,
 Claude Code o Cursor; el login es Privy (Google, email o wallet), el mismo usuario y la
 misma wallet que la web. Todas las herramientas son de lectura: ninguna firma
 ni manda transacciones (regla 4 de `AGENTS.md`).
 
 - **Dueño:** Steven
-- **Estado:** desplegado en `https://mixtoc-mcp.stevenmolina.workers.dev/mcp`.
+- **Estado:** desplegado en `https://saltarg-mcp.stevenmolina.workers.dev/mcp`.
   Probado de punta a punta el 7/11 a las 14:45: registro, login con email en
   Privy, autorizar, token y las cuatro herramientas contra Arbitrum.
 - **Lee de:** Privy (usuario y wallet), Arbitrum por RPC, Morpho y el BCRA.
@@ -24,10 +24,10 @@ ni manda transacciones (regla 4 de `AGENTS.md`).
 ## Agregarlo
 
 - **Claude (web o desktop):** Configuración, Conectores, Agregar conector
-  personalizado, URL `https://mixtoc-mcp.stevenmolina.workers.dev/mcp`.
-- **Claude Code:** `claude mcp add --transport http mixtoc https://mixtoc-mcp.stevenmolina.workers.dev/mcp`
+  personalizado, URL `https://saltarg-mcp.stevenmolina.workers.dev/mcp`.
+- **Claude Code:** `claude mcp add --transport http saltarg https://saltarg-mcp.stevenmolina.workers.dev/mcp`
   y después `/mcp` para entrar.
-- **Cursor:** en `mcp.json`, `{"mixtoc": {"url": "https://mixtoc-mcp.stevenmolina.workers.dev/mcp"}}`.
+- **Cursor:** en `mcp.json`, `{"saltarg": {"url": "https://saltarg-mcp.stevenmolina.workers.dev/mcp"}}`.
 
 Se abre la página de login: entrás con Privy, ves qué app pide acceso y
 apretás Autorizar.
@@ -63,5 +63,5 @@ clientes, consentimientos y tokens.
 
 Privy: la app "hacka" no tiene dominios permitidos cargados, así que acepta
 cualquier origen. Si se cargan, hay que sumar
-`https://mixtoc-mcp.stevenmolina.workers.dev` (y `http://localhost:8788` para
+`https://saltarg-mcp.stevenmolina.workers.dev` (y `http://localhost:8788` para
 local).

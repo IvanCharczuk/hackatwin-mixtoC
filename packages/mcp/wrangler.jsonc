@@ -1,6 +1,6 @@
 {
   "$schema": "../../node_modules/wrangler/config-schema.json",
-  "name": "mixtoc-mcp",
+  "name": "saltarg-mcp",
   "main": "src/index.ts",
   "compatibility_date": "2026-11-01",
   "compatibility_flags": ["nodejs_compat"],
@@ -11,7 +11,7 @@
   },
   "vars": {
     // URL pública del MCP. En local la pisa .dev.vars con http://localhost:8788/mcp.
-    "MCP_RESOURCE": "https://mixtoc-mcp.stevenmolina.workers.dev/mcp"
+    "MCP_RESOURCE": "https://saltarg-mcp.stevenmolina.workers.dev/mcp"
   },
   // Secretos (wrangler secret put): PRIVY_APP_ID, PRIVY_APP_SECRET.
   // Opcional: ARBITRUM_RPC_URL (si falta, usa el RPC público de Arbitrum).

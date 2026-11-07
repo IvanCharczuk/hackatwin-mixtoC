@@ -52,7 +52,7 @@ url.search = new URLSearchParams({
 const auth = await fetch(url, { redirect: "manual" });
 const html = await auth.text();
 const cookie = auth.headers.get("set-cookie") ?? "";
-check(auth.status === 200 && html.includes("window.__MIXTOC__") && html.includes("Prueba Mixto C"), "/authorize sirve el login de Privy", `${auth.status}, cookie ${cookie.split("=")[0]}`);
+check(auth.status === 200 && html.includes("window.__SALTARG__") && html.includes("Prueba Mixto C"), "/authorize sirve el login de Privy", `${auth.status}, cookie ${cookie.split("=")[0]}`);
 const js = html.match(/src="(\/login\/assets\/[^"]+\.js)"/)?.[1];
 if (js) {
 	const r = await fetch(`${base}${js}`);

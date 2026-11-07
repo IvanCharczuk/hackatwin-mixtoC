@@ -20,7 +20,7 @@ const SIN_WALLET =
 	"Tu usuario de Privy no tiene una wallet EVM vinculada. Entrá a la web del equipo con el mismo login para que Privy te cree una, y volvé a conectar el MCP.";
 
 export function crearServidor(env: Env, props: Props | undefined) {
-	const server = new McpServer({ name: "mixtoc", version: "0.1.0" });
+	const server = new McpServer({ name: "saltarg", version: "0.1.0" });
 	const rpc = env.ARBITRUM_RPC_URL || RPC_DEFAULT;
 
 	server.registerTool(
