@@ -59,6 +59,23 @@
       button:hover:not(:disabled) { transform: translateY(-2px); }
       button:disabled { opacity: .6; cursor: default; box-shadow: none; }
       button.secundario { margin-top: 10px; background: transparent; color: var(--navy); box-shadow: inset 0 0 0 1.5px var(--line); font-weight: 600; }
+      h1 { text-wrap: balance; }
+      .cargando { text-align: center; }
+      .cuenta { display: flex; align-items: center; gap: 12px; margin: 18px 0 20px; padding: 12px 14px; border: 1px solid var(--edge); border-radius: 14px; background: #fff; }
+      .avatar { flex: none; width: 38px; height: 38px; border-radius: 50%; display: grid; place-items: center; background: var(--navy); color: var(--sun); font-weight: 700; }
+      .cuenta-texto { min-width: 0; flex: 1; display: flex; flex-direction: column; line-height: 1.3; }
+      .cuenta-texto b { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+      .cuenta-texto small { font: 12px "JetBrains Mono", ui-monospace, monospace; color: var(--ink-2); }
+      button.link { width: auto; margin: 0; padding: 6px 10px; background: none; box-shadow: none; color: var(--sun-ink); font-size: 13px; font-weight: 600; border-radius: 8px; }
+      button.link:hover:not(:disabled) { transform: none; background: var(--cream-2); }
+      .titulo-lista { margin: 14px 0 6px; font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--navy); }
+      .lista { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+      .lista li { display: flex; align-items: center; gap: 10px; color: var(--navy); }
+      .lista li::before { flex: none; width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; font-size: 12px; font-weight: 700; }
+      .lista li.si::before { content: "✓"; background: #2e8b571f; color: #2e8b57; }
+      .lista li.no::before { content: "✕"; background: #b5524a1f; color: var(--no); }
+      .aviso-local { display: flex; gap: 10px; align-items: flex-start; margin-top: 18px; padding: 10px 12px; border-radius: 12px; background: #f2ae2e26; color: var(--sun-ink); font-size: 13px; line-height: 1.45; }
+      .aviso-local span { flex: none; width: 18px; height: 18px; margin-top: 1px; border-radius: 50%; display: grid; place-items: center; background: var(--sun-ink); color: var(--paper); font: 700 11px/1 Georgia, serif; font-style: italic; }
       footer { position: fixed; z-index: 2; bottom: 14px; left: 0; right: 0; text-align: center; font-size: 12px; color: var(--navy-deep); opacity: .8; }
 
       @keyframes titila { 0%, 100% { opacity: 1; } 50% { opacity: .35; } }
