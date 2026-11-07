@@ -1,6 +1,7 @@
 "use client";
 
 import { forwardRef, useMemo, useState } from "react";
+import { isAddress } from "viem";
 import { Check, ExternalLink, X } from "lucide-react";
 import { useChequeo } from "@/lib/hooks/use-credito";
 import { usePasos } from "@/lib/hooks/use-pasos";
@@ -12,7 +13,7 @@ import { cn } from "@/lib/utils";
 
 export type Modo = "pedir" | "repagar" | "recuperar";
 const EYEBROW = "text-[12px] font-semibold uppercase tracking-[2px] text-sun-ink lg:text-[13px]";
-const TITULOS: Record<Modo, string> = { pedir: "Tu plan para pedir", repagar: "Tu plan para repagar", recuperar: "Recuperar tu garantía" };
+const TITULOS: Record<Modo, string> = { pedir: "Tu plan para financiar el pago", repagar: "Pagar tu saldo", recuperar: "Liberar tu respaldo" };
 
 function Campo({ label, unidad, value, onChange }: { label: string; unidad: string; value: string; onChange: (v: string) => void }) {
   return (
@@ -40,7 +41,9 @@ export const AntesDePedir = forwardRef<HTMLElement, {
 }>(function AntesDePedir({ address, credito, simular, modo, setModo }, ref) {
   const [chlt, setChlt] = useState("5000");
   const [argt, setArgt] = useState("4000");
-  const chequeo = useChequeo(address, credito, Number(chlt), Number(argt));
+  const [proveedor, setProveedor] = useState("");
+  const pagarA = isAddress(proveedor) ? proveedor : undefined;
+  const chequeo = useChequeo(address, credito, Number(chlt), Number(argt), pagarA);
   const deudaCero = credito.raw.borrowShares === 0n;
   const puedeRepagar = credito.tienePosicion && !deudaCero;
   const puedeRecuperar = credito.raw.collateral > 0n && deudaCero;
@@ -50,19 +53,30 @@ export const AntesDePedir = forwardRef<HTMLElement, {
       <div className="mx-auto grid w-full max-w-[1248px] gap-10 px-6 py-[72px] lg:grid-cols-[380px_1fr] lg:gap-20 lg:py-[96px]">
         <div className="flex flex-col gap-6">
           <div>
-            <p className={EYEBROW}>Antes de pedir</p>
-            <h2 className="mt-3 text-[30px] leading-[1.1] font-semibold tracking-[-0.6px] text-navy lg:text-[40px] lg:tracking-[-1px]">Revisamos seis cosas antes de tu primera firma</h2>
+            <p className={EYEBROW}>Antes de financiar</p>
+            <h2 className="mt-3 text-[30px] leading-[1.1] font-semibold tracking-[-0.6px] text-navy lg:text-[40px] lg:tracking-[-1px]">Revisamos seis cosas antes de pagarle a tu proveedor</h2>
             <p className="mt-4 text-[16px] leading-[1.5] text-ink-2">Si algo falla, no arranca y te decimos qué falta. Cada paso después te pide su propia firma.</p>
           </div>
           <div className="flex gap-3">
-            <Campo label="CHLt a congelar" unidad="CHLt" value={chlt} onChange={setChlt} />
-            <Campo label="ARGt a pedir" unidad="ARGt" value={argt} onChange={setArgt} />
+            <Campo label="CHLt de respaldo" unidad="CHLt" value={chlt} onChange={setChlt} />
+            <Campo label="Monto a pagar" unidad="ARGt" value={argt} onChange={setArgt} />
           </div>
+          <label className="flex flex-col gap-2">
+            <span className="text-[13px] font-semibold text-ink-2">Pagale a</span>
+            <input
+              id="proveedor"
+              value={proveedor}
+              onChange={(e) => setProveedor(e.target.value.trim())}
+              placeholder="0x… wallet de tu proveedor"
+              className="rounded-[14px] border border-line bg-white px-4 py-3 font-mono text-[14px] text-navy outline-none focus:border-navy"
+            />
+            {proveedor && !pagarA ? <span className="text-[13px] text-bad">No es una dirección válida.</span> : <span className="text-[13px] text-ink-2">{pagarA ? "El ARGt va directo a tu proveedor y el saldo queda a tu nombre." : "Si lo dejás vacío, el ARGt llega a tu wallet."}</span>}
+          </label>
           {credito.tienePosicion && (
             <div className="flex flex-wrap gap-3 border-t border-line pt-6">
-              <SecButton onClick={() => setModo("repagar")} disabled={!puedeRepagar} activo={modo === "repagar"}>Repagar</SecButton>
-              <SecButton onClick={() => setModo("recuperar")} disabled={!puedeRecuperar} activo={modo === "recuperar"}>Recuperar garantía</SecButton>
-              {!puedeRecuperar && credito.raw.collateral > 0n && <p className="w-full text-[13px] text-ink-2">La garantía se recupera cuando la deuda queda en cero.</p>}
+              <SecButton onClick={() => setModo("repagar")} disabled={!puedeRepagar} activo={modo === "repagar"}>Pagar saldo</SecButton>
+              <SecButton onClick={() => setModo("recuperar")} disabled={!puedeRecuperar} activo={modo === "recuperar"}>Liberar respaldo</SecButton>
+              {!puedeRecuperar && credito.raw.collateral > 0n && <p className="w-full text-[13px] text-ink-2">El respaldo se libera cuando el saldo queda en cero.</p>}
             </div>
           )}
         </div>
@@ -112,7 +126,7 @@ export const AntesDePedir = forwardRef<HTMLElement, {
 
 const PLACEHOLDER = (["C1", "C2", "C3", "C4", "C5", "C6"] as const).map((id) => ({
   id,
-  titulo: { C1: "Tenés los CHLt", C2: "Hay gas para firmar", C3: "El cambio a USDT0 rinde", C4: "Hay ARGt para prestarte", C5: "Queda margen de seguridad", C6: "Permisos de los tokens" }[id],
+  titulo: { C1: "Tenés los CHLt", C2: "Hay gas para firmar", C3: "El cambio a USDT0 rinde", C4: "Hay fondos para financiarte", C5: "Entra en tu límite", C6: "Permisos de los tokens" }[id],
   ok: false,
   detalle: "",
 }));

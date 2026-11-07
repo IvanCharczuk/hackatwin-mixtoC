@@ -6,7 +6,7 @@ import { Providers } from "./providers";
 const montserrat = Montserrat({ subsets: ["latin"], weight: ["300", "400", "500", "600", "700"], variable: "--font-montserrat" });
 const jetbrains = JetBrains_Mono({ subsets: ["latin"], variable: "--font-jetbrains" });
 
-export const metadata: Metadata = { title: "[Nombre] · tu crédito en Argentina" };
+export const metadata: Metadata = { title: "[Nombre] · pagá hoy, devolvé después" };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (

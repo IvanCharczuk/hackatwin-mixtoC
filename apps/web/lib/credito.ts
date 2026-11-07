@@ -137,6 +137,8 @@ export async function chequear(
   credito: Credito,
   chlt: number,
   argt: number,
+  // ponytail: Morpho manda el ARGt prestado a `receiver`; así le pagamos directo al proveedor (BNPL).
+  pagarA: `0x${string}` = wallet,
 ): Promise<Resultado> {
   const dx = parseUnits(String(chlt), 18);
   const argtRaw = parseUnits(String(argt), 18);
@@ -184,18 +186,18 @@ export async function chequear(
     },
     {
       id: "C4",
-      titulo: "Hay ARGt para prestarte",
+      titulo: "Hay fondos para financiarte",
       ok: credito.liquidezArgt >= argt * 1.1,
-      detalle: `${fmt(credito.liquidezArgt)} ARGt libres en el mercado`,
+      detalle: `${fmt(credito.liquidezArgt)} ARGt disponibles en Morpho`,
     },
     {
       id: "C5",
-      titulo: "Queda margen de seguridad",
+      titulo: "Entra en tu límite",
       ok: deudaNueva <= tope,
       detalle:
         deudaNueva <= tope
-          ? `Vas a deber ${fmt(deudaNueva)} de un tope de ${fmt(tope)} ARGt`
-          : `Pedís ${fmt(deudaNueva - tope)} ARGt de más: el tope es ${fmt(tope)}`,
+          ? `Tu saldo queda en ${fmt(deudaNueva)} de un límite de ${fmt(tope)} ARGt`
+          : `Te pasás por ${fmt(deudaNueva - tope)} ARGt: tu límite es ${fmt(tope)}`,
     },
     {
       id: "C6",
@@ -208,11 +210,12 @@ export async function chequear(
   const pasos: Paso[] = [];
   if (allowChlt < dx)
     pasos.push({ id: "approve-chlt", titulo: "Aprobar CHLt", detalle: `Permite al pool de Curve usar ${fmt(chlt)} CHLt`, tx: { to: TOKENS.CHLt.address, data: approve(POOL_CHLT_USDT0, dx) } });
-  pasos.push({ id: "exchange", titulo: "Congelar CHLt", detalle: `Cambia ${fmt(chlt)} CHLt por al menos ${fmt(num(minDy, 6), 2)} USDT0`, tx: { to: POOL_CHLT_USDT0, data: encodeFunctionData({ abi: curveAbi, functionName: "exchange", args: [0n, 1n, dx, minDy] }) } });
+  pasos.push({ id: "exchange", titulo: "Pasar tus CHLt a dólares", detalle: `Cambia ${fmt(chlt)} CHLt por al menos ${fmt(num(minDy, 6), 2)} USDT0`, tx: { to: POOL_CHLT_USDT0, data: encodeFunctionData({ abi: curveAbi, functionName: "exchange", args: [0n, 1n, dx, minDy] }) } });
   if (allowUsdt0 < minDy)
-    pasos.push({ id: "approve-usdt0", titulo: "Aprobar USDT0", detalle: "Permite a Morpho tomar la garantía", tx: { to: TOKENS.USDT0.address, data: approve(MORPHO, minDy) } });
-  pasos.push({ id: "supply", titulo: "Dejar la garantía", detalle: `${fmt(num(minDy, 6), 2)} USDT0 quedan en Morpho a tu nombre`, tx: { to: MORPHO, data: encodeFunctionData({ abi: morphoAbi, functionName: "supplyCollateral", args: [MARKET_PARAMS, minDy, wallet, "0x"] }) } });
-  pasos.push({ id: "borrow", titulo: "Recibir ARGt", detalle: `${fmt(argt)} ARGt llegan a tu wallet`, tx: { to: MORPHO, data: encodeFunctionData({ abi: morphoAbi, functionName: "borrow", args: [MARKET_PARAMS, argtRaw, 0n, wallet, wallet] }) } });
+    pasos.push({ id: "approve-usdt0", titulo: "Aprobar USDT0", detalle: "Permite a Morpho tomar tu respaldo", tx: { to: TOKENS.USDT0.address, data: approve(MORPHO, minDy) } });
+  pasos.push({ id: "supply", titulo: "Dejar tu respaldo", detalle: `${fmt(num(minDy, 6), 2)} USDT0 quedan en Morpho a tu nombre`, tx: { to: MORPHO, data: encodeFunctionData({ abi: morphoAbi, functionName: "supplyCollateral", args: [MARKET_PARAMS, minDy, wallet, "0x"] }) } });
+  const aProveedor = pagarA.toLowerCase() !== wallet.toLowerCase();
+  pasos.push({ id: "borrow", titulo: aProveedor ? "Pagarle a tu proveedor" : "Recibir ARGt", detalle: aProveedor ? `${fmt(argt)} ARGt van a ${pagarA.slice(0, 6)}…${pagarA.slice(-4)}, el saldo queda a tu nombre` : `${fmt(argt)} ARGt llegan a tu wallet`, tx: { to: MORPHO, data: encodeFunctionData({ abi: morphoAbi, functionName: "borrow", args: [MARKET_PARAMS, argtRaw, 0n, wallet, pagarA] }) } });
 
   return { ok: chequeos.every((c) => c.ok), chequeos, pasos };
 }
@@ -222,13 +225,13 @@ export function planRepago(credito: Credito, wallet: `0x${string}`): Paso[] {
   const margen = (credito.raw.deuda * 101n) / 100n;
   return [
     { id: "approve-argt", titulo: "Aprobar ARGt", detalle: `Permite a Morpho cobrar hasta ${fmt(num(margen, 18), 2)} ARGt`, tx: { to: TOKENS.ARGt.address, data: approve(MORPHO, margen) } },
-    { id: "repay", titulo: "Repagar", detalle: `Cancelás ${fmt(credito.deudaArgt, 2)} ARGt con la comisión incluida`, tx: { to: MORPHO, data: encodeFunctionData({ abi: morphoAbi, functionName: "repay", args: [MARKET_PARAMS, 0n, credito.raw.borrowShares, wallet, "0x"] }) } },
+    { id: "repay", titulo: "Pagar tu saldo", detalle: `Cancelás ${fmt(credito.deudaArgt, 2)} ARGt, costo de financiación incluido`, tx: { to: MORPHO, data: encodeFunctionData({ abi: morphoAbi, functionName: "repay", args: [MARKET_PARAMS, 0n, credito.raw.borrowShares, wallet, "0x"] }) } },
   ];
 }
 
 /** Retiro de la garantía, paso 8 de la SPEC. Solo con la deuda en cero. */
 export function planRecuperar(credito: Credito, wallet: `0x${string}`): Paso[] {
   return [
-    { id: "withdraw", titulo: "Recuperar garantía", detalle: `${fmt(credito.garantiaUsdt0, 2)} USDT0 vuelven a tu wallet`, tx: { to: MORPHO, data: encodeFunctionData({ abi: morphoAbi, functionName: "withdrawCollateral", args: [MARKET_PARAMS, credito.raw.collateral, wallet, wallet] }) } },
+    { id: "withdraw", titulo: "Liberar tu respaldo", detalle: `${fmt(credito.garantiaUsdt0, 2)} USDT0 vuelven a tu wallet`, tx: { to: MORPHO, data: encodeFunctionData({ abi: morphoAbi, functionName: "withdrawCollateral", args: [MARKET_PARAMS, credito.raw.collateral, wallet, wallet] }) } },
   ];
 }

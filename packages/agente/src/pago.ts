@@ -12,7 +12,13 @@ export type PlanPago = {
   /** Lo que hay que pedir prestado en Morpho para completar el pago. */
   aPedirArgt: number;
   alcanza: boolean;
-  /** Si no alcanza: cuánto falta y cuánto USDT0 más de colateral lo cubriría. */
+  /** Qué limita hoy lo que se puede pedir: el colateral o la liquidez del mercado. */
+  limitadoPor: "colateral" | "liquidez";
+  /** Lo máximo que se puede pedir hoy (el menor de los dos topes). */
+  maxPagableHoyArgt: number;
+  /** Lo máximo que se podría pedir sumando colateral: la liquidez del mercado. */
+  maxConMasColateralArgt: number;
+  /** Si no alcanza: cuánto falta y cuánto USDT0 más de colateral sirve sumar (sólo hasta la liquidez del mercado). */
   faltanteArgt: number;
   colateralExtraUsdt0: number;
   /** Lo que le queda después de pagar. */
@@ -23,26 +29,36 @@ export type PlanPago = {
 export function planearPago(p: {
   montoArgt: number;
   saldoArgt: number;
-  /** Cuánto ARGt puede pedir hoy (sale de la decisión del agente). */
-  disponibleArgt: number;
+  /** Tope por colateral: colateral en ARGt × tope − deuda actual. */
+  maxPorColateralArgt: number;
+  /** Tope por mercado: liquidez de Morpho con 10% de margen. */
+  liquidezUsableArgt: number;
   /** ARGt que habilita cada USDT0 extra de colateral: precio del oráculo × tope. */
   argtPorUsdt0DeTope: number;
 }): PlanPago {
   const desdeSaldoArgt = Math.min(p.saldoArgt, p.montoArgt);
   const aPedirArgt = p.montoArgt - desdeSaldoArgt;
-  const alcanza = aPedirArgt <= p.disponibleArgt;
-  const faltanteArgt = alcanza ? 0 : aPedirArgt - p.disponibleArgt;
+  const maxPagableHoyArgt = Math.max(0, Math.min(p.maxPorColateralArgt, p.liquidezUsableArgt));
+  const limitadoPor: PlanPago["limitadoPor"] = p.liquidezUsableArgt < p.maxPorColateralArgt || aPedirArgt > p.liquidezUsableArgt ? "liquidez" : "colateral";
+  const alcanza = aPedirArgt <= maxPagableHoyArgt;
+  const faltanteArgt = alcanza ? 0 : aPedirArgt - maxPagableHoyArgt;
+  // Sumar colateral sólo sirve hasta que el tope pasa a ser la liquidez del mercado.
+  const objetivo = Math.min(aPedirArgt, p.liquidezUsableArgt);
+  const extraArgt = alcanza ? 0 : Math.max(0, objetivo - p.maxPorColateralArgt);
   const colateralExtraUsdt0 =
-    faltanteArgt > 0 && p.argtPorUsdt0DeTope > 0 ? Math.ceil((faltanteArgt / p.argtPorUsdt0DeTope) * 100) / 100 : 0;
+    extraArgt > 0 && p.argtPorUsdt0DeTope > 0 ? Math.ceil((extraArgt / p.argtPorUsdt0DeTope) * 100) / 100 : 0;
   return {
     montoArgt: r2(p.montoArgt),
     desdeSaldoArgt: r2(desdeSaldoArgt),
     aPedirArgt: r2(aPedirArgt),
     alcanza,
+    limitadoPor,
+    maxPagableHoyArgt: r2(maxPagableHoyArgt),
+    maxConMasColateralArgt: r2(Math.max(0, p.liquidezUsableArgt)),
     faltanteArgt: r2(faltanteArgt),
     colateralExtraUsdt0,
     quedaSaldoArgt: r2(p.saldoArgt - desdeSaldoArgt),
-    quedaParaPedirArgt: r2(Math.max(0, p.disponibleArgt - (alcanza ? aPedirArgt : p.disponibleArgt))),
+    quedaParaPedirArgt: r2(Math.max(0, maxPagableHoyArgt - (alcanza ? aPedirArgt : maxPagableHoyArgt))),
   };
 }
 
@@ -96,7 +112,9 @@ export function armarChecks(p: { proveedor: Bcra; empresa: Bcra; tope: number; p
       ok: p.plan.alcanza,
       detalle: p.plan.alcanza
         ? `Sale ${fmt(p.plan.desdeSaldoArgt)} ARGt de tu saldo${p.plan.aPedirArgt > 0 ? ` y se piden ${fmt(p.plan.aPedirArgt)} ARGt` : ""}.`
-        : `Faltan ${fmt(p.plan.faltanteArgt)} ARGt: dejá ${fmt(p.plan.colateralExtraUsdt0)} USDT0 más de colateral.`,
+        : p.plan.limitadoPor === "liquidez"
+          ? `El mercado de Morpho presta como máximo ${fmt(p.plan.maxConMasColateralArgt)} ARGt y faltan ${fmt(p.plan.faltanteArgt)}: sumar colateral no alcanza${p.plan.colateralExtraUsdt0 > 0 ? ` (sirve sólo hasta ${fmt(p.plan.colateralExtraUsdt0)} USDT0 más)` : ""}. Pagá una parte ahora o esperá más liquidez.`
+          : `Faltan ${fmt(p.plan.faltanteArgt)} ARGt: dejá ${fmt(p.plan.colateralExtraUsdt0)} USDT0 más de colateral.`,
     },
     {
       id: "disponible-despues",

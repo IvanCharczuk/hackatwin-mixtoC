@@ -29,24 +29,24 @@ export function Tarjetas({ credito }: { credito: Credito }) {
     <div className="grid gap-4 md:grid-cols-3 lg:gap-6">
       <Tarjeta
         icono={ReceiptText}
-        titulo="Debés"
+        titulo="Saldo a pagar"
         valor={fmt(credito.deudaArgt, 2)}
         unidad="ARGt"
-        nota={credito.comisionAnual !== null ? <>Con la comisión corrida · comisión {pct(credito.comisionAnual, 1)} anual</> : "Con la comisión corrida hasta ahora"}
+        nota={credito.comisionAnual !== null ? <>Incluye el costo de financiación hasta hoy · {pct(credito.comisionAnual, 1)} anual</> : "Incluye el costo de financiación hasta hoy"}
       />
       <Tarjeta
         icono={ShieldCheck}
-        titulo="Tu garantía"
+        titulo="Tu respaldo"
         valor={fmt(credito.garantiaUsdt0, 2)}
         unidad="USDT0"
         nota={<>≈ {fmt(credito.garantiaEnArgt)} ARS al precio del oráculo de Morpho</>}
       />
       <Tarjeta
         icono={Landmark}
-        titulo="ARGt para prestar en el mercado"
+        titulo="Fondos para financiar"
         valor={fmt(credito.liquidezArgt)}
         unidad="ARGt"
-        nota="Liquidez libre en Morpho, la que sale cuando pedís"
+        nota="ARGt libres en Morpho, de donde sale cada pago que financiás"
       />
     </div>
   );
@@ -57,16 +57,16 @@ export function BarraSeguridad({ ltv }: { ltv: number }) {
   const estado = ltv < TOPE ? "ok" : ltv < LIQUIDA ? "cerca" : "riesgo";
   const frase =
     estado === "ok"
-      ? `Usás el ${pct(ltv)} de tu garantía. Te quedan ${fmt((LIQUIDA - ltv) * 100)} puntos antes de que se liquide.`
+      ? `Usaste el ${pct(ltv)} de tu respaldo. Te quedan ${fmt((LIQUIDA - ltv) * 100)} puntos antes de que se liquide.`
       : estado === "cerca"
-        ? `Usás el ${pct(ltv)}: pasaste el tope de [Nombre]. Repagá una parte para volver a zona verde.`
-        : `Usás el ${pct(ltv)}: Morpho puede liquidar tu garantía. Repagá ahora.`;
+        ? `Usaste el ${pct(ltv)}: pasaste tu límite. Pagá una parte del saldo para volver a zona verde.`
+        : `Usaste el ${pct(ltv)}: Morpho puede liquidar tu respaldo. Pagá tu saldo ahora.`;
   return (
     <div className="flex flex-col gap-5">
       <div className="flex flex-col gap-2 lg:flex-row lg:items-end lg:justify-between">
         <div>
           <p className={EYEBROW}>Seguridad</p>
-          <h2 className="mt-2 text-[22px] leading-[1.25] font-semibold text-navy lg:text-[26px]">¿Está segura tu garantía?</h2>
+          <h2 className="mt-2 text-[22px] leading-[1.25] font-semibold text-navy lg:text-[26px]">¿Está seguro tu respaldo?</h2>
         </div>
         <p className={`max-w-[520px] text-[15px] leading-[1.5] lg:text-right lg:text-[16px] ${estado === "riesgo" ? "font-semibold text-bad" : "text-ink-2"}`}>{frase}</p>
       </div>
@@ -76,7 +76,7 @@ export function BarraSeguridad({ ltv }: { ltv: number }) {
           <div className="rounded-full bg-navy px-2.5 py-1 text-[12px] font-bold whitespace-nowrap text-white tabular-nums">Hoy {pct(ltv)}</div>
           <div className="mx-auto h-0 w-0 border-x-[6px] border-t-[7px] border-x-transparent border-t-navy" />
         </div>
-        <div className="flex h-3.5 overflow-hidden rounded-full" role="img" aria-label={`Préstamo sobre garantía: ${pct(ltv)}. Tope 60 %, liquidación 77 %.`}>
+        <div className="flex h-3.5 overflow-hidden rounded-full" role="img" aria-label={`Saldo sobre respaldo: ${pct(ltv)}. Límite 60 %, liquidación 77 %.`}>
           <div className="bg-ok" style={{ width: `${TOPE * 100}%` }} />
           <div className="bg-sun" style={{ width: `${(LIQUIDA - TOPE) * 100}%` }} />
           <div className="flex-1 bg-bad" />

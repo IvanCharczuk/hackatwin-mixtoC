@@ -25,12 +25,12 @@ export function useCredito(address: `0x${string}` | undefined) {
   return { data: query.data, isLoading: query.isLoading, error: query.error, block };
 }
 
-export function useChequeo(address: `0x${string}` | undefined, credito: Credito | undefined, chlt: number, argt: number) {
+export function useChequeo(address: `0x${string}` | undefined, credito: Credito | undefined, chlt: number, argt: number, pagarA?: `0x${string}`) {
   const client = usePublicClient({ chainId: CHAIN_ID });
   return useQuery({
-    queryKey: ["chequeo", address, chlt, argt, credito?.ilustrativo, credito?.deudaArgt.toFixed(2)],
+    queryKey: ["chequeo", address, chlt, argt, pagarA, credito?.ilustrativo, credito?.deudaArgt.toFixed(2)],
     enabled: Boolean(address && client && credito) && chlt > 0 && argt > 0,
-    queryFn: () => chequear(client!, address!, credito!, chlt, argt),
+    queryFn: () => chequear(client!, address!, credito!, chlt, argt, pagarA),
     refetchInterval: 15_000,
     placeholderData: (prev) => prev,
   });

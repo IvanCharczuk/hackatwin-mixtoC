@@ -32,12 +32,12 @@ export default function Dashboard() {
           <Hero credito={credito} cargando={isLoading} onPedir={pedir} />
         ) : (
           <div className="mx-auto flex w-full max-w-[1248px] flex-col items-start gap-5 px-6 pt-6 pb-[200px] lg:pt-14 lg:pb-[190px]">
-            <p className="text-[12px] font-semibold tracking-[2px] text-sun uppercase lg:text-[13px]">Tu crédito en Argentina</p>
+            <p className="text-[12px] font-semibold tracking-[2px] text-sun uppercase lg:text-[13px]">Pagá hoy en Argentina, devolvé después</p>
             <h1 className="max-w-[720px] text-[38px] leading-[1.06] font-semibold tracking-[-1px] text-white lg:text-[64px] lg:tracking-[-1.8px]">
-              Entrá para ver cuánto ARGt podés pedir hoy
+              Entrá para ver tu límite disponible
             </h1>
             <p className="max-w-[520px] text-[17px] leading-[1.45] font-medium text-lavender-soft lg:text-[19px]">
-              Leemos tu posición en Morpho, en Arbitrum, en vivo.
+              Le pagamos a tu proveedor en pesos y lo devolvés cuando cobrás tus ventas acá.
             </p>
             <button type="button" onClick={login} disabled={!ready} className="brillo-sol rounded-full bg-sun px-[34px] py-[18px] text-[17px] font-bold text-navy-deep">
               {ready ? "Entrar" : "Cargando…"}

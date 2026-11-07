@@ -88,7 +88,7 @@ export default function Page() {
   return (
     <main className="mx-auto flex max-w-md flex-col gap-6 p-6">
       <header className="flex items-center justify-between">
-        <h1 className="text-xl font-semibold">Mixto C · adelantos en ARGt</h1>
+        <h1 className="text-xl font-semibold">Mixto C · pagos en ARGt</h1>
         {authenticated ? (
           <button onClick={logout} className="text-sm underline">Salir</button>
         ) : (
