@@ -61,6 +61,7 @@ export function Panel({
   chequeos,
   listo,
   alcanza,
+  pagada = false,
 }: {
   fase: Fase;
   factura: FacturaVista | null;
@@ -71,6 +72,7 @@ export function Panel({
   chequeos?: Chequeo[];
   listo: boolean;
   alcanza: boolean;
+  pagada?: boolean;
 }) {
   const facturaItems: Item[] = factura
     ? [
@@ -90,13 +92,13 @@ export function Panel({
       : [];
   const cItems: Item[] = listo && chequeos ? chequeos.map((c) => ({ id: c.id, titulo: `${c.id} · ${c.titulo}`, detalle: c.detalle, estado: c.ok ? "ok" : "no" })) : [];
 
-  const ocupado = fase === "leyendo" || fase === "evaluando" || (factura && !listo && fase !== "error");
+  const ocupado = !pagada && (fase === "leyendo" || fase === "evaluando" || (factura && !listo && fase !== "error"));
 
   return (
     <aside aria-labelledby="revision" className="flex flex-col gap-4 rounded-[20px] bg-white p-6 shadow-[0_1px_2px_rgb(0_37_100/0.06)] lg:sticky lg:top-6 lg:max-h-[calc(100dvh-3rem)] lg:overflow-y-auto">
       <h2 id="revision" className="text-[16px] font-bold text-navy">Revisión de la factura</h2>
 
-      <div aria-live="polite" className={cn("rounded-[16px] px-4 py-4", !listo || fase !== "listo" ? "bg-cream" : alcanza ? "bg-ok/10" : "bg-bad/10")}>
+      <div aria-live="polite" className={cn("rounded-[16px] px-4 py-4", pagada ? "bg-ok/10" : !listo || fase !== "listo" ? "bg-cream" : alcanza ? "bg-ok/10" : "bg-bad/10")}>
         {fase === "vacio" ? (
           <p className="text-[15px] text-ink-2">Subí una factura y te decimos si la podés pagar con tus CHLt.</p>
         ) : fase === "error" ? (
@@ -108,6 +110,14 @@ export function Panel({
             <Loader2 className="size-5 animate-spin motion-reduce:animate-none" aria-hidden="true" />
             {fase === "leyendo" ? "Leyendo la factura…" : "Revisando en el BCRA y en Morpho…"}
           </p>
+        ) : pagada ? (
+          <div className="flex items-start gap-3">
+            <CircleCheck className="mt-0.5 size-6 shrink-0 text-ok" aria-hidden="true" />
+            <div>
+              <p className="text-[19px] font-semibold text-navy">Factura pagada</p>
+              <p className="text-[14px] text-ink-2">El proveedor ya cobró. El comprobante con cada transacción quedó a la izquierda y en tus movimientos.</p>
+            </div>
+          </div>
         ) : alcanza ? (
           <div className="flex items-start gap-3">
             <CircleCheck className="mt-0.5 size-6 shrink-0 text-ok" aria-hidden="true" />

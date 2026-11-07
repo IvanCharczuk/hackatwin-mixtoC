@@ -14,6 +14,8 @@ import { Subir } from "@/components/app/subir";
 import { Panel } from "@/components/app/panel";
 import { Pagar } from "@/components/app/pagar";
 import { Onboarding } from "@/components/app/onboarding";
+import { Movimientos } from "@/components/dashboard/movimientos";
+import type { Paso } from "@/lib/credito";
 import { borrarOnboarding, guardarOnboarding, leerOnboarding, type Onboarding as DatosOnboarding } from "@/lib/onboarding";
 
 export default function App() {
@@ -51,6 +53,17 @@ export default function App() {
   const montoValido = Boolean(facturaOk) && monto > 0 && monto <= (facturaOk?.total ?? 0);
   const total = montoValido ? monto : undefined;
   const cap = useCapacidad(wallet, credito, saldos.chlt, total, pagarA);
+  // El plan se congela la primera vez que da verde: después de pagar, la deuda cambia y el chequeo
+  // se recalcula, pero el pago tiene que quedar como comprobante y no volver al paso 1.
+  const [plan, setPlan] = useState<Paso[] | null>(null);
+  const [pagada, setPagada] = useState(false);
+  useEffect(() => {
+    setPlan(null);
+    setPagada(false);
+  }, [f.factura, montoTxt, pagarA]);
+  useEffect(() => {
+    if (!plan && cap.alcanza && cap.chequeo.data) setPlan(cap.chequeo.data.pasos);
+  }, [plan, cap.alcanza, cap.chequeo.data]);
   // Los dólares que van a quedar de respaldo, para que el agente calcule con lo mismo que el panel.
   const colateralUsdt0 = cap.limiteTotal && credito ? cap.limiteTotal / (credito.argtPorUsdt0 * 0.6) : undefined;
 
@@ -115,10 +128,11 @@ export default function App() {
             </section>
           )}
 
-          {cap.alcanza && cap.chequeo.data && (
+          {plan && (
             <Pagar
-              key={`${cap.chltAUsar}-${total}-${pagarA ?? "yo"}`}
-              pasos={cap.chequeo.data.pasos}
+              key={f.factura?.numeroCompleto ?? "factura"}
+              pasos={plan}
+              onListo={() => setPagada(true)}
               simular={sesion.mock}
               monto={(total ?? 0).toLocaleString("es-AR")}
               aProveedor={Boolean(pagarA)}
@@ -137,10 +151,12 @@ export default function App() {
             chequeos={cap.chequeo.data?.chequeos}
             listo={cap.listo}
             alcanza={cap.alcanza}
+            pagada={pagada}
           />
         </div>
       </main>
       )}
+      {dentro && wallet && ob && <Movimientos address={wallet} ilustrativo={false} />}
       {dentro && wallet && ob && (
         <footer className="mx-auto w-full max-w-[1200px] px-6 pb-8">
           <button type="button" onClick={() => { borrarOnboarding(wallet); setOb(null); f.reiniciar(); }} className="text-[13px] text-ink-2 underline underline-offset-2 hover:text-navy">
