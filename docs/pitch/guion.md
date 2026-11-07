@@ -20,14 +20,17 @@ Siguen las preguntas.
 
 ## El minuto del pitch: lo que se ve y lo que decís (video de la spec 0135)
 
+**Show, don't tell:** el video muestra (imágenes, movimiento y palabras
+sueltas, nada de frases largas) y Ivan cuenta. El video no tiene voz.
+
 | Tiempo | En pantalla (video) | Lo que decís |
 |---|---|---|
-| 0:00 a 0:08 | **Propuesta.** Logo de Saltar: «Pesos desde el primer día». | «Saltar le da pesos desde el primer día a las empresas que llegan a operar a Argentina.» |
-| 0:08 a 0:20 | **Problema.** Chile → San Juan; tres cruces: banco, cepo, vender. | «Una minera de Chile abre en San Juan y necesita pesos para arrancar. El banco no la conoce, traer dólares choca con el cepo y vender sus stablecoins la deja sin respaldo.» |
-| 0:20 a 0:32 | **Solución.** CHLt de garantía → ARGt; un check sobre una factura. | «Con Saltar deja sus CHLt de garantía y recibe ARGt, los pesos digitales de Twin. Y nuestro agente revisa cada factura antes de pagarle al proveedor.» |
-| 0:32 a 0:44 | **Mercado.** 1.158 empresas · US$ 6.500 M · RIGI US$ 50.000 M · 7 monedas. | «Hay 1.158 empresas chilenas que ya le venden a Argentina, y el RIGI aprobó casi 50.000 millones de dólares en proyectos que traen empresas de afuera. Con las siete monedas de Twin, cada país es un corredor.» |
-| 0:44 a 0:56 | **Diferencia.** Banco ✗ · Bitso o BVNK ✗ · Saltar ✓. 1% · 0,3%. | «El banco pide historial; los pagos con stablecoins no prestan en pesos ni validan facturas. Nosotros no prestamos plata propia: conectamos el crédito de Morpho con un agente que entiende Argentina. Cobramos 1% por abrir el crédito y 0,3% por cada pago.» |
-| 0:56 a 1:00 | Cierre: «Saltar». | «Les muestro cómo funciona.» |
+| 0:00 a 0:08 | **Propuesta.** Amanece sobre la cordillera; aparece el logo de Saltar. Texto: «Pesos desde el día uno». | «Saltar le da pesos desde el primer día a las empresas que llegan a operar a Argentina.» |
+| 0:08 a 0:20 | **Problema.** Un camión cruza de Chile a San Juan. Caen tres cruces, una por palabra: «Banco» ✗ «Cepo» ✗ «Vender» ✗. | «Una minera de Chile abre en San Juan y necesita pesos para arrancar. El banco no la conoce, traer dólares choca con el cepo y vender sus stablecoins la deja sin respaldo.» |
+| 0:20 a 0:32 | **Solución.** La moneda CHLt entra a una bóveda y sale ARGt. Una factura recibe un check verde. Texto: «CHLt → ARGt». | «Con Saltar deja sus CHLt de garantía y recibe ARGt, los pesos digitales de Twin. Y nuestro agente revisa cada factura antes de pagarle al proveedor.» |
+| 0:32 a 0:44 | **Mercado.** Contadores que suben: «1.158 empresas», «US$ 50.000 M RIGI». El mapa de la región se enciende país por país: «7 monedas». | «Hay 1.158 empresas chilenas que ya le venden a Argentina, y el RIGI aprobó casi 50.000 millones de dólares en proyectos que traen empresas de afuera. Con las siete monedas de Twin, cada país es un corredor.» |
+| 0:44 a 0:56 | **Diferencia.** Tres columnas: «Banco» ✗, «Pagos cripto» ✗, «Saltar» ✓. Debajo: «1%» y «0,3%». | «El banco pide historial; los pagos con stablecoins no prestan en pesos ni validan facturas. Nosotros no prestamos plata propia: conectamos el crédito de Morpho con un agente que entiende Argentina. Cobramos 1% por abrir el crédito y 0,3% por cada pago.» |
+| 0:56 a 1:00 | **Cierre.** El logo de Saltar sobre el sol. | «Les muestro cómo funciona.» |
 
 ## Demo en vivo: cómo funciona (unos 90 segundos)
 
