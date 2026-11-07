@@ -1,0 +1,34 @@
+{
+  "name": "mcp",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "vite build",
+    "dev": "vite build && wrangler dev",
+    "deploy": "vite build && wrangler deploy",
+    "typecheck": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p login/tsconfig.json",
+    "probar": "node probar.mjs"
+  },
+  "dependencies": {
+    "@cloudflare/workers-oauth-provider": "^1.2.4",
+    "@modelcontextprotocol/server": "2.4.0",
+    "@privy-io/react-auth": "3.37",
+    "agents": "0.33.0",
+    "hono": "^4.13.17",
+    "jose": "^6.2.15",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
+    "viem": "^2.57.8",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^5.20261107.1",
+    "@types/node": "^22",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "@vitejs/plugin-react": "^5.2.0",
+    "typescript": "^5",
+    "vite": "^8.3.6",
+    "wrangler": "^4.158.0"
+  }
+}

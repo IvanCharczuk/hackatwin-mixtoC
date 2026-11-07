@@ -1,0 +1,6 @@
+# Copiá a .dev.vars para `npm run -w packages/mcp dev`. En producción van con `wrangler secret put`.
+MCP_RESOURCE=http://localhost:8788/mcp
+PRIVY_APP_ID=
+PRIVY_APP_SECRET=
+# Opcional: si falta, usa https://arb1.arbitrum.io/rpc
+ARBITRUM_RPC_URL=

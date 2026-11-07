@@ -1,6 +1,6 @@
 # landing
 
-Landing de [Nombre]: empresas de Chile que llegan a Argentina dejan CHLt de
+Landing de Saltar: empresas de Chile que llegan a Argentina dejan CHLt de
 garantía y pagan a sus proveedores en ARGt. Copy tomado de la página de Notion
 «Llegar a Argentina · Copy y estrategia» (7/11). Es el diseño **C · Amanecer** de `design/expandir-hackatwin.pen` (desktop y mobile).
 
@@ -24,6 +24,11 @@ npm run build -w apps/landing
 | `src/data.ts` | Tipo de cambio ilustrativo CLP/ARS y la cuenta de la garantía |
 | `src/index.css` | Tokens de color y tipografía (Tailwind v4 `@theme`) |
 | `public/` | Sol de Mayo, Andes, foto del ejemplo y logos de las 7 monedas |
+
+El header es fijo: transparente sobre el cielo del hero y azul profundo con
+desenfoque apenas empieza el scroll. El hero tiene parallax: estrellas, sol,
+Andes y texto se mueven a distinta velocidad (`useHeroParallax` en `App.tsx`,
+capas en `index.css`). Con "reducir movimiento" del sistema queda quieto.
 
 La cuenta: el préstamo en ARGt es hasta el 60% de la garantía (chequeo C5 del
 circuito), así que la garantía mínima es lo que hay que pagar / 0,6, pasado a

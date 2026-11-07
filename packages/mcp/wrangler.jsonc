@@ -1,0 +1,26 @@
+{
+  "$schema": "../../node_modules/wrangler/config-schema.json",
+  "name": "mixtoc-mcp",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-11-01",
+  "compatibility_flags": ["nodejs_compat"],
+  // La página de login (React + Privy) compilada por Vite en dist/login.
+  "assets": {
+    "directory": "./dist",
+    "binding": "ASSETS"
+  },
+  "vars": {
+    // URL pública del MCP. En local la pisa .dev.vars con http://localhost:8788/mcp.
+    "MCP_RESOURCE": "https://mixtoc-mcp.stevenmolina.workers.dev/mcp"
+  },
+  // Secretos (wrangler secret put): PRIVY_APP_ID, PRIVY_APP_SECRET.
+  // Opcional: ARBITRUM_RPC_URL (si falta, usa el RPC público de Arbitrum).
+  "kv_namespaces": [
+    {
+      "binding": "OAUTH_KV",
+      "id": "fc94e7ab0a464f5ba6e12b10ce7bd3c4"
+    }
+  ],
+  "observability": { "enabled": true },
+  "dev": { "port": 8788 }
+}

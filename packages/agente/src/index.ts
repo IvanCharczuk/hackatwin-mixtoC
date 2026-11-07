@@ -11,6 +11,7 @@ import { explicar } from "./explicar";
 export type { Bcra, Decision, Onchain, PlanPago, Alertas, Check };
 export { decidir, topePorPerfil } from "./reglas";
 export { planearPago, alertasProveedor, armarChecks } from "./pago";
+export { leerFactura, validarFacturaLeida, type FacturaLeida, type FacturaValidada } from "./leerFactura";
 
 type BcraSimulado = { situacion: number | null; chequesRechazados?: number };
 
@@ -107,7 +108,10 @@ export async function evaluar(p: Pedido): Promise<Resultado> {
     leerOnchain(wallet),
     factura ? (proveedorSim ?? consultarBcra(factura.cuitProveedor)) : Promise.resolve(null),
   ]);
-  const decision = decidir({ bcra, mercado: onchain.mercado, posicion: onchain.posicion, colateralExtraUsdt0, pedidoArgt });
+  // Con factura y sin pedido explícito, lo que se pide es lo que falta después de usar el saldo.
+  const pedidoEfectivo =
+    pedidoArgt ?? (factura ? Math.max(0, factura.montoArs - onchain.saldos.ARGt) : undefined);
+  const decision = decidir({ bcra, mercado: onchain.mercado, posicion: onchain.posicion, colateralExtraUsdt0, pedidoArgt: pedidoEfectivo });
 
   let pago: Pago | null = null;
   if (factura && proveedor) {

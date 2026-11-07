@@ -1,4 +1,4 @@
-import { useState, type FormEvent, type ReactNode } from "react";
+import { useEffect, useRef, useState, type FormEvent, type ReactNode } from "react";
 import {
   ArrowRight,
   Check,
@@ -18,11 +18,12 @@ import { MAX_LTV, money, quote, short, tokenSrc, type Ticker } from "./data";
 // La demo con wallet (apps/web). VITE_APP_URL la pisa en otro deploy.
 const APP_URL = import.meta.env.VITE_APP_URL ?? "https://hackatwin-mixtoc-web.vercel.app";
 
-const NAME = "[Nombre]";
+const NAME = "Saltar";
 
 export function App() {
   return (
     <div className="overflow-x-clip">
+      <SiteHeader />
       <Hero />
       <main>
         <Problem />
@@ -122,22 +123,25 @@ const STARS: [number, number, number][] = [
   [980, 80, 2],
 ];
 
-function Hero() {
-  return (
-    <header className="hero-sky relative flex h-[800px] flex-col items-center overflow-hidden px-6 pt-5 lg:h-[980px] lg:px-24 lg:pt-7">
-      <div className="hero-glow absolute bottom-[-60px] left-1/2 h-[400px] w-[640px] -translate-x-1/2 rounded-full lg:h-[520px] lg:w-[900px]" />
-      <SolDeMayo className="sun-rise bottom-[-20px] left-[calc(50%-120px)] z-[1] w-[240px] lg:bottom-0 lg:left-[calc(50%-210px)] lg:w-[420px]" />
-      <Andes className="bottom-[-226px] z-[2] lg:bottom-[-46px]" />
-      {STARS.map(([x, y, s], i) => (
-        <span
-          key={i}
-          aria-hidden
-          className="absolute rounded-full bg-white/70"
-          style={{ left: `${(x / 1440) * 100}%`, top: y, width: s, height: s }}
-        />
-      ))}
+/* The header is fixed: clear over the hero sky, navy with blur once the page scrolls. */
+function SiteHeader() {
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
-      <nav className="relative z-10 flex w-full max-w-[1248px] items-center justify-between">
+  return (
+    <header
+      className={`fixed inset-x-0 top-0 z-50 flex justify-center px-6 transition-[background-color,box-shadow,padding] duration-300 lg:px-24 ${
+        scrolled
+          ? "bg-navy-deep/85 py-3 shadow-[0_8px_30px_#1b225033] backdrop-blur-md lg:py-3.5"
+          : "bg-transparent py-5 lg:py-7"
+      }`}
+    >
+      <nav className="flex w-full max-w-[1248px] items-center justify-between">
         <a href="#" aria-label={`${NAME}, inicio`}>
           <Logo size={16} />
         </a>
@@ -146,46 +150,110 @@ function Hero() {
           <a className="transition-colors hover:text-white" href="#calculadora">Calculadora</a>
           <a className="transition-colors hover:text-white" href="#preguntas">Preguntas frecuentes</a>
         </div>
-        <div className="hidden items-center gap-4 lg:flex">
-          <span className="text-sm font-medium text-mist">ES / EN</span>
+        <div className="flex items-center gap-4">
+          <span className="hidden text-sm font-medium text-mist lg:inline">ES / EN</span>
           <a
             href="#contacto"
-            className="rounded-full px-[22px] py-3 text-[15px] font-medium text-white ring-[1.5px] ring-white/50 ring-inset transition-colors hover:bg-white/10"
+            className="rounded-full px-4 py-2 text-[13px] font-medium text-white ring-[1.5px] ring-white/50 ring-inset transition-colors hover:bg-white/10 lg:px-[22px] lg:py-3 lg:text-[15px]"
           >
-            Evaluar mi expansión
+            <span className="lg:hidden">Evaluar</span>
+            <span className="hidden lg:inline">Evaluar mi expansión</span>
           </a>
         </div>
       </nav>
+    </header>
+  );
+}
 
-      <div className="relative z-10 flex flex-col items-center">
-        <p className="flex items-center gap-2 pt-12 pb-4 lg:pt-[72px] lg:pb-6">
+/*
+ * Hero parallax: scroll progress through the hero (0 to 1) is written to --p on the
+ * section, and each layer moves at its own depth. Far layers (stars, sun) sink
+ * fastest, the Andes barely move, the copy lifts and fades. Off with reduced motion.
+ */
+function useHeroParallax() {
+  const ref = useRef<HTMLElement>(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    let frame = 0;
+    const update = () => {
+      frame = 0;
+      const p = Math.min(Math.max(window.scrollY / el.offsetHeight, 0), 1);
+      el.style.setProperty("--p", p.toFixed(4));
+    };
+    const onScroll = () => {
+      if (!frame) frame = requestAnimationFrame(update);
+    };
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
+  }, []);
+  return ref;
+}
+
+function Hero() {
+  const ref = useHeroParallax();
+  return (
+    <section
+      ref={ref}
+      className="hero-sky relative flex h-svh min-h-[680px] flex-col items-center overflow-hidden px-6 pt-14 lg:min-h-[760px] lg:px-24 lg:pt-[76px]"
+    >
+      <div className="parallax-layer intro-fade absolute inset-0" style={{ ["--depth" as string]: 0.55 }} aria-hidden>
+        {STARS.map(([x, y, s], i) => (
+          <span
+            key={i}
+            className="twinkle absolute rounded-full bg-white/70"
+            style={{ left: `${(x / 1440) * 100}%`, top: y, width: s, height: s, animationDelay: `${i * 0.37}s` }}
+          />
+        ))}
+      </div>
+      <div className="parallax-layer absolute inset-0" style={{ ["--depth" as string]: 0.4 }} aria-hidden>
+        <div className="hero-glow absolute bottom-[-60px] left-1/2 h-[400px] w-[640px] -translate-x-1/2 rounded-full lg:h-[520px] lg:w-[900px]" />
+        <SolDeMayo className="sun-rise bottom-[-20px] left-[calc(50%-120px)] w-[240px] lg:bottom-0 lg:left-[calc(50%-210px)] lg:w-[420px]" />
+      </div>
+      <div className="parallax-layer absolute inset-0 z-[2]" style={{ ["--depth" as string]: 0.12 }} aria-hidden>
+        <div className="andes-rise absolute inset-0">
+          <Andes className="bottom-[-226px] lg:bottom-[-46px]" />
+        </div>
+      </div>
+
+      <div className="parallax-copy relative z-10 flex flex-col items-center">
+        <p className="intro-up flex items-center gap-2 pt-12 pb-4 lg:pt-[72px] lg:pb-6" style={{ animationDelay: "0.1s" }}>
           <span className="size-[7px] rounded-full bg-live lg:size-2" aria-hidden />
-          <span className="text-[13px] text-mist lg:hidden">Para empresas de Chile que llegan a Argentina</span>
+          <span className="text-[13px] text-mist lg:hidden">Para empresas que se expanden a Argentina</span>
           <span className="hidden text-sm text-lavender-soft lg:inline">
-            Para empresas de Chile que quieren crecer en Argentina
+            Para empresas de Chile que se expanden a Argentina
           </span>
         </p>
 
-        <h1 className="max-w-[1120px] text-center text-[34px] leading-[38px] font-semibold tracking-[-1px] text-white lg:text-[60px] lg:leading-[66px] lg:tracking-[-1.6px]">
-          Tu próximo cliente está en Argentina.{" "}
-          <span className="text-sun">¿Cómo pagás el primer paso?</span>
+        <h1
+          className="intro-up max-w-[1120px] text-center text-[34px] leading-[38px] font-semibold tracking-[-1px] text-white lg:text-[60px] lg:leading-[66px] lg:tracking-[-1.6px]"
+          style={{ animationDelay: "0.25s" }}
+        >
+          Expandí tu empresa a Argentina.{" "}
+          <span className="text-sun">Operá en pesos desde el primer día.</span>
         </h1>
 
-        <p className="pt-4 pb-6 text-center text-[17px] leading-[25px] text-mist lg:hidden">
-          Proveedores, equipos y puesta en marcha: los primeros pagos llegan antes que los primeros cobros.
+        <p className="intro-up pt-4 pb-6 text-center text-[17px] leading-[25px] text-mist lg:hidden" style={{ animationDelay: "0.4s" }}>
+          Dejás tus stablecoins de garantía y recibís pesos digitales para abrir tu operación, sin vender lo que tenés.
         </p>
 
-        <div className="flex items-center gap-2.5 lg:gap-5 lg:pt-8 lg:pb-7">
+        <div className="intro-up flex items-center gap-2.5 lg:gap-5 lg:pt-8 lg:pb-7" style={{ animationDelay: "0.45s" }}>
           <EquationPill t="CHLt" label="Dejás de garantía" value="CHLt" />
           <ArrowRight className="size-5 text-sun lg:size-7" aria-hidden />
-          <EquationPill t="ARGt" label="Tu proveedor cobra en" value="ARGt" />
+          <EquationPill t="ARGt" label="Recibís para operar" value="ARGt" />
         </div>
 
-        <p className="hidden text-center text-xl font-medium text-mist lg:block">
-          Proveedores, equipos y puesta en marcha: los primeros pagos llegan antes que los primeros cobros.
+        <p className="intro-up hidden text-center text-xl font-medium text-mist lg:block" style={{ animationDelay: "0.55s" }}>
+          Dejás tus stablecoins de garantía y recibís pesos digitales para abrir tu operación, sin vender lo que tenés.
         </p>
 
-        <div className="w-full pt-5 lg:w-auto lg:pt-7">
+        <div className="intro-up w-full pt-5 lg:w-auto lg:pt-7" style={{ animationDelay: "0.65s" }}>
           <a
             href="#contacto"
             className="flex items-center justify-center gap-2.5 rounded-full bg-sun px-[34px] py-4 text-base font-bold text-navy-deep shadow-[0_10px_30px_#f2ae2e59] transition-transform hover:-translate-y-0.5 lg:py-[18px] lg:text-[17px]"
@@ -194,11 +262,14 @@ function Hero() {
             <ArrowRight size={18} aria-hidden />
           </a>
         </div>
-        <p className="max-w-[340px] pt-4 text-center text-xs leading-[18px] font-medium text-white [text-shadow:0_1px_10px_#1b2250] lg:max-w-none lg:text-[13px]">
+        <p
+          className="intro-up max-w-[340px] pt-4 text-center text-xs leading-[18px] font-medium text-white [text-shadow:0_1px_10px_#1b2250] lg:max-w-none lg:text-[13px]"
+          style={{ animationDelay: "0.75s" }}
+        >
           Piloto para empresas de Chile. Sujeto a evaluación, garantía y fondos disponibles.
         </p>
       </div>
-    </header>
+    </section>
   );
 }
 
@@ -218,8 +289,8 @@ function EquationPill({ t, label, value }: { t: Ticker; label: string; value: st
 /* ---------- problem ---------- */
 
 const ROWS = [
-  ["Crédito", "El banco argentino no conoce tu empresa", "Tu garantía en CHLt define cuánto podés pagar"],
-  ["Pagos", "Pagás proveedores antes de cobrar el primer peso", "Cada factura se paga en ARGt, 1 a 1 con el peso"],
+  ["Crédito", "El banco argentino no conoce tu empresa", "Tu garantía en CHLt define cuánto ARGt recibís"],
+  ["Pesos", "Para tener pesos tenés que vender tus stablecoins", "Recibís ARGt, 1 a 1 con el peso, y tus CHLt quedan de garantía"],
   ["Condiciones", "Las conocés del todo recién al firmar", "Ves monto, costo, garantía y devolución antes"],
 ] as const;
 
@@ -280,10 +351,10 @@ function Problem() {
 /* ---------- how it works ---------- */
 
 const STEPS: { title: string; desc: string; icon: LucideIcon }[] = [
-  { title: "Contanos qué tenés que pagar", desc: "La factura, el proveedor y qué ponés en marcha en Argentina.", icon: Receipt },
-  { title: "Revisamos la operación", desc: "Un agente valida la factura y consulta al proveedor y a tu empresa en el BCRA.", icon: ShieldCheck },
+  { title: "Contanos tu expansión", desc: "Dónde abrís, qué ponés en marcha y cuántos pesos necesitás los primeros meses.", icon: Receipt },
+  { title: "Revisamos tu empresa", desc: "Un agente revisa la documentación y consulta a tu empresa en el BCRA.", icon: ShieldCheck },
   { title: "Dejás CHLt de garantía", desc: `Pedís hasta el ${MAX_LTV * 100}% de su valor. Ves el costo antes de firmar.`, icon: Lock },
-  { title: "Tu proveedor cobra en ARGt", desc: "Devolvés lo pedido más el costo y recuperás tu garantía.", icon: Repeat },
+  { title: "Recibís ARGt para operar", desc: "Pagás en pesos alquiler, equipos y sueldos. Devolvés lo pedido más el costo y recuperás tu garantía.", icon: Repeat },
 ];
 
 function HowItWorks() {
@@ -294,7 +365,7 @@ function HowItWorks() {
     >
       <div className="flex flex-col gap-2.5 pb-3.5 lg:w-[400px] lg:shrink-0 lg:gap-4 lg:pb-0">
         <Eyebrow>Cómo funciona</Eyebrow>
-        <SectionTitle>De tu plan al pago de tu proveedor</SectionTitle>
+        <SectionTitle>De tu plan a operar en Argentina</SectionTitle>
         <p className="text-base leading-6 text-ink-2 lg:text-lg lg:leading-[27px]">
           No prestamos capital propio. El préstamo sale de un mercado de Morpho, un protocolo abierto de préstamos.
         </p>
@@ -359,16 +430,16 @@ function Calculator() {
       <div className="flex flex-1 flex-col gap-[22px] lg:gap-7">
         <Eyebrow dark>Calculadora</Eyebrow>
         <SectionTitle dark>¿Cuánta garantía necesitás?</SectionTitle>
-        <p className="hidden text-lg text-lavender-soft lg:block">Poné cuánto tenés que pagar en Argentina.</p>
+        <p className="hidden text-lg text-lavender-soft lg:block">Poné cuántos pesos necesitás para abrir tu operación en Argentina.</p>
 
         <label className="flex flex-col gap-2 lg:gap-2.5 lg:pt-3">
-          <span className="text-[13px] font-semibold text-lavender-soft lg:text-sm">Pagos a proveedores en Argentina</span>
+          <span className="text-[13px] font-semibold text-lavender-soft lg:text-sm">Pesos que necesitás en Argentina</span>
           <span className="flex items-center justify-between gap-3 rounded-[14px] bg-white/8 p-4 ring-1 ring-white/20 ring-inset focus-within:ring-sun lg:px-5 lg:py-[18px]">
             <span className="flex flex-1 items-center gap-2 text-xl font-semibold text-white lg:text-2xl">
               <span aria-hidden>$</span>
               <input
                 inputMode="numeric"
-                aria-label="Pagos a proveedores en Argentina, en pesos"
+                aria-label="Pesos que necesitás en Argentina"
                 value={ars ? ars.toLocaleString("es-AR") : ""}
                 placeholder="0"
                 onChange={(e) => onArs(e.target.value)}
@@ -411,7 +482,7 @@ function Calculator() {
         </p>
 
         <dl className="flex flex-col pt-[18px] pb-1 lg:pt-7 lg:pb-0">
-          <ResultRow icon={Receipt} k="Tu proveedor cobra">
+          <ResultRow icon={Receipt} k="Recibís">
             <span className="text-base font-bold text-navy tabular-nums lg:text-lg">{short(q.pay)} ARGt</span>
             <span className="text-xs text-ink-2 lg:text-[13px]">1 ARGt = 1 peso</span>
           </ResultRow>
@@ -454,8 +525,8 @@ function ResultRow({ icon: Icon, k, children }: { icon: LucideIcon; k: ReactNode
 const EXAMPLE_ARS = 12_000_000;
 const ex = quote(EXAMPLE_ARS);
 const TICKET = [
-  ["Factura del proveedor", money(EXAMPLE_ARS)],
-  ["El proveedor cobra", `${short(EXAMPLE_ARS)} ARGt`],
+  ["Pesos que necesita", money(EXAMPLE_ARS)],
+  ["Recibe", `${short(EXAMPLE_ARS)} ARGt`],
   [`Garantía (pide el ${MAX_LTV * 100}%)`, `≈ ${short(ex.collateralClp)} CHLt`],
   ["Costo", "Lo ve antes de firmar"],
   ["Devolución", "Préstamo y costo, como se acordó"],
@@ -469,9 +540,9 @@ function Example() {
     >
       <div className="flex flex-1 flex-col gap-[18px]">
         <Eyebrow>Ejemplo ilustrativo</Eyebrow>
-        <SectionTitle>Una empresa minera de Antofagasta empieza a operar en San Juan</SectionTitle>
+        <SectionTitle>Una empresa minera de Antofagasta suma una operación en San Juan</SectionTitle>
         <p className="text-base leading-6 text-ink-2 lg:text-lg lg:leading-7">
-          Ganó un contrato en San Juan y tiene que pagar el montaje a un proveedor local antes de cobrar. Con {NAME} deja CHLt de garantía y el proveedor cobra en ARGt.
+          Sigue operando en Chile, abre una base en San Juan y necesita pesos para el galpón, los equipos y los primeros sueldos. Con {NAME} deja CHLt de garantía y recibe ARGt para operar.
         </p>
         <img
           src="/ejemplo-san-juan.jpg"
@@ -519,8 +590,8 @@ function TicketCity({ t, city }: { t: Ticker; city: string }) {
 
 const FAQ = [
   [
-    "¿Me dan plata o pagan mi expansión?",
-    "Pagamos gastos concretos: cada pago va a un proveedor y está atado a una factura. Tu empresa devuelve lo pedido más los costos, según lo acordado.",
+    "¿Para qué sirven los ARGt?",
+    "Para operar en Argentina: alquiler, equipos, sueldos e impuestos. Cada ARGt vale un peso. Tu empresa devuelve lo pedido más los costos, según lo acordado.",
   ],
   [
     "¿Quién presta la plata?",
@@ -531,8 +602,8 @@ const FAQ = [
     "Queda comprometida mientras debés. Si pierde valor y deja de cubrir el préstamo, tenés que sumar más; si no, puede venderse para cubrir la deuda.",
   ],
   [
-    "¿Puedo devolverlo con lo que cobre en Argentina?",
-    "Podés planificarlo así, pero el calendario de pago tiene que poder cumplirse aunque tus cobros se demoren.",
+    "¿Puedo devolverlo con lo que gane en Argentina?",
+    "Podés planificarlo así, pero el calendario de pago tiene que poder cumplirse aunque tus ingresos se demoren.",
   ],
   [
     "¿Ya puedo usarlo?",
@@ -550,7 +621,7 @@ function Faq() {
         <Eyebrow>Preguntas frecuentes</Eyebrow>
         <SectionTitle>Antes de comprometer nada</SectionTitle>
         <p className="text-base leading-6 text-ink-2 lg:text-lg lg:leading-[27px]">
-          Qué se paga, cuánto cuesta y cómo se devuelve, antes de firmar.
+          Cuánto recibís, cuánto cuesta y cómo se devuelve, antes de firmar.
         </p>
       </div>
       <div className="flex flex-1 flex-col">
@@ -590,7 +661,7 @@ function Closing() {
       <h2 className="relative z-[2] max-w-[820px] text-center text-[32px] leading-9 font-semibold tracking-[-0.8px] text-navy lg:text-[52px] lg:leading-[57px] lg:tracking-[-1.5px]">
         Ya sabés hacia dónde querés crecer
       </h2>
-      <p className="relative z-[2] text-center text-lg text-ink-2 lg:text-[22px]">Hablemos de cómo pagar el primer paso.</p>
+      <p className="relative z-[2] text-center text-lg text-ink-2 lg:text-[22px]">Hablemos de cómo llegar con pesos para operar.</p>
 
       <div className="relative z-[3] w-full max-w-[560px] rounded-[22px] bg-white p-[22px] shadow-[0_20px_50px_#1b225026] lg:rounded-3xl lg:p-8">
         {sent ? (
@@ -613,8 +684,8 @@ function Closing() {
               required
               name="pagos"
               rows={3}
-              placeholder="¿Qué necesitás pagar en Argentina?"
-              aria-label="¿Qué necesitás pagar en Argentina?"
+              placeholder="¿Qué vas a poner en marcha en Argentina?"
+              aria-label="¿Qué vas a poner en marcha en Argentina?"
               className={`${FIELD} resize-none`}
             />
             <button

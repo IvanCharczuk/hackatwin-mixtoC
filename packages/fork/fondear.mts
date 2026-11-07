@@ -1,4 +1,4 @@
-// uso: npm run -w packages/fork fondear -- <wallet> [--usdt0 50] [--chlt 50000] [--argt 0] [--eth 1]
+// uso: npm run -w packages/fork fondear -- <wallet> [--usdt0 50] [--chlt 50000] [--argt 0] [--eth 1] [--desbloquear]
 // Le carga plata DE MENTIRA a una wallet en el servidor de prueba (127.0.0.1:8545).
 // Se niega a correr contra cualquier otra URL: nunca toca la red real.
 import { createPublicClient, createTestClient, createWalletClient, http, parseAbi, parseUnits, parseEther, formatUnits, getAddress } from "viem";
@@ -60,5 +60,10 @@ for (const t of Object.keys(TOKENS) as Token[]) {
   await test.stopImpersonatingAccount({ address: ballena });
   const saldo = await pub.readContract({ address, abi: erc20, functionName: "balanceOf", args: [destino] });
   console.log(`${t}: ${formatUnits(saldo, decimals)} (tx de prueba ${hash.slice(0, 10)}…)`);
+}
+if (args.includes("--desbloquear")) {
+  // El servidor de prueba firma por esta wallet: la web en modo demo (sin Privy) puede mandar transacciones reales a la copia local.
+  await test.impersonateAccount({ address: destino });
+  console.log("Desbloqueada: el servidor de prueba acepta eth_sendTransaction desde esta wallet sin clave.");
 }
 console.log(`Listo: ${destino} tiene plata de mentira en el servidor de prueba.`);

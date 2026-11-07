@@ -109,8 +109,10 @@ export function armarChecks(p: { proveedor: Bcra; empresa: Bcra; tope: number; p
     {
       id: "plata-suficiente",
       titulo: "Plata suficiente para pagar",
-      ok: p.plan.alcanza,
-      detalle: p.plan.alcanza
+      ok: p.plan.alcanza && !(p.tope === 0 && p.plan.aPedirArgt > 0),
+      detalle: p.tope === 0 && p.plan.aPedirArgt > 0
+        ? `Con tu perfil en el BCRA no podés pedir ARGt: sólo podés pagar con tu saldo (${fmt(p.plan.desdeSaldoArgt)} ARGt).`
+        : p.plan.alcanza
         ? `Sale ${fmt(p.plan.desdeSaldoArgt)} ARGt de tu saldo${p.plan.aPedirArgt > 0 ? ` y se piden ${fmt(p.plan.aPedirArgt)} ARGt` : ""}.`
         : p.plan.limitadoPor === "liquidez"
           ? `El mercado de Morpho presta como máximo ${fmt(p.plan.maxConMasColateralArgt)} ARGt y faltan ${fmt(p.plan.faltanteArgt)}: sumar colateral no alcanza${p.plan.colateralExtraUsdt0 > 0 ? ` (sirve sólo hasta ${fmt(p.plan.colateralExtraUsdt0)} USDT0 más)` : ""}. Pagá una parte ahora o esperá más liquidez.`
