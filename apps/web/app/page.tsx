@@ -75,7 +75,7 @@ export default function Dashboard() {
           <span>Construido con las monedas de Twin · <a href="/factura" className="underline underline-offset-2">Pagar una factura</a> · <a href="/transferir" className="underline underline-offset-2">Transferir</a></span>
         </div>
       </footer>
-      <Asistente endpoint="/api/chat" wallet={authenticated ? (address ?? null) : null} idioma="es" />
+      <Asistente endpoint="/api/chat" wallet={authenticated ? (address ?? null) : null} idioma="es" pagina="dashboard" />
     </main>
   );
 }
