@@ -10,6 +10,7 @@ import { evaluar, type Pedido, type Resultado } from "../../agente/src/index";
 import { explicacionArmada } from "../../agente/src/explicar";
 import { POOL_CHLT_USDT0, TOPE, chequear, curveAbi, leerCredito } from "./circuito";
 import type { Env, Props } from "./tipos";
+import { metaUi, UI_PLAN } from "./tarjetas";
 
 const WEB_FIRMA = "https://saltarg-app.vercel.app/app";
 
@@ -116,6 +117,7 @@ export function registrarFlujo(server: McpServer, env: Env, props: Props | undef
 	server.registerTool(
 		"preparar_adelanto",
 		{
+			_meta: metaUi(UI_PLAN),
 			description:
 				"PREPARA (no firma, no manda) el adelanto en ARGt para la wallet con la que entraste: pone CHLt, los cambia a USDT0 en Curve, los deja de colateral en Morpho y pide ARGt, que van a tu wallet o directo al proveedor. Lee la cadena y corre los chequeos previos (C1 tenés los CHLt, C2 gas, C3 el cambio rinde, C4 liquidez, C5 límite del 60%, C6 permisos) y arma cada transacción (to + data). Devuelve firmarEn: el link a la web donde la persona revisa y firma con Privy. Esta herramienta nunca firma ni envía nada.",
 			inputSchema: z.object({

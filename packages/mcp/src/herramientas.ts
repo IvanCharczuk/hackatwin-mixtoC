@@ -11,6 +11,7 @@ import { consultarBcra } from "../../agente/src/bcra";
 import { decidir, type Bcra } from "../../agente/src/reglas";
 import type { Env, Props } from "./tipos";
 import { registrarFlujo } from "./flujo";
+import { metaUi, registrarTarjetas, UI_CUANTO } from "./tarjetas";
 
 const erc20 = parseAbi(["function balanceOf(address) view returns (uint256)"]);
 
@@ -23,6 +24,7 @@ const SIN_WALLET =
 export function crearServidor(env: Env, props: Props | undefined) {
 	const server = new McpServer({ name: "saltarg", version: "0.1.0" });
 	const rpc = env.ARBITRUM_RPC_URL || RPC_DEFAULT;
+	registrarTarjetas(server);
 
 	server.registerTool(
 		"quien_soy",
@@ -95,6 +97,7 @@ export function crearServidor(env: Env, props: Props | undefined) {
 					.describe("USDT0 que pensás sumar de colateral, para simular."),
 				pedido_argt: z.number().min(0).optional().describe("ARGt que querés pedir. Si falta, devuelve el máximo."),
 			}),
+			_meta: metaUi(UI_CUANTO),
 		},
 		async ({ cuit, colateral_extra_usdt0, pedido_argt }) => {
 			if (!props?.wallet) return error(SIN_WALLET);
@@ -114,7 +117,8 @@ export function crearServidor(env: Env, props: Props | undefined) {
 				colateralExtraUsdt0: colateral_extra_usdt0,
 				pedidoArgt: pedido_argt,
 			});
-			return texto({ wallet: onchain.wallet, bcra, mercado: onchain.mercado, posicion: onchain.posicion, decision });
+			const resultado = { wallet: onchain.wallet, bcra, mercado: onchain.mercado, posicion: onchain.posicion, decision };
+			return { ...texto(resultado), structuredContent: resultado };
 		},
 	);
 
