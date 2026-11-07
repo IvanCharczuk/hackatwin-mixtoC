@@ -24,8 +24,13 @@ y pagar en pesos, y tener el control del colateral.
    - Central de Deudores del BCRA por CUIT: situación (1 a 5), deudas por
      entidad y cheques rechazados. API pública y gratuita, sin clave
      ([BCRA](https://www.bcra.gob.ar/apis-banco-central/)).
-   - Historial onchain: cobros previos en ARGt por nuestro contrato.
-   - KYB (KUMPLY; simulado si no hay clave).
+   - **Identidad onchain:** la billetera del proveedor tiene una atestación
+     verificable (KYB de KUMPLY o una propia) que la une a su CUIT y a su
+     descripción como empresa (razón social, actividad, provincia). El agente
+     verifica que la billetera que cobra es la de la empresa que emitió la
+     factura.
+   - **Historial onchain:** cobros previos en ARGt por nuestro contrato, días
+     de atraso y adelantos ya repagados.
 4. **Mira a la empresa que paga:** su pago comprometido en el contrato y su
    propio perfil en el BCRA.
 5. **Hace los chequeos financieros** (tabla de abajo) y compara opciones.
@@ -39,12 +44,28 @@ comprometió en el contrato (USDC).
 | Chequeo | Regla | Si falla |
 |---|---|---|
 | V1 Saldo | USDC comprometido, pasado a pesos, cubre la factura | Rechaza: falta fondear |
-| V2 Colateral | Adelanto / valor del colateral en pesos ≤ 70% (Morpho liquida a 77%) | Recorta el adelanto al 70% |
+| V2 Colateral | Adelanto / valor del colateral en pesos ≤ el límite del nivel onchain del proveedor (tabla de abajo; Morpho liquida a 77%) | Recorta el adelanto a ese límite |
 | V3 Liquidez | Hay ARGt disponible para prestar (mercado de Morpho en Arbitrum) | Recorta a lo disponible o recomienda la factura de crédito |
-| V4 Identidad | Proveedor con KYB (KUMPLY; simulado si no hay clave) | Rechaza hasta verificar |
+| V4 Identidad | Billetera del proveedor con atestación onchain que la une al CUIT de la factura (KUMPLY; simulada si no hay clave) | Rechaza hasta verificar |
 | V5 Plazo | Factura no vencida y a 120 días o menos | Rechaza |
 | V6 Factura | CAE válido y CUIT del receptor igual al de la empresa que comprometió el pago | Rechaza: factura no corresponde |
 | V7 Perfil | Proveedor en situación 1 o 2 del BCRA y sin cheques rechazados recientes | Situación 3 o peor: rechaza; cheques rechazados: recorta y lo explica |
+
+### El historial onchain baja la colateralización
+
+Cuanto mejor es el historial onchain del proveedor, más se le adelanta contra
+el mismo pago comprometido (o, en la idea de Steven, menos tiene que congelar).
+Los umbrales son configurables; estos son los de la demo:
+
+| Nivel | Condición | Adelanto máximo sobre el colateral |
+|---|---|---|
+| 0 | Sin historial onchain | 50% |
+| 1 | 3 cobros o más, sin atrasos | 60% |
+| 2 | 10 cobros o más y al menos un adelanto repagado a tiempo | 70% |
+
+Un atraso de más de 7 días baja un nivel. El tope del nivel 2 queda debajo
+del 77% en que liquida Morpho. El texto de la respuesta le dice al proveedor
+en qué nivel está y qué le falta para subir.
 
 Después compara el costo para el proveedor:
 
@@ -80,7 +101,7 @@ nada: la transacción la confirma una persona.
 
 Stack recomendado: TypeScript con Node, para compartirlo con el front.
 
-- **CA-1** — El caso aprobado da `aprobado`, con un adelanto de 70% o menos del
+- **CA-1** — El caso aprobado da `aprobado`, con un adelanto dentro del límite de su nivel sobre el
   colateral y una explicación que nombra las tres opciones.
   `npm test -- aprobado`
 - **CA-2** — Sin saldo suficiente, rechaza y dice cuánto falta fondear.
@@ -88,11 +109,15 @@ Stack recomendado: TypeScript con Node, para compartirlo con el front.
 - **CA-3** — Con liquidez menor al pedido, recorta a lo disponible o recomienda
   la factura de crédito.
   `npm test -- liquidez`
-- **CA-4** — Un pedido por encima del 70% del colateral se recorta al 70%.
+- **CA-4** — Un pedido por encima del límite del nivel se recorta a ese límite.
   `npm test -- colateral`
 - **CA-5** — La lectura en vivo de Morpho devuelve la liquidez y la tasa del
   mercado ARGt, o falla con un mensaje claro.
   `npm run leer-morpho`
+- **CA-7** — El mismo pedido da 50%, 60% y 70% de adelanto máximo para
+  proveedores de nivel 0, 1 y 2, y la explicación nombra el nivel y qué le
+  falta para subir.
+  `npm test -- nivel`
 - **CA-6** — Con una factura de ejemplo, el agente extrae CUIT, monto, CAE y
   vencimiento, consulta la Central de Deudores del BCRA por ese CUIT y
   devuelve el perfil junto con la decisión.
