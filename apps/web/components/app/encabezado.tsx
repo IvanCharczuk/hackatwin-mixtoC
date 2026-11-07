@@ -49,7 +49,8 @@ function Saldo({ token, valor, d = 0 }: { token: string; valor?: number; d?: num
   );
 }
 
-function Barra({ sesion, dentro }: { sesion: Sesion; dentro: boolean }) {
+function Barra({ sesion, dentro, saldos }: { sesion: Sesion; dentro: boolean; saldos: Saldos }) {
+  const monto = (v: number | undefined) => (v === undefined ? "…" : fmt(v));
   const { address, chainId } = useAccount();
   const { switchChain, isPending } = useSwitchChain();
   const enArbitrum = chainId === CHAIN_ID;
@@ -68,8 +69,18 @@ function Barra({ sesion, dentro }: { sesion: Sesion; dentro: boolean }) {
             className="flex items-center gap-2 rounded-full border border-line bg-white px-3.5 py-2 text-[13px] text-navy focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sun disabled:cursor-default"
           >
             <span className={cn("size-2 rounded-full", enArbitrum ? "bg-live" : "bg-bad")} aria-hidden="true" />
-            <span className="font-mono">{corta(address)}</span>
-            <span className="hidden text-ink-2 sm:inline">· {enArbitrum ? "Arbitrum" : "Cambiar a Arbitrum"}</span>
+            {enArbitrum ? (
+              <span className="font-mono font-semibold tabular-nums">
+                {monto(saldos.argt)} <span className="font-sans font-medium text-ink-2">ARGt</span>
+                <span className="hidden sm:inline">
+                  {" "}· {monto(saldos.chlt)} <span className="font-sans font-medium text-ink-2">CHLt</span>
+                </span>
+              </span>
+            ) : (
+              <span className="font-semibold text-bad">Cambiar a Arbitrum</span>
+            )}
+            <span className="hidden h-4 w-px bg-line sm:block" aria-hidden="true" />
+            <span className="hidden font-mono text-ink-2 sm:inline">{corta(address)}</span>
             {sesion.mock && <span className="rounded-full bg-sun px-2 py-0.5 text-[11px] font-bold text-navy">demo</span>}
           </button>
           <button type="button" onClick={sesion.logout} aria-label="Salir" className="flex size-10 items-center justify-center rounded-full border border-line bg-white text-ink-2 hover:text-navy focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sun">
@@ -108,7 +119,7 @@ export function Encabezado({
   return (
     <header className="border-b border-line bg-white">
       <p className="bg-navy px-6 py-2 text-center text-[13px] font-medium text-white">Pagá hoy en Argentina, devolvé después · en pesos, sobre Arbitrum</p>
-      <Barra sesion={sesion} dentro={dentro} />
+      <Barra sesion={sesion} dentro={dentro} saldos={saldos} />
       <div className="mx-auto flex w-full max-w-[1200px] flex-col gap-6 px-6 pt-4 pb-8 lg:flex-row lg:items-end lg:justify-between">
         <div className="flex min-w-0 flex-col gap-3">
           <h1 className="text-[28px] leading-[1.1] font-bold tracking-[-0.02em] text-balance text-navy uppercase lg:text-[36px]">
