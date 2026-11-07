@@ -17,6 +17,7 @@ import { Cielo } from "@/components/app/cielo";
 import { Pagar } from "@/components/app/pagar";
 import { Onboarding } from "@/components/app/onboarding";
 import { Movimientos } from "@/components/dashboard/movimientos";
+import { Confirmacion, type Recibo } from "@/components/app/confirmacion";
 import type { Paso } from "@/lib/credito";
 import { borrarOnboarding, guardarOnboarding, leerOnboarding, type Onboarding as DatosOnboarding } from "@/lib/onboarding";
 
@@ -58,10 +59,11 @@ export default function App() {
   // El plan se congela la primera vez que da verde: después de pagar, la deuda cambia y el chequeo
   // se recalcula, pero el pago tiene que quedar como comprobante y no volver al paso 1.
   const [plan, setPlan] = useState<Paso[] | null>(null);
-  const [pagada, setPagada] = useState(false);
+  const [recibo, setRecibo] = useState<Recibo | null>(null);
+  const pagada = Boolean(recibo);
   useEffect(() => {
     setPlan(null);
-    setPagada(false);
+    setRecibo(null);
   }, [f.factura, montoTxt, pagarA]);
   useEffect(() => {
     if (!plan && cap.alcanza && cap.chequeo.data) setPlan(cap.chequeo.data.pasos);
@@ -81,6 +83,15 @@ export default function App() {
               guardarOnboarding(wallet, d);
               setCuitEstado(d.cuit);
               setOb(d);
+            }}
+          />
+        ) : recibo ? (
+          <Confirmacion
+            recibo={recibo}
+            onOtra={() => {
+              setRecibo(null);
+              setPlan(null);
+              f.reiniciar();
             }}
           />
         ) : (
@@ -150,7 +161,18 @@ export default function App() {
                     <Pagar
                       key={f.factura?.numeroCompleto ?? "factura"}
                       pasos={plan}
-                      onListo={() => setPagada(true)}
+                      onListo={(hashes) => {
+                        setRecibo({
+                          pasos: plan,
+                          hashes,
+                          monto: (total ?? 0).toLocaleString("es-AR"),
+                          proveedor: f.factura?.razonSocialEmisor,
+                          numero: f.factura?.numeroCompleto,
+                          destino: pagarA,
+                          simulado: sesion.mock,
+                        });
+                        window.scrollTo({ top: 0, behavior: "smooth" });
+                      }}
                       simular={sesion.mock}
                       monto={(total ?? 0).toLocaleString("es-AR")}
                       aProveedor={Boolean(pagarA)}
@@ -169,7 +191,11 @@ export default function App() {
           </main>
         )}
       </Cielo>
-      {dentro && wallet && ob && <Movimientos address={wallet} ilustrativo={false} />}
+      {dentro && wallet && ob && (
+        <div id="movimientos" className="scroll-mt-6">
+          <Movimientos address={wallet} ilustrativo={false} />
+        </div>
+      )}
       {dentro && wallet && ob && (
         <footer className="mx-auto w-full max-w-[1120px] px-6 pb-8">
           <button type="button" onClick={() => { borrarOnboarding(wallet); setOb(null); f.reiniciar(); }} className="text-[13px] text-ink-2 underline underline-offset-2 hover:text-navy">
