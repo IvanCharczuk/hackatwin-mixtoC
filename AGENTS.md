@@ -6,20 +6,24 @@ en la HackaTwin. Leelo entero antes de tocar nada. Entrega: 7/11/2026, 18:00
 
 ## Qué estamos construyendo
 
-Pagos y adelantos en stablecoins de Twin para proveedores: una empresa paga
-desde afuera, el pago comprometido queda en un contrato como colateral, y el
-proveedor cobra antes en ARGt. Un agente valida cada factura y explica la
-mejor opción. Detalle en `docs/ivan/idea.md` y `docs/steven/ideas.md`.
+Dirección del equipo desde las 12:10: una empresa de afuera (el ejemplo es
+chilena) que entra a Argentina usa sus stablecoins de colateral y recibe ARGt
+para operar acá, con transacciones reales en Morpho y Curve (ver
+`packages/circuito/SPEC.md`). Las ideas en discusión, una por archivo, están en
+`docs/ideas/`; la decisión vigente se anuncia en `mensajes/`.
 
 ## Mapa del repo
 
 | Carpeta | Qué hay | Dueño |
 |---|---|---|
-| `apps/web/` | Front de la demo | a definir |
-| `packages/agente/` | Agente que valida y compara el adelanto (`SPEC.md`) | Ivan |
+| `apps/web/` | Front de la demo | Franco |
+| `packages/agente/` | Agente que valida la factura y arma el perfil (`SPEC.md`) | Ivan (en pausa) |
+| `packages/circuito/` | Circuito CHLt → colateral en Morpho → ARGt → repago (`SPEC.md`) | Franco |
 | `packages/contratos/` | Contrato que guarda el pago comprometido | a definir |
 | `packages/comun/` | Direcciones de tokens, redes y tipos compartidos | quien lo necesite primero, con aviso |
-| `docs/` | Consigna, investigación e ideas de cada persona (`docs/<persona>/`) | cada uno la suya |
+| `docs/estado.md` | Estado del equipo: una sección por persona | cada uno su sección |
+| `docs/ideas/` | Ideas en discusión, un archivo por idea | quien la propone |
+| `docs/investigacion/` | Regulación, competencia, números y consigna (`research.md`, `sources/`) | todos, con fuentes |
 | `mensajes/` | Canal entre las IAs del equipo | todos |
 | `plantilla/` | Material previo al evento; no es parte del producto | nadie |
 
@@ -31,13 +35,16 @@ carpeta sin dueño, avisá con un mensaje y anotate en la tabla.
 1. `git pull --rebase`.
 2. Leé los mensajes de `mensajes/` con `estado: abierto` para todos o para tu
    persona (formato en `mensajes/README.md`).
-3. Leé el `README.md` del paquete donde vas a trabajar y el `ESTADO.md` de las
-   otras personas en `docs/<persona>/`.
+3. Leé `docs/estado.md` y el `README.md` del paquete donde vas a trabajar.
 
 ## Reglas
 
-1. **Tu carpeta y tu paquete.** No edites lo de otro: mandale un mensaje.
-2. **Directo a `main`:** mensajes nuevos, tu `docs/<persona>/` y tu paquete
+1. **Un lugar para todos, por tema.** No hay carpetas por persona: lo que
+   escribas va en `docs/ideas/`, `docs/investigacion/` o el paquete que
+   corresponda. Tu estado, en tu sección de `docs/estado.md`. No edites lo que
+   escribió otro: mandale un mensaje.
+2. **Directo a `main`:** mensajes nuevos, tu sección de `docs/estado.md`, tus
+   archivos de `docs/` y tu paquete
    mientras sea sólo tuyo. **Por PR:** cambios en `packages/comun/`, en este
    archivo, en `README.md` o en un paquete de otro.
 3. **Un solo `npm install` en la raíz.** Los paquetes son workspaces de npm;

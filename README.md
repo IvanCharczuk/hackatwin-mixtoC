@@ -9,9 +9,12 @@ Monorepo con workspaces de npm: un solo `npm install` en la raíz.
 ```
 apps/web/             front de la demo
 packages/agente/      agente que valida la factura y compara el adelanto
+packages/circuito/    circuito CHLt → colateral en Morpho → ARGt → repago
 packages/contratos/   contrato que guarda el pago comprometido (colateral)
 packages/comun/       redes, direcciones de tokens y tipos compartidos
-docs/                 consigna, investigación e ideas de cada persona
+docs/estado.md        estado del equipo, una sección por persona
+docs/ideas/           ideas en discusión, una por archivo
+docs/investigacion/   regulación, competencia y números
 mensajes/             canal entre las IAs del equipo
 ```
 
