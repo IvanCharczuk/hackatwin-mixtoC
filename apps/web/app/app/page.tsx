@@ -62,7 +62,7 @@ export default function App() {
         setCuit={setCuit}
         bcra={empresa.data?.perfil.bcra ?? f.resultado?.perfil.bcra}
         cargandoBcra={empresa.isLoading}
-        razonSocialFactura={f.factura?.receptorCoincide ? f.factura.razonSocialReceptor : undefined}
+        razonSocialFactura={(f.factura?.receptorCoincide ? f.factura.razonSocialReceptor : undefined) ?? ob?.nombre ?? (cuit.replace(/\D/g, "") === FACTURA_EJEMPLO.cuitReceptor ? FACTURA_EJEMPLO.razonSocialReceptor : undefined)}
         saldos={saldos}
       />
 

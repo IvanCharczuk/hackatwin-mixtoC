@@ -1,5 +1,5 @@
 // "Primera vez" por wallet, en localStorage. Si el navegador lo bloquea, queda en memoria.
-export type Onboarding = { cuit: string; pais?: string; idLocal?: string };
+export type Onboarding = { cuit: string; pais?: string; idLocal?: string; nombre?: string };
 
 const clave = (wallet: string) => `saltar:onboarding:${wallet.toLowerCase()}`;
 const memoria = new Map<string, Onboarding>();

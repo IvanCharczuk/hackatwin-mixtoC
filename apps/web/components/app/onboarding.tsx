@@ -7,6 +7,7 @@ import { usePublicClient } from "wagmi";
 import { BadgeCheck, Building2, Check, CircleHelp } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
 import { PAISES } from "@/lib/paises";
+import { FACTURA_EJEMPLO } from "@/lib/factura-ejemplo";
 import { CHAIN_ID } from "@/lib/tokens";
 import { planPermisos } from "@/lib/credito";
 import { useEmpresa } from "@/lib/hooks/use-factura";
@@ -15,7 +16,7 @@ import { cn } from "@/lib/utils";
 
 const digitos = (s: string) => s.replace(/\D/g, "");
 
-export function Onboarding({ wallet, simular, onListo }: { wallet: `0x${string}`; simular: boolean; onListo: (datos: { cuit: string; pais: string; idLocal: string }) => void }) {
+export function Onboarding({ wallet, simular, onListo }: { wallet: `0x${string}`; simular: boolean; onListo: (datos: { cuit: string; pais: string; idLocal: string; nombre?: string }) => void }) {
   const [paso, setPaso] = useState<1 | 2>(1);
   const [paisId, setPaisId] = useState("CL");
   const pais = PAISES.find((p) => p.id === paisId)!;
@@ -30,7 +31,9 @@ export function Onboarding({ wallet, simular, onListo }: { wallet: `0x${string}`
   const bcra = empresa.data?.perfil.bcra;
   const client = usePublicClient({ chainId: CHAIN_ID });
   const permisos = useQuery({ queryKey: ["permisos", wallet], enabled: paso === 2 && Boolean(client), queryFn: () => planPermisos(client!, wallet) });
-  const terminar = () => onListo({ cuit: digitos(cuit), pais: pais.id, idLocal: idLocal.trim() });
+  // El nombre sale del BCRA; el CUIT de la demo es ficticio y el BCRA no lo trae: se usa el de la factura de ejemplo.
+  const nombre = bcra?.denominacion || (digitos(cuit) === FACTURA_EJEMPLO.cuitReceptor ? FACTURA_EJEMPLO.razonSocialReceptor : undefined);
+  const terminar = () => onListo({ cuit: digitos(cuit), pais: pais.id, idLocal: idLocal.trim(), nombre });
 
   return (
     <main className="mx-auto flex w-full max-w-[560px] flex-1 flex-col gap-6 px-6 py-12">
