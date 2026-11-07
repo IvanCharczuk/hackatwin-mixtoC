@@ -2,8 +2,9 @@
 
 // Asistente de Saltar: botón flotante con un chat que responde sobre Saltar,
 // financiamiento y (con sesión) la cuenta de la persona. Habla con /api/chat.
-// Vive sólo en el dashboard (app/page.tsx).
+// Vive en el dashboard (app/page.tsx) y en /app. Usa los colores del tema de la página.
 import { useEffect, useRef, useState, type FormEvent, type ReactNode } from "react";
+import { ArrowUp, MessageCircle, RotateCcw, X } from "lucide-react";
 
 export type Idioma = "es" | "en" | "pt";
 type Mensaje = { rol: "usuario" | "asistente"; texto: string };
@@ -75,7 +76,7 @@ function leerGuardado(): Mensaje[] {
 function enLinea(texto: string): ReactNode[] {
   return texto.split(/(\*\*[^*]+\*\*)/g).map((p, i) =>
     p.startsWith("**") && p.endsWith("**") ? (
-      <strong key={i} className="font-semibold text-navy-deep">
+      <strong key={i} className="font-semibold text-navy">
         {p.slice(2, -2)}
       </strong>
     ) : (
@@ -107,7 +108,7 @@ function Texto({ texto }: { texto: string }) {
           g.lista ? (
             <ul key={i} className="my-1.5 space-y-1 pl-4">
               {g.lineas.map((l, j) => (
-                <li key={j} className="list-disc marker:text-sun">
+                <li key={j} className="list-disc marker:text-ink-2">
                   {enLinea(l.replace(VINETA, ""))}
                 </li>
               ))}
@@ -124,17 +125,6 @@ function Texto({ texto }: { texto: string }) {
           ),
         )}
     </>
-  );
-}
-
-function Sol({ className = "" }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 24 24" aria-hidden className={className}>
-      <circle cx="12" cy="12" r="5" fill="currentColor" />
-      {Array.from({ length: 8 }, (_, i) => (
-        <rect key={i} x="11.2" y="1.5" width="1.6" height="4" rx="0.8" fill="currentColor" transform={`rotate(${i * 45} 12 12)`} />
-      ))}
-    </svg>
   );
 }
 
@@ -204,11 +194,11 @@ export function Asistente({ endpoint, wallet, idioma = "es" }: { endpoint: strin
         onClick={() => setAbierto((v) => !v)}
         aria-expanded={abierto}
         aria-label={abierto ? t.cerrar : t.abrir}
-        className={`fixed right-4 bottom-4 z-50 flex items-center gap-2 rounded-full bg-navy-deep py-3 pr-5 pl-4 text-sm font-semibold text-cream shadow-[0_10px_30px_-8px_rgba(27,34,80,0.55)] ring-1 ring-white/10 transition duration-200 hover:-translate-y-0.5 hover:bg-navy active:translate-y-0 sm:right-6 sm:bottom-6 ${
-          abierto ? "pointer-events-none translate-y-2 opacity-0 sm:pointer-events-auto sm:translate-y-0 sm:opacity-100" : ""
+        className={`fixed right-4 bottom-4 z-50 flex items-center gap-2 rounded-full bg-navy py-2.5 pr-4 pl-3.5 text-[14px] font-semibold text-white shadow-[0_8px_24px_-12px_rgba(0,0,0,0.45)] transition hover:opacity-90 active:scale-[0.98] sm:right-6 sm:bottom-6 ${
+          abierto ? "pointer-events-none opacity-0 sm:pointer-events-auto sm:opacity-100" : ""
         }`}
       >
-        <Sol className="h-5 w-5 text-sun motion-safe:animate-[spin_12s_linear_infinite]" />
+        {abierto ? <X className="size-4" aria-hidden /> : <MessageCircle className="size-4" aria-hidden />}
         {abierto ? t.cerrar : t.abrir}
       </button>
 
@@ -216,80 +206,50 @@ export function Asistente({ endpoint, wallet, idioma = "es" }: { endpoint: strin
         role="dialog"
         aria-label={t.titulo}
         aria-hidden={!abierto}
-        className={`fixed inset-x-3 bottom-3 z-50 flex max-h-[min(640px,calc(100dvh-24px))] origin-bottom-right flex-col overflow-hidden rounded-3xl border border-line bg-paper text-navy shadow-[0_30px_80px_-20px_rgba(27,34,80,0.45)] transition duration-200 ease-out sm:inset-x-auto sm:right-6 sm:bottom-22 sm:w-[400px] ${
-          abierto ? "translate-y-0 scale-100 opacity-100" : "pointer-events-none translate-y-3 scale-95 opacity-0"
+        className={`fixed inset-x-3 bottom-3 z-50 flex max-h-[min(600px,calc(100dvh-24px))] flex-col overflow-hidden rounded-2xl border border-line bg-white text-navy shadow-[0_24px_60px_-24px_rgba(0,0,0,0.35)] transition duration-150 ease-out sm:inset-x-auto sm:right-6 sm:bottom-20 sm:w-[380px] ${
+          abierto ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-2 opacity-0"
         }`}
       >
-        <header className="relative shrink-0 overflow-hidden bg-navy-deep px-5 pt-4 pb-5 text-cream">
-          <div
-            aria-hidden
-            className="pointer-events-none absolute inset-0 opacity-90"
-            style={{
-              background:
-                "radial-gradient(70% 120% at 85% 130%, #f3c98a 0%, #f3c98a00 60%), linear-gradient(180deg, #161c45 0%, #2b3470 70%, #6f6a9a 100%)",
-            }}
-          />
-          <div className="relative flex items-start gap-3">
-            <span className="mt-0.5 grid h-9 w-9 shrink-0 place-items-center rounded-full bg-sun/15 ring-1 ring-sun/40">
-              <Sol className="h-5 w-5 text-sun" />
-            </span>
-            <div className="min-w-0 flex-1">
-              <h2 className="text-base leading-tight font-semibold">{t.titulo}</h2>
-              <p className="mt-0.5 flex items-center gap-1.5 text-xs text-cream/75">
-                <span className="relative flex h-2 w-2">
-                  <span className="absolute inline-flex h-full w-full rounded-full bg-[#2fbf71] opacity-60 motion-safe:animate-ping" />
-                  <span className="relative inline-flex h-2 w-2 rounded-full bg-[#2fbf71]" />
-                </span>
-                {t.sub}
-              </p>
-            </div>
-            {mensajes.length > 0 && (
-              <button
-                type="button"
-                onClick={() => {
-                  setMensajes([]);
-                  setError(null);
-                }}
-                aria-label={t.borrar}
-                title={t.borrar}
-                className="grid h-8 w-8 place-items-center rounded-full text-cream/80 transition hover:bg-white/10 hover:text-cream"
-              >
-                <svg viewBox="0 0 24 24" className="h-4 w-4" aria-hidden>
-                  <path
-                    d="M4 12a8 8 0 1 0 2.4-5.7M4 4v4h4"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    fill="none"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </button>
-            )}
+        <header className="flex shrink-0 items-center gap-2 border-b border-line px-4 py-3">
+          <div className="min-w-0 flex-1">
+            <h2 className="text-[15px] leading-tight font-semibold text-navy">{t.titulo}</h2>
+            <p className="mt-0.5 text-[12px] text-ink-2">{t.sub}</p>
+          </div>
+          {mensajes.length > 0 && (
             <button
               type="button"
-              onClick={() => setAbierto(false)}
-              aria-label={t.cerrar}
-              className="grid h-8 w-8 place-items-center rounded-full text-cream/80 transition hover:bg-white/10 hover:text-cream"
+              onClick={() => {
+                setMensajes([]);
+                setError(null);
+              }}
+              aria-label={t.borrar}
+              title={t.borrar}
+              className="grid size-8 place-items-center rounded-full text-ink-2 transition hover:bg-cream hover:text-navy"
             >
-              <svg viewBox="0 0 24 24" className="h-4 w-4" aria-hidden>
-                <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-              </svg>
+              <RotateCcw className="size-4" aria-hidden />
             </button>
-          </div>
+          )}
+          <button
+            type="button"
+            onClick={() => setAbierto(false)}
+            aria-label={t.cerrar}
+            className="grid size-8 place-items-center rounded-full text-ink-2 transition hover:bg-cream hover:text-navy"
+          >
+            <X className="size-4" aria-hidden />
+          </button>
         </header>
 
-        <div ref={lista} className="min-h-0 flex-1 space-y-3 overflow-y-auto px-4 py-4 text-sm leading-relaxed" aria-live="polite">
-          <div className="max-w-[88%] rounded-2xl rounded-tl-md bg-cream-2/70 px-3.5 py-2.5">{wallet ? t.holaCuenta : t.hola}</div>
+        <div ref={lista} className="min-h-0 flex-1 space-y-4 overflow-y-auto px-4 py-4 text-[14px] leading-relaxed text-navy" aria-live="polite">
+          <p className="text-ink-2">{wallet ? t.holaCuenta : t.hola}</p>
 
           {mensajes.length === 0 && (
-            <div className="flex flex-wrap gap-2 pt-1">
+            <div className="flex flex-col items-start gap-2">
               {sugerencias.map((s) => (
                 <button
                   key={s}
                   type="button"
                   onClick={() => void preguntar(s)}
-                  className="rounded-full border border-line bg-paper px-3 py-1.5 text-left text-xs font-medium text-navy transition hover:-translate-y-px hover:border-sun hover:bg-sun-soft/40 active:translate-y-0"
+                  className="rounded-full border border-line px-3 py-1.5 text-left text-[13px] font-medium text-navy transition hover:border-sun hover:bg-cream"
                 >
                   {s}
                 </button>
@@ -299,28 +259,28 @@ export function Asistente({ endpoint, wallet, idioma = "es" }: { endpoint: strin
 
           {mensajes.map((m, i) =>
             m.rol === "usuario" ? (
-              <div key={i} className="ml-auto w-fit max-w-[85%] rounded-2xl rounded-tr-md bg-navy px-3.5 py-2.5 whitespace-pre-wrap text-cream">
+              <div key={i} className="ml-auto w-fit max-w-[85%] rounded-2xl bg-cream px-3.5 py-2 whitespace-pre-wrap text-navy">
                 {m.texto}
               </div>
             ) : (
-              <div key={i} className="max-w-[92%] rounded-2xl rounded-tl-md bg-cream-2/70 px-3.5 py-2.5">
+              <div key={i} className="max-w-full">
                 <Texto texto={m.texto} />
               </div>
             ),
           )}
 
           {pensando && (
-            <div className="flex w-fit items-center gap-1.5 rounded-2xl rounded-tl-md bg-cream-2/70 px-4 py-3" aria-label="…">
+            <div className="flex items-center gap-1.5 py-1" aria-label="…">
               {[0, 150, 300].map((d) => (
-                <span key={d} className="h-1.5 w-1.5 rounded-full bg-ink-2 motion-safe:animate-bounce" style={{ animationDelay: `${d}ms` }} />
+                <span key={d} className="size-1.5 rounded-full bg-ink-2/60 motion-safe:animate-bounce" style={{ animationDelay: `${d}ms` }} />
               ))}
             </div>
           )}
-          {error && <p className="text-xs text-[#b5524a]">{error}</p>}
+          {error && <p className="text-[13px] text-bad">{error}</p>}
         </div>
 
-        <form onSubmit={enviar} className="shrink-0 border-t border-line bg-paper px-3 pt-3 pb-2">
-          <div className="flex items-end gap-2 rounded-2xl border border-line bg-cream/60 p-1.5 pl-3.5 transition focus-within:border-navy/50 focus-within:bg-paper">
+        <form onSubmit={enviar} className="shrink-0 px-3 pt-2 pb-3">
+          <div className="flex items-end gap-2 rounded-3xl border border-line bg-white py-1.5 pr-1.5 pl-4 transition focus-within:border-sun">
             <textarea
               ref={entrada}
               value={texto}
@@ -334,20 +294,18 @@ export function Asistente({ endpoint, wallet, idioma = "es" }: { endpoint: strin
               rows={1}
               maxLength={2000}
               placeholder={t.placeholder}
-              className="max-h-28 min-h-9 flex-1 resize-none bg-transparent py-2 text-sm text-navy outline-none placeholder:text-ink-2/70"
+              className="max-h-28 min-h-8 flex-1 resize-none bg-transparent py-1.5 text-[14px] text-navy outline-none placeholder:text-ink-2/70"
             />
             <button
               type="submit"
               disabled={!texto.trim() || pensando}
               aria-label={t.enviar}
-              className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-sun text-navy-deep transition hover:brightness-105 active:scale-95 disabled:opacity-40"
+              className="grid size-8 shrink-0 place-items-center rounded-full bg-navy text-white transition hover:opacity-90 active:scale-95 disabled:opacity-30"
             >
-              <svg viewBox="0 0 24 24" className="h-4 w-4" aria-hidden>
-                <path d="M5 12h13M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2.2" fill="none" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
+              <ArrowUp className="size-4" aria-hidden />
             </button>
           </div>
-          <p className="px-1 pt-1.5 text-[11px] text-ink-2/80">{t.nota}</p>
+          <p className="px-1 pt-2 text-[11px] text-ink-2/80">{t.nota}</p>
         </form>
       </section>
     </>

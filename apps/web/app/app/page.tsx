@@ -13,6 +13,7 @@ import { Encabezado } from "@/components/app/encabezado";
 import { Subir } from "@/components/app/subir";
 import { Panel } from "@/components/app/panel";
 import { Plan } from "@/components/dashboard/antes-de-pedir";
+import { Asistente } from "@/components/asistente";
 
 export default function App() {
   const sesion = useAuth();
@@ -117,6 +118,8 @@ export default function App() {
           />
         </div>
       </main>
+
+      <Asistente endpoint="/api/chat" wallet={wallet ?? null} idioma="es" />
     </div>
   );
 }
