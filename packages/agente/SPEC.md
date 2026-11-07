@@ -1,10 +1,64 @@
-# SPEC — Agente que valida y compara el adelanto
+# SPEC — Agente que arma el perfil y dice cuánto ARGt se puede pedir
 
 - **Dueño:** Ivan
-- **Rama:** `ivan/mac` (el código entra a `main` por PR)
-- **Estado:** borrador, 7/11/2026 11:45
+- **Rama:** `main` (paquete propio; el endpoint en `apps/web` se avisa a Franco)
+- **Estado:** en curso, 7/11/2026 13:50
 
-## Objetivo
+## Versión demo (vigente)
+
+Alineada con la idea del equipo (`docs/ideas/expansion-regional.md`) y con el
+circuito de Franco (`packages/circuito/SPEC.md`): la empresa de afuera deja
+USDT0 de colateral en Morpho y pide ARGt. El agente no firma ni manda nada.
+
+**Entrada:** CUIT y wallet de la empresa; opcionalmente cuánto USDT0 piensa
+dejar de colateral y cuánto ARGt quiere pedir.
+
+**Qué hace:**
+
+1. **Perfil BCRA** (API pública de la Central de Deudores, sin clave):
+   denominación, peor situación del último período (1 a 5), deuda total y
+   cheques rechazados. Un 404 significa «sin deudas registradas».
+2. **Perfil onchain** (Arbitrum, lecturas reales): saldos de ARGt, CHLt y
+   USDT0, cantidad de transacciones, y su posición en el mercado ARGt/USDT0
+   de Morpho (colateral y deuda). Del mercado: liquidez disponible y precio
+   del oráculo.
+3. **Tope sobre el colateral**, según el perfil:
+
+   | Perfil | Tope |
+   |---|---|
+   | Sin historial, o situación 1 | 60% (el máximo seguro del circuito; Morpho liquida a 77%) |
+   | Situación 2, o cheques rechazados | 50% |
+   | Situación 2 y cheques rechazados | 40% |
+   | Situación 3 o peor | 0: no puede pedir |
+   | El BCRA no respondió | 50% hasta poder verificar |
+
+4. **Cuánto puede pedir hoy:** el mínimo entre (colateral en ARGt × tope −
+   deuda actual) y la liquidez del mercado con 10% de margen (igual que el C4
+   del circuito). Si pidió un monto: `aprobado`, `recortado` o `rechazado`.
+5. **Explicación en castellano** con Claude Haiku (`claude-haiku-5-5`), sin
+   prometer rendimiento; si la API falla, un texto armado y lo dice.
+
+**Interfaces:** la función `evaluar()` (`packages/agente/src/index.ts`), el
+comando `npm run -w packages/agente perfil -- <cuit> <wallet> [--colateral
+<usdt0>] [--pedido <argt>]` y el endpoint `POST /api/agente` de `apps/web`,
+del lado del servidor (la clave de Claude nunca llega al navegador).
+
+**Criterios de aceptación de la demo:**
+
+- **CA-D1** — Las reglas del tope y de cuánto puede pedir dan lo de la tabla
+  (60/50/40/0, error del BCRA, liquidez, deuda previa, sin colateral).
+  `npm test -w packages/agente`
+- **CA-D2** — Con un CUIT y una wallet reales, el comando devuelve JSON con
+  el perfil BCRA, el perfil onchain, la decisión y la explicación.
+  `npm run -s -w packages/agente perfil -- 30546689979 0x000000000000000000000000000000000000dEaD --colateral 10 | node -e "const j=JSON.parse(require('fs').readFileSync(0,'utf8'));process.exit(j.perfil&&j.decision&&j.explicacion?0:1)"`
+- **CA-D3** — El endpoint responde lo mismo desde la web, y con datos
+  inválidos devuelve 400 con un mensaje claro.
+  `curl -s -X POST localhost:3000/api/agente -H 'content-type: application/json' -d '{"cuit":"30546689979","wallet":"0x000000000000000000000000000000000000dEaD","colateralUsdt0":10}' | grep -q decision`
+
+Lo que sigue más abajo (factura, niveles por historial, repago por factura,
+vínculo factura y plata) es para después de la demo.
+
+## Objetivo (para después de la demo)
 
 Trabaja para la empresa grande que llega a invertir en Argentina: es su
 cuenta a pagar local. El proveedor manda la factura y nada más. El agente la lee, hace todos los
