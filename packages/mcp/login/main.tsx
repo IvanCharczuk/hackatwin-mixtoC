@@ -118,8 +118,8 @@ function App() {
 		<PrivyProvider
 			appId={datos.appId}
 			config={{
-				// Google está apagado en el dashboard de Privy de la app "hacka".
-				loginMethods: ["email", "wallet"],
+				// Misma app de Privy que apps/web, donde Google ya está habilitado.
+				loginMethods: ["google", "email", "wallet"],
 				defaultChain: arbitrum,
 				supportedChains: [arbitrum],
 				embeddedWallets: { ethereum: { createOnLogin: "users-without-wallets" } },
