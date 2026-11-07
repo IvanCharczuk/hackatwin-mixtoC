@@ -89,14 +89,14 @@ export async function POST(req: Request) {
       });
 
       if (r.stop_reason === "refusal") {
-        return responder({ texto: "No puedo ayudarte con eso. Preguntame sobre Saltar o sobre cómo financiar tu llegada a Argentina." });
+        return responder({ texto: "Con eso no te puedo ayudar. Preguntame lo que quieras sobre cómo pagar en Argentina con Saltar." });
       }
       if (r.stop_reason !== "tool_use") {
         const texto = r.content
           .flatMap((b) => (b.type === "text" ? [b.text] : []))
           .join("\n")
           .trim();
-        return responder({ texto: texto || "No tengo una respuesta para eso. ¿Lo preguntás de otra forma?" });
+        return responder({ texto: texto || "No te entendí bien. ¿Me lo preguntás de otra forma?" });
       }
 
       // Guardamos la respuesta entera (incluye los bloques de razonamiento) y corremos las herramientas en paralelo.
@@ -110,10 +110,10 @@ export async function POST(req: Request) {
       );
       mensajes.push({ role: "user", content: resultados });
     }
-    return responder({ texto: "Me llevó demasiados pasos responder eso. ¿Lo preguntás más simple?" });
+    return responder({ texto: "Uy, eso me enredó. ¿Me lo preguntás más simple?" });
   } catch (e) {
     const msg = e instanceof Anthropic.APIError ? `Claude ${e.status}: ${e.message}` : String((e as Error)?.message ?? e);
     console.error("asistente:", msg);
-    return responder({ error: "El asistente no pudo responder ahora. Probá de nuevo en un momento." }, 502);
+    return responder({ error: "Uy, se me cortó. ¿Me lo repetís en un ratito?" }, 502);
   }
 }
