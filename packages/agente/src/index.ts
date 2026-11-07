@@ -114,7 +114,8 @@ export async function evaluar(p: Pedido): Promise<Resultado> {
     const plan = planearPago({
       montoArgt: factura.montoArs,
       saldoArgt: onchain.saldos.ARGt,
-      disponibleArgt: decision.disponibleArgt,
+      maxPorColateralArgt: decision.maxPorColateralArgt,
+      liquidezUsableArgt: decision.liquidezUsableArgt,
       argtPorUsdt0DeTope: onchain.mercado.precioArgtPorUsdt0 * decision.tope,
     });
     pago = {
