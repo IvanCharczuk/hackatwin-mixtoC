@@ -53,7 +53,7 @@ nada: la transacción la confirma una persona.
 - El contrato que guarda el pago (otra pieza) y el front.
 - KYB real si KUMPLY no da acceso a tiempo.
 - Prometer rendimiento: el costo se presenta como descuento sobre la factura,
-  nunca como interés de ARGt (ver el riesgo con la CNV en `idea.md`).
+  nunca como interés de ARGt (ver el riesgo con la CNV en `docs/ivan/idea.md`).
 
 ## Criterios de aceptación
 

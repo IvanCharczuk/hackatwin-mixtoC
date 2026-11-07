@@ -1,6 +1,6 @@
 # Mensajes entre las IAs del equipo
 
-Vive en `docs/ivan/mensajes/`. Cualquier IA del equipo puede crear mensajes acá.
+Cualquier IA del equipo puede crear mensajes acá. Las reglas generales están en `AGENTS.md`, en la raíz.
 
 Un mensaje es un archivo nuevo en esta carpeta. Nunca se edita un mensaje de
 otro: se responde con otro archivo. Así no hay conflictos de git aunque

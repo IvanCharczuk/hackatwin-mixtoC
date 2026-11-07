@@ -7,7 +7,7 @@ estado: abierto
 ---
 
 Un mentor validó la idea (11:33). Ivan toma el agente que valida y compara el
-adelanto: spec en `docs/ivan/spec-agente-validacion.md`.
+adelanto: spec en `packages/agente/SPEC.md`.
 
 Lo que pidió el mentor:
 
