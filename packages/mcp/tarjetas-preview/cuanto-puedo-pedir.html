@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Saltar: cuánto podés pedir</title><style>
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap");
+:root{
+  --bg:#fbf8f2; --card:#ffffff; --ink:#262f63; --ink2:#545c86; --line:#e6decf; --soft:#f4eee3;
+  --sun:#f2ae2e; --sun2:#f8d995; --sunink:#94601a; --lav:#8c98c8; --mist:#dde1f2;
+  --ok:#2e8b57; --okbg:#e3f3e9; --warn:#c98a12; --warnbg:#fbf0d6; --no:#b5524a; --nobg:#f7e3e1;
+  --sky:linear-gradient(160deg,#161c45 0%,#2b3470 55%,#8a7fa6 85%,#f3c98a 100%);
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#12163a; --card:#1b2250; --ink:#f4eee3; --ink2:#b9bfdc; --line:#2f3870; --soft:#232b5e;
+  --sun:#f6be52; --sun2:#5a4a2a; --sunink:#f8d995; --lav:#8c98c8; --mist:#2b3470;
+  --ok:#4fd08a; --okbg:#173d33; --warn:#f2c04e; --warnbg:#3b3420; --no:#ef8a80; --nobg:#40232a;
+  color-scheme: dark;
+}}
+:root[data-theme="dark"]{
+  --bg:#12163a; --card:#1b2250; --ink:#f4eee3; --ink2:#b9bfdc; --line:#2f3870; --soft:#232b5e;
+  --sun:#f6be52; --sun2:#5a4a2a; --sunink:#f8d995; --lav:#8c98c8; --mist:#2b3470;
+  --ok:#4fd08a; --okbg:#173d33; --warn:#f2c04e; --warnbg:#3b3420; --no:#ef8a80; --nobg:#40232a;
+  color-scheme: dark;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:transparent}
+body{font-family:Montserrat,system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased;font-size:14px;line-height:1.4}
+.mono{font-family:"JetBrains Mono",ui-monospace,Menlo,monospace}
+.wrap{max-width:640px;margin:0 auto;padding:4px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:20px;overflow:hidden;box-shadow:0 1px 0 rgba(0,0,0,.02),0 12px 32px -18px rgba(27,34,80,.35)}
+.hero{background:var(--sky);color:#fbf8f2;padding:18px 20px 20px;position:relative;overflow:hidden}
+.hero:after{content:"";position:absolute;left:50%;bottom:-120px;width:340px;height:200px;transform:translateX(-50%);background:radial-gradient(ellipse at center,#ffd98acc 0%,#ffd98a00 70%);pointer-events:none;animation:sol 1.6s ease-out both}
+@keyframes sol{from{opacity:0;transform:translate(-50%,40px)}to{opacity:1;transform:translate(-50%,0)}}
+.top{display:flex;align-items:center;justify-content:space-between;gap:8px;position:relative;z-index:1}
+.marca{display:flex;align-items:center;gap:8px;font-weight:600;letter-spacing:.02em;font-size:13px;opacity:.95}
+.marca svg{width:22px;height:22px}
+.pill{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:4px 10px;font-size:12px;font-weight:600;white-space:nowrap}
+.pill.ok{background:var(--okbg);color:var(--ok)} .pill.warn{background:var(--warnbg);color:var(--warn)} .pill.no{background:var(--nobg);color:var(--no)}
+.hero .pill{background:rgba(251,248,242,.14);color:#fbf8f2;border:1px solid rgba(251,248,242,.25)}
+.hero .pill i{width:8px;height:8px;border-radius:50%;background:var(--dot,#2fbf71);box-shadow:0 0 0 3px rgba(47,191,113,.25)}
+.etq{font-size:12px;text-transform:uppercase;letter-spacing:.08em;opacity:.8;margin:14px 0 2px;position:relative;z-index:1}
+.big{font-size:40px;font-weight:700;letter-spacing:-.02em;line-height:1.05;position:relative;z-index:1;font-variant-numeric:tabular-nums}
+.big small{font-size:16px;font-weight:600;opacity:.8;margin-left:6px;letter-spacing:0}
+.sub{font-size:13px;opacity:.85;position:relative;z-index:1;margin-top:4px}
+.body{padding:16px 20px 18px}
+.sec{margin-top:16px}
+.sec:first-child{margin-top:0}
+.h{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--ink2);font-weight:600;margin:0 0 8px}
+.muted{color:var(--ink2)}
+.foot{font-size:12px;color:var(--ink2);border-top:1px solid var(--line);padding:10px 20px 12px;background:var(--soft)}
+.fade{opacity:0;transform:translateY(6px);animation:fade .5s ease-out forwards}
+@keyframes fade{to{opacity:1;transform:none}}
+.vacio{padding:28px 20px;text-align:center;color:var(--ink2)}
+@media (max-width:420px){.big{font-size:32px}.body{padding:14px 16px 16px}.hero{padding:16px}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.fade{opacity:1;transform:none}}
+
+.gauge{display:grid;grid-template-columns:minmax(0,220px) 1fr;gap:16px;align-items:center}
+.gauge svg{width:100%;height:auto;overflow:visible}
+.arco{fill:none;stroke-width:16;stroke-linecap:butt}
+.aguja{transform-box:view-box;transform-origin:110px 110px;transition:transform .9s cubic-bezier(.2,.9,.25,1.15)}
+.ltv{font-size:28px;font-weight:700;font-variant-numeric:tabular-nums}
+.ley{display:flex;flex-direction:column;gap:6px;font-size:12px;color:var(--ink2)}
+.ley span{display:flex;align-items:center;gap:8px}
+.ley b{display:inline-block;width:10px;height:10px;border-radius:3px}
+.barras{display:flex;flex-direction:column;gap:10px}
+.barra .fila{display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px;gap:8px}
+.barra .fila b{font-variant-numeric:tabular-nums}
+.pista{height:10px;border-radius:99px;background:var(--soft);overflow:hidden}
+.pista i{display:block;height:100%;border-radius:99px;width:0;transition:width 1s cubic-bezier(.2,.8,.2,1)}
+.limita{font-size:11px;font-weight:700;color:var(--sunink);background:var(--sun2);border-radius:99px;padding:1px 8px;margin-left:6px}
+.prueba{background:var(--soft);border-radius:14px;padding:12px 14px}
+.prueba .fila{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.prueba .monto{font-size:22px;font-weight:700;font-variant-numeric:tabular-nums}
+input[type=range]{width:100%;margin:10px 0 6px;accent-color:var(--sun);height:28px}
+.veredicto{font-size:13px;font-weight:600}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{border:1px solid var(--line);border-radius:999px;padding:4px 10px;font-size:12px;background:var(--card)}
+.motivos{margin:0;padding-left:18px;color:var(--ink2);font-size:13px}
+.motivos li{margin:3px 0}
+@media (max-width:460px){.gauge{grid-template-columns:1fr}.gauge svg{max-width:240px;margin:0 auto;display:block}}
+</style></head>
+<body><div class="wrap" id="raiz"><div class="card"><div class="vacio">Esperando el resultado…</div></div></div>
+<script>
+const MUESTRA = {"wallet":"0x7a3B9c2e41F0d8a5E6b1C4f9A2d3E8b7C6a5F401","bcra":{"ok":true,"simulado":true,"denominacion":"ANDES LOGÍSTICA SPA (sucursal Argentina)","situacionMax":1,"deudaTotalArs":18400000,"entidades":2,"chequesRechazados":0,"periodo":"202609"},"mercado":{"liquidezArgt":650000,"precioArgtPorUsdt0":1450,"lltv":0.77,"tasaAnual":0},"posicion":{"colateralUsdt0":1000,"deudaArgt":0},"decision":{"estado":"aprobado","tope":0.6,"motivos":["Situación 1 en el BCRA (normal): puede pedir el máximo seguro, 60% de su colateral.","La liquidez del mercado alcanza para 590909.09 ARGt (con 10% de margen): eso limita lo que puede pedir hoy."],"colateralUsdt0":1000,"colateralEnArgt":1450000,"maxPorColateralArgt":870000,"liquidezUsableArgt":590909.09,"disponibleArgt":590909.09,"pedidoArgt":null,"otorgadoArgt":590909.09,"ltvResultante":0.41}};
+
+const ESCALA = 1; // el medidor va de 0% a 100% del colateral
+function arco(desde, hasta, r){
+  const p = (v) => { const a = Math.PI * (1 - v / ESCALA); return [110 + r * Math.cos(a), 110 - r * Math.sin(a)]; };
+  const [x1, y1] = p(desde), [x2, y2] = p(hasta);
+  return "M" + x1.toFixed(2) + " " + y1.toFixed(2) + " A" + r + " " + r + " 0 0 1 " + x2.toFixed(2) + " " + y2.toFixed(2);
+}
+function marca(v, txt){
+  const a = Math.PI * (1 - v / ESCALA);
+  const x1 = 110 + 70 * Math.cos(a), y1 = 110 - 70 * Math.sin(a), x2 = 110 + 100 * Math.cos(a), y2 = 110 - 100 * Math.sin(a);
+  const tx = 110 + 112 * Math.cos(a), ty = 110 - 112 * Math.sin(a);
+  return '<line x1="' + x1 + '" y1="' + y1 + '" x2="' + x2 + '" y2="' + y2 + '" stroke="var(--ink)" stroke-width="2" stroke-dasharray="3 3"/>' +
+    '<text x="' + tx + '" y="' + ty + '" font-size="11" font-weight="700" fill="var(--ink)" text-anchor="middle">' + txt + '</text>';
+}
+function dibujar(d){
+  if (d.error && !d.decision) { document.getElementById("raiz").innerHTML = '<div class="card"><div class="vacio">' + esc(d.error) + '</div></div>'; return; }
+  const dec = d.decision || {}, mer = d.mercado || {}, pos = d.posicion || {}, bcra = d.bcra || {};
+  const tope = dec.tope ?? 0.6, lltv = mer.lltv ?? 0.77, precio = mer.precioArgtPorUsdt0 || 1;
+  const colArgt = dec.colateralEnArgt || 0, deuda = pos.deudaArgt || 0, disp = dec.disponibleArgt || 0;
+  const estado = dec.estado || "aprobado";
+  const pill = estado === "rechazado" ? ["no", "#b5524a", "No puede pedir hoy"] : estado === "recortado" ? ["warn", "#f2ae2e", "Recortado"] : ["ok", "#2fbf71", "Aprobado"];
+  const limitaLiquidez = (dec.liquidezUsableArgt ?? Infinity) < (dec.maxPorColateralArgt ?? 0);
+  const maxBarra = Math.max(dec.maxPorColateralArgt || 0, dec.liquidezUsableArgt || 0, 1);
+  const bcraTxt = bcra.ok
+    ? (bcra.situacionMax == null ? "BCRA: sin deudas" : "BCRA: situación " + bcra.situacionMax) + (bcra.chequesRechazados ? " · " + bcra.chequesRechazados + " cheque(s) rechazado(s)" : "")
+    : "BCRA sin consultar";
+  const bcraCls = !bcra.ok ? "warn" : (bcra.situacionMax >= 3 ? "no" : bcra.situacionMax === 2 || bcra.chequesRechazados ? "warn" : "ok");
+  const maxSlider = Math.max(Math.floor(colArgt * 0.9 - deuda), Math.ceil(disp * 1.2), 1);
+  const inicial = dec.otorgadoArgt || disp;
+  document.getElementById("raiz").innerHTML = `
+  <div class="card">
+    <div class="hero">
+      <div class="top"><div class="marca"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="15" r="5" fill="#f2ae2e"/><path d="M2 19h20" stroke="#fbf8f2" stroke-width="1.6" stroke-linecap="round"/><path d="M12 4v3M5.5 8l1.8 1.8M18.5 8l-1.8 1.8" stroke="#f8d995" stroke-width="1.6" stroke-linecap="round"/></svg> Saltar · adelanto en ARGt</div>
+        <span class="pill" style="--dot:${pill[1]}"><i></i>${pill[2]}</span></div>
+      <div class="etq">Podés pedir hoy</div>
+      <div class="big"><span id="num">0</span><small>ARGt</small></div>
+      <div class="sub">≈ US$ ${fmt(disp / precio)} · contra ${fmt(dec.colateralUsdt0, 2)} USDT0 de colateral (${fmt(colArgt)} ARGt)</div>
+    </div>
+    <div class="body">
+      <div class="sec fade" style="animation-delay:.15s">
+        <div class="h">Préstamo sobre tu colateral</div>
+        <div class="gauge">
+          <svg viewBox="0 0 220 128" role="img" aria-label="Medidor del préstamo">
+            <path class="arco" d="${arco(0, tope, 88)}" stroke="var(--ok)" opacity=".85"/>
+            <path class="arco" d="${arco(tope, lltv, 88)}" stroke="var(--sun)"/>
+            <path class="arco" d="${arco(lltv, 1, 88)}" stroke="var(--no)" opacity=".85"/>
+            ${marca(tope, Math.round(tope * 100) + "%")}
+            ${marca(lltv, Math.round(lltv * 100) + "%")}
+            <g class="aguja" id="aguja" style="transform:rotate(0deg)">
+              <line x1="110" y1="110" x2="38" y2="110" stroke="var(--ink)" stroke-width="4" stroke-linecap="round"/>
+            </g>
+            <circle cx="110" cy="110" r="8" fill="var(--ink)"/><circle cx="110" cy="110" r="3" fill="var(--sun)"/>
+          </svg>
+          <div>
+            <div class="ltv"><span id="ltv">0</span>%</div>
+            <div class="muted" style="font-size:12px;margin-bottom:10px">de tu colateral queda prestado</div>
+            <div class="ley">
+              <span><b style="background:var(--ok)"></b>Hasta ${Math.round(tope * 100)}%: tope seguro</span>
+              <span><b style="background:var(--sun)"></b>${Math.round(tope * 100)}% a ${Math.round(lltv * 100)}%: fuera del tope</span>
+              <span><b style="background:var(--no)"></b>Desde ${Math.round(lltv * 100)}%: Morpho liquida</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="sec fade" style="animation-delay:.3s">
+        <div class="h">Qué lo limita</div>
+        <div class="barras">
+          <div class="barra"><div class="fila"><span>Tu colateral × ${Math.round(tope * 100)}%${!limitaLiquidez ? '<span class="limita">limita</span>' : ""}</span><b>${fmt(dec.maxPorColateralArgt)} ARGt</b></div>
+            <div class="pista"><i data-w="${(dec.maxPorColateralArgt || 0) / maxBarra * 100}" style="background:var(--lav)"></i></div></div>
+          <div class="barra"><div class="fila"><span>Liquidez del mercado${limitaLiquidez ? '<span class="limita">limita</span>' : ""}</span><b>${fmt(dec.liquidezUsableArgt)} ARGt</b></div>
+            <div class="pista"><i data-w="${(dec.liquidezUsableArgt || 0) / maxBarra * 100}" style="background:var(--sun)"></i></div></div>
+        </div>
+      </div>
+      <div class="sec fade" style="animation-delay:.45s">
+        <div class="h">Probá otro monto</div>
+        <div class="prueba">
+          <div class="fila"><span class="monto"><span id="prueba">${fmt(inicial)}</span> ARGt</span><span class="muted" id="pruebaUsd"></span></div>
+          <input type="range" id="slider" min="0" max="${maxSlider}" step="1" value="${Math.round(inicial)}" aria-label="Monto a pedir en ARGt">
+          <div class="veredicto" id="veredicto"></div>
+        </div>
+      </div>
+      <div class="sec fade" style="animation-delay:.6s">
+        <div class="chips">
+          <span class="pill ${bcraCls}">${esc(bcraTxt)}${bcra.simulado ? " (muestra)" : ""}</span>
+          ${bcra.denominacion ? '<span class="chip">' + esc(bcra.denominacion) + '</span>' : ""}
+          ${d.wallet ? '<span class="chip mono">' + esc(corta(d.wallet)) + '</span>' : ""}
+          ${deuda ? '<span class="chip">Ya debés ' + fmt(deuda) + ' ARGt</span>' : ""}
+        </div>
+        ${(dec.motivos || []).length ? '<ul class="motivos" style="margin-top:10px">' + dec.motivos.map((m) => "<li>" + esc(m) + "</li>").join("") + "</ul>" : ""}
+      </div>
+    </div>
+    <div class="foot">Simulación: no pide nada. ARGt no genera intereses; el costo del adelanto es un descuento sobre la factura.</div>
+  </div>`;
+  contar(document.getElementById("num"), disp, 1100);
+  requestAnimationFrame(() => document.querySelectorAll(".pista i").forEach((i) => { i.style.width = i.dataset.w + "%"; }));
+  const s = document.getElementById("slider");
+  const mover = () => {
+    const monto = Number(s.value);
+    const ltv = colArgt > 0 ? (deuda + monto) / colArgt : 0;
+    document.getElementById("prueba").textContent = fmt(monto);
+    document.getElementById("pruebaUsd").textContent = "≈ US$ " + fmt(monto / precio);
+    document.getElementById("ltv").textContent = fmt(ltv * 100, 1);
+    document.getElementById("aguja").style.transform = "rotate(" + Math.min(1, ltv / ESCALA) * 180 + "deg)";
+    const v = document.getElementById("veredicto");
+    if (estado === "rechazado" || disp <= 0) { v.textContent = "Hoy no se puede pedir ARGt con este perfil o colateral."; v.style.color = "var(--no)"; }
+    else if (monto <= disp + 0.01) { v.textContent = "✓ Dentro de lo que podés pedir hoy."; v.style.color = "var(--ok)"; }
+    else if (ltv < lltv) { v.textContent = "Pasa lo disponible: se recortaría a " + fmt(disp) + " ARGt."; v.style.color = "var(--warn)"; }
+    else { v.textContent = "Con este monto Morpho liquidaría tu colateral."; v.style.color = "var(--no)"; }
+  };
+  s.addEventListener("input", mover);
+  setTimeout(mover, 120);
+}
+
+
+const enCliente = window.parent && window.parent !== window;
+let sigId = 1; const pendientes = new Map();
+function pedir(method, params){
+  const id = sigId++;
+  window.parent.postMessage({ jsonrpc: "2.0", id, method, params }, "*");
+  return new Promise((ok, mal) => {
+    pendientes.set(id, { ok, mal });
+    setTimeout(() => { if (pendientes.has(id)) { pendientes.delete(id); mal(new Error("timeout " + method)); } }, 10000);
+  });
+}
+function avisar(method, params){ if (enCliente) window.parent.postMessage({ jsonrpc: "2.0", method, params: params || {} }, "*"); }
+function tema(t){ if (t === "dark" || t === "light") document.documentElement.setAttribute("data-theme", t); }
+function datosDe(r){
+  if (!r) return null;
+  if (r.structuredContent) return r.structuredContent;
+  const t = (r.content || []).find((c) => c.type === "text");
+  if (t) { try { return JSON.parse(t.text); } catch (e) { return { error: t.text }; } }
+  return null;
+}
+async function abrir(url){
+  if (enCliente) { try { const r = await pedir("ui/open-link", { url }); if (!r || !r.isError) return; } catch (e) {} }
+  window.open(url, "_blank", "noopener");
+}
+window.addEventListener("message", (e) => {
+  const m = e.data; if (!m || m.jsonrpc !== "2.0") return;
+  if (m.id != null && !m.method && pendientes.has(m.id)) {
+    const p = pendientes.get(m.id); pendientes.delete(m.id);
+    m.error ? p.mal(m.error) : p.ok(m.result); return;
+  }
+  if (m.method === "ui/notifications/tool-result") { const d = datosDe(m.params); if (d) dibujar(d); return; }
+  if (m.method === "ui/notifications/host-context-changed") { tema(m.params && m.params.theme); return; }
+  if (m.id != null && m.method) window.parent.postMessage({ jsonrpc: "2.0", id: m.id, result: {} }, "*");
+});
+let ultimoAlto = 0;
+new ResizeObserver(() => {
+  const h = Math.ceil(document.documentElement.getBoundingClientRect().height);
+  if (h !== ultimoAlto) { ultimoAlto = h; avisar("ui/notifications/size-changed", { height: h }); }
+}).observe(document.documentElement);
+const fmt = (n, d) => Number(n || 0).toLocaleString("es-AR", { maximumFractionDigits: d == null ? 0 : d, minimumFractionDigits: 0 });
+const corta = (a) => a && a.length > 12 ? a.slice(0, 6) + "…" + a.slice(-4) : (a || "");
+const esc = (s) => String(s == null ? "" : s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+function contar(el, hasta, ms){
+  const t0 = performance.now();
+  const paso = (t) => { const p = Math.min(1, (t - t0) / ms); const e = 1 - Math.pow(1 - p, 3); el.textContent = fmt(hasta * e); if (p < 1) requestAnimationFrame(paso); };
+  requestAnimationFrame(paso);
+}
+if (enCliente) {
+  pedir("ui/initialize", { appInfo: { name: "saltarg-tarjeta", version: "0.1.0" }, appCapabilities: {}, protocolVersion: "2026-01-26" })
+    .then((r) => { tema(r && r.hostContext && r.hostContext.theme); avisar("ui/notifications/initialized"); })
+    .catch(() => {});
+} else {
+  const q = new URLSearchParams(location.search); tema(q.get("tema"));
+  dibujar(MUESTRA);
+}
+
+</script></body></html>
