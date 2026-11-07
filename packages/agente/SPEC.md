@@ -6,7 +6,8 @@
 
 ## Objetivo
 
-El proveedor manda la factura y nada más. El agente la lee, hace todos los
+Trabaja para la empresa grande que llega a invertir en Argentina: es su
+cuenta a pagar local. El proveedor manda la factura y nada más. El agente la lee, hace todos los
 chequeos, arma el perfil de la empresa que la emite (y de la que paga) con
 fuentes públicas, y decide si se le puede adelantar, cuánto, y por qué conviene
 (o no) frente a descontar la factura de crédito o esperar al vencimiento. Es lo

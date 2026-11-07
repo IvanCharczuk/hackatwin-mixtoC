@@ -1,26 +1,36 @@
-# Idea: pagos y adelantos con stablecoins para proveedores de proyectos RIGI
+# Idea: la cuenta a pagar en Argentina para empresas grandes que llegan a invertir
 
-Propuesta de Ivan, en discusión. Estado al 7/11/2026 a las 10:52.
+Propuesta de Ivan, validada por un mentor a las 11:33. Estado al 7/11/2026 a las 12:10.
 
 ## En una frase
 
-Una empresa extranjera que entra a Argentina por el RIGI (por ejemplo una
-minera chilena) paga desde afuera, en stablecoins, a sus proveedores pymes
-argentinos; y esos proveedores pueden cobrar por adelantado usando como
-colateral el pago que la empresa ya comprometió.
+Una empresa grande de afuera que entra a invertir en Argentina (por ejemplo una
+minera chilena por el RIGI) paga a sus proveedores locales desde afuera, en
+stablecoins, sin abrir un banco acá: cada factura que recibe pasa por un agente
+que la valida, revisa al proveedor y deja todo en regla con la ley impositiva.
+Como el pago queda comprometido en un contrato, el proveedor puede cobrar antes,
+y eso le permite a la empresa negociar mejores precios y plazos.
 
-## Usuario y problema
+## Cliente y problema
 
-- **Quien paga:** empresas grandes de afuera que se expanden a Argentina con el
-  RIGI. Caso ancla: Vicuña (BHP y Lundin, binacional Chile-Argentina), aprobada
-  en el RIGI por US$ 9.700 millones, con obras desde 2027. Contratistas chilenos
-  como Excon, ICV, Vecchiola y Mas Errázuriz evalúan entrar a San Juan.
-- **Quien cobra:** las pymes argentinas que le venden (catering, construcción,
-  transporte). El RIGI exige un plan de proveedores locales con al menos 20% de
-  la inversión en bienes y obras (el proyecto de Súper RIGI lo eliminaría: a
-  verificar).
-- **El dolor:** la empresa necesita pagar desde afuera y demostrar compras
-  locales; la pyme espera 60 a 90 días para cobrar y se financia caro.
+- **El cliente es la empresa grande que llega a invertir.** Caso ancla: Vicuña
+  (BHP y Lundin, binacional Chile-Argentina), aprobada en el RIGI por
+  US$ 9.700 millones, con obras desde 2027. Contratistas chilenos como Excon,
+  ICV, Vecchiola y Mas Errázuriz evalúan entrar a San Juan. Ella paga el
+  servicio.
+- **Su dolor al llegar:**
+  - Tiene que pagarle a cientos de proveedores locales sin cuenta bancaria ni
+    historial acá, y moviendo plata desde afuera.
+  - No conoce a esos proveedores: necesita saber si la factura es real y si el
+    proveedor es confiable (deudas, cheques rechazados, identidad).
+  - Las reglas impositivas son propias: factura de crédito electrónica
+    obligatoria por encima de $ 5.549.862 cuando le factura una pyme,
+    retenciones, y comprobantes que tienen que cerrar con ARCA.
+  - Quiere poder mostrar cuánto compra localmente (el 20% del RIGI es un
+    extra: no tiene sanción clara y el Súper RIGI lo eliminaría).
+- **Los proveedores pymes son la otra punta:** cobran a 60 o 90 días y se
+  financian caro. Que cobren antes es lo que hace atractiva a la empresa como
+  cliente y lo que le da poder de negociación.
 
 ## Mecanismo
 
@@ -38,11 +48,11 @@ Es factoring inverso (riesgo del comprador), onchain y transfronterizo.
 
 ## Adopción
 
-- Se entra por la empresa grande: una trae a todos sus proveedores.
-- A la empresa le damos: pago desde afuera sin banco intermedio, y proveedores
-  que cobran antes y pueden cotizarle mejor. El registro de compras locales para
-  el RIGI es un extra: el 20% no tiene sanción clara y el Súper RIGI lo
-  eliminaría, así que la adopción no puede depender de esa regla.
+- Se vende a la empresa grande, en el momento en que decide invertir: una
+  trae a todos sus proveedores.
+- A la empresa le damos: pagar desde afuera sin banco local, cada factura
+  validada y cada proveedor revisado, el cumplimiento impositivo resuelto y
+  mejores condiciones con proveedores que cobran antes.
 - Al proveedor: cobra antes y más barato. Alta una vez, con KYB.
 
 ## Moat
