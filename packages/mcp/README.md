@@ -3,7 +3,7 @@
 MCP remoto de Saltar, llamado `saltarg`, en Cloudflare Workers. Se agrega por URL en Claude,
 Claude Code o Cursor; el login es Privy (Google, email o wallet), el mismo usuario y la
 misma wallet que la web. Todas las herramientas son de lectura: ninguna firma
-ni manda transacciones (regla 4 de `AGENTS.md`).
+ni manda transacciones (`preparar_adelanto` sólo arma el calldata) (regla 4 de `AGENTS.md`).
 
 - **Dueño:** Steven
 - **Estado:** desplegado en `https://saltarg-mcp.stevenmolina.workers.dev/mcp`.
@@ -20,6 +20,12 @@ ni manda transacciones (regla 4 de `AGENTS.md`).
 | `saldos` | ETH, ARGt, CHLt y USDT0 de tu wallet en Arbitrum One |
 | `mercado_y_posicion` | Mercado ARGt/USDT0 de Morpho (liquidez, precio, tasa) y tu colateral y deuda ahí |
 | `cuanto_puedo_pedir` | Cuánto ARGt podés pedir hoy con las reglas del agente (tope 60%, BCRA, liquidez). Simula, no pide |
+| `evaluar_factura` | Claude lee la factura y pasa los campos; corre el agente (BCRA de empresa y proveedor, Morpho, solvencia en el país de origen) y sugiere cuánto pedir |
+| `preparar_adelanto` | Chequeos C1 a C6 y las transacciones listas (CHLt → USDT0 en Curve, colateral y préstamo en Morpho). No firma: devuelve el link a la web donde la persona firma con Privy |
+
+Prompt `pedir_adelanto` (aparece como comando en Claude): guía el flujo entero,
+de la factura al link de firma. Probar sin login ni Worker:
+`npx tsx packages/mcp/probar-herramientas.mjs [wallet]`.
 
 ## Agregarlo
 
