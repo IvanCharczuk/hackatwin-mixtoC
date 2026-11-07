@@ -18,8 +18,8 @@ El problema, sin detalle técnico.
 > dólares, y otros 20 de minería y petróleo esperando. Las empresas que
 > llegan tienen que pagarles desde el primer día a cientos de proveedores
 > locales.
-> Pero el banco no las conoce, convertir sus dólares lleva tiempo y vender lo
-> que tienen las deja sin respaldo. Saltar les da pesos desde el día uno, con
+> Pero el banco no las conoce y conseguir pesos desde afuera lleva tiempo y
+> trámites. Saltar les da pesos desde el día uno, con
 > su propia plata como garantía, y revisa cada factura antes de pagar.
 
 Qué preguntarles después:
@@ -56,8 +56,8 @@ sueltas, nada de frases largas) y Ivan cuenta. El video no tiene voz.
 | Tiempo | En pantalla (video) | Lo que decís |
 |---|---|---|
 | 0:00 a 0:14 | **El caso.** Amanece sobre la cordillera de San Juan. Un camión con el nombre «Excon» cruza de Chile hacia «San Juan · Vicuña · US$ 9,7B». Texto: «Pagar en pesos». | «Excon, una contratista chilena, ya está analizando entrar a San Juan, donde Vicuña invierte casi 10 billions. Para arrancar tiene que pagar sueldos y proveedores en pesos desde el primer día.» |
-| 0:14 a 0:22 | **El muro.** Caen tres cruces, una por palabra: «Banco» ✗ «Tiempo» ✗ «Vender» ✗. | «Pero el banco no la conoce, convertir sus dólares lleva tiempo y vender sus stablecoins la deja sin respaldo.» |
-| 0:22 a 0:32 | **Los beneficios.** El logo de Saltar despeja el riel; aparecen tres checks: «Día uno» ✓ «Sin vender» ✓ «Factura revisada» ✓. | «Saltar agiliza los rieles para que tenga pesos desde el día uno, sin vender su respaldo y con cada factura revisada antes de pagar.» |
+| 0:14 a 0:22 | **El muro.** Caen dos cruces: «Banco» ✗ «Trámites» ✗. | «Pero el banco no la conoce y conseguir pesos desde afuera lleva tiempo y trámites.» |
+| 0:22 a 0:32 | **Los beneficios.** El logo de Saltar despeja el riel; aparecen tres checks: «Día uno» ✓ «Con su garantía» ✓ «Factura revisada» ✓. | «Saltar agiliza los rieles para que tenga pesos desde el día uno, con su propia garantía y cada factura revisada antes de pagar.» |
 | 0:32 a 0:44 | **Por qué los demás no alcanzan.** Cuatro columnas: «Banco» ✗, «Bitso · BVNK» ✗, «Lemon · Ripio» ✗, «Saltar» ✓. | «El banco pide historia, Bitso o BVNK mueven plata pero no prestan pesos, y Lemon o Ripio son para ahorro personal. Saltar resuelve las tres cosas.» |
 | 0:44 a 0:56 | **Tamaño.** Contadores: «13 proyectos mineros · US$ 25B», «+20 esperando», «7.500 pymes proveedoras». Debajo: «1%» y «0,3%». | «Y no es un caso aislado. Hay 13 proyectos mineros aprobados, 20 esperando y 7.500 pymes proveedoras en Vaca Muerta. Cobramos 1% por abrir y 0,3% por pago.» |
 | 0:56 a 1:00 | **Cierre.** El logo de Saltar sobre el sol: «Financiación desde el día uno». | «Les muestro cómo funciona.» |
@@ -79,7 +79,7 @@ sueltas, nada de frases largas) y Ivan cuenta. El video no tiene voz.
 ## Si piden la versión hablada de 30 segundos
 
 > Una empresa de Chile abre en Argentina y necesita pesos para operar. El
-> banco no la conoce y vender sus stablecoins la deja sin respaldo. Con Saltar
+> banco no la conoce y conseguir pesos desde afuera lleva tiempo. Con Saltar
 > deja sus CHLt de garantía y recibe ARGt, los pesos digitales de Twin. Cuando
 > un proveedor le factura, nuestro agente revisa la factura y al proveedor
 > antes de pagar. No prestamos plata propia: el crédito sale de Morpho.
