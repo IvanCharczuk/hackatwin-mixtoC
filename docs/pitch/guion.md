@@ -55,7 +55,7 @@ sueltas, nada de frases largas) y Ivan cuenta. El video no tiene voz.
 
 | Tiempo | En pantalla (video) | Lo que decís |
 |---|---|---|
-| 0:00 a 0:14 | **El mercado.** Un contador sube de «US$ 56B» a «US$ 160B+». Después, un camión con el nombre «Excon» cruza de Chile hacia «San Juan». | «Hoy hay 56 billions de dólares de inversión aprobada en el RIGI, y con lo que espera aprobación puede pasar los 160. Contratistas chilenas como Excon ya analizan entrar a San Juan.» |
+| 0:00 a 0:14 | **El mercado.** Un contador sube de «US$ 56B» a «US$ 160B+». Después, un camión con el nombre «Excon» cruza de Chile hacia «San Juan». | «Hoy hay 56 billions de dólares aprobados para grandes proyectos en Argentina, y con los que esperan aprobación puede pasar los 160 billions. Contratistas chilenas como Excon ya analizan entrar a San Juan.» |
 | 0:14 a 0:22 | **El problema.** Una solicitud de crédito se sella: «Sin historial en Argentina». | «Para arrancar necesitan pesos desde el primer día, pero en Argentina no tienen historial para pedir crédito.» |
 | 0:22 a 0:32 | **Los beneficios.** El logo de Saltar despeja el riel; aparecen tres checks: «Día uno» ✓ «Con su garantía» ✓ «Factura revisada» ✓. | «Saltar agiliza los rieles para que tengan pesos desde el día uno, con su propia garantía y cada factura revisada antes de pagar.» |
 | 0:32 a 0:44 | **Por qué los demás no alcanzan.** Cuatro columnas: «Banco» ✗, «Bitso · BVNK» ✗, «Lemon · Ripio» ✗, «Saltar» ✓. | «El banco pide historia, Bitso o BVNK mueven plata pero no prestan pesos, y Lemon o Ripio son para ahorro personal. Saltar resuelve las tres cosas.» |
