@@ -1,28 +1,35 @@
 # Pitch de Saltar
 
-Para Ivan, que presenta. 7/11/2026. Formato: 2,5 minutos; el primer minuto con un
-video de fondo mientras Ivan habla, después la demo en vivo, y preguntas. El jurado de Twin puntúa por igual idea, problema, negocio y pitch.
+Para Ivan, que presenta. 7/11/2026. Formato: 2,5 minutos; el primer minuto es el pitch con un video de fondo y
+después la demo en vivo, y preguntas.
 
 Frase que se repite en todo: **«Llegás a Argentina y operás en pesos desde el
 primer día.»**
 
-## Formato: video de fondo mientras Ivan habla, y después demo en vivo
+## Formato
 
-Total 2,5 minutos. El primer minuto, el video corre detrás (sin voz, pocas
-palabras en pantalla) mientras Ivan cuenta el pitch. Después, la demo en vivo,
-unos 90 segundos. Siguen las preguntas.
+Total 2,5 minutos:
 
-## Primer minuto: video de fondo y lo que decís (spec 0135)
+1. **Primer minuto, el pitch:** propuesta, problema, solución, mercado y
+   diferencia. Ivan lo cuenta mientras corre detrás un video de 1 minuto (sin
+   voz, pocas palabras en pantalla).
+2. **Después, la demo en vivo** (unos 90 segundos): cómo funciona, paso a
+   paso.
+
+Siguen las preguntas.
+
+## El minuto del pitch: lo que se ve y lo que decís (video de la spec 0135)
 
 | Tiempo | En pantalla (video) | Lo que decís |
 |---|---|---|
-| 0:00 a 0:12 | Chile → Argentina. Una minera, un galpón en San Juan. | «Una minera de Chile abre una base en San Juan. Tiene la plata, pero en Chile y en stablecoins, y para arrancar necesita pesos.» |
-| 0:12 a 0:22 | Tres cruces: banco, cepo, vender. | «El banco argentino no la conoce, traer dólares choca con el cepo y vender sus stablecoins la deja sin respaldo.» |
-| 0:22 a 0:34 | «Saltar»: CHLt de garantía → ARGt. | «Con Saltar deja sus CHLt de garantía y recibe ARGt, los pesos digitales de Twin, para operar desde el primer día.» |
-| 0:34 a 0:48 | El circuito: Curve → Morpho → ARGt → factura revisada → proveedor cobra → devuelve. | «El crédito sale de Morpho, no de nosotros. Y cuando un proveedor le factura, nuestro agente revisa la factura y al proveedor antes de pagar.» |
-| 0:48 a 1:00 | 1% · 0,3% · 1.158 empresas. Cierre con el logo. | «Cobramos 1% por abrir el crédito y 0,3% por cada pago validado. Hay 1.158 empresas chilenas que ya le venden a Argentina. Les muestro.» |
+| 0:00 a 0:08 | **Propuesta.** Logo de Saltar: «Pesos desde el primer día». | «Saltar le da pesos desde el primer día a las empresas que llegan a operar a Argentina.» |
+| 0:08 a 0:20 | **Problema.** Chile → San Juan; tres cruces: banco, cepo, vender. | «Una minera de Chile abre en San Juan y necesita pesos para arrancar. El banco no la conoce, traer dólares choca con el cepo y vender sus stablecoins la deja sin respaldo.» |
+| 0:20 a 0:32 | **Solución.** CHLt de garantía → ARGt; un check sobre una factura. | «Con Saltar deja sus CHLt de garantía y recibe ARGt, los pesos digitales de Twin. Y nuestro agente revisa cada factura antes de pagarle al proveedor.» |
+| 0:32 a 0:44 | **Mercado.** 1.158 empresas · US$ 6.500 M · RIGI US$ 50.000 M · 7 monedas. | «Hay 1.158 empresas chilenas que ya le venden a Argentina, y el RIGI aprobó casi 50.000 millones de dólares en proyectos que traen empresas de afuera. Con las siete monedas de Twin, cada país es un corredor.» |
+| 0:44 a 0:56 | **Diferencia.** Banco ✗ · Bitso o BVNK ✗ · Saltar ✓. 1% · 0,3%. | «El banco pide historial; los pagos con stablecoins no prestan en pesos ni validan facturas. Nosotros no prestamos plata propia: conectamos el crédito de Morpho con un agente que entiende Argentina. Cobramos 1% por abrir el crédito y 0,3% por cada pago.» |
+| 0:56 a 1:00 | Cierre: «Saltar». | «Les muestro cómo funciona.» |
 
-## Demo en vivo (unos 90 segundos)
+## Demo en vivo: cómo funciona (unos 90 segundos)
 
 > [Tu agente] Esta es la empresa. El agente la consultó en el BCRA y en
 > Arbitrum, y le dice cuánto puede pedir y por qué.
@@ -30,8 +37,10 @@ unos 90 segundos. Siguen las preguntas.
 > [Subir la factura] Llega la factura de un proveedor. El agente la lee,
 > chequea el CAE, que sea para nuestra empresa, al proveedor en el BCRA y si
 > alcanza la plata. Todo en verde.
-> [Financiar] Deja la garantía en Morpho, pide los pesos y el proveedor cobra.
-> [Arbiscan] Este es el hash: la transacción es real, en Arbitrum.
+> [Financiar] Los CHLt se cambian en Curve, quedan de garantía en Morpho, se
+> piden los ARGt y el proveedor cobra.
+> [Arbiscan] Este es el hash: la transacción es real, en Arbitrum. Cuando la
+> empresa vende acá, devuelve y recupera su garantía.
 > Saltar: llegás a Argentina y operás en pesos desde el primer día.
 
 ## Si piden la versión hablada de 30 segundos
