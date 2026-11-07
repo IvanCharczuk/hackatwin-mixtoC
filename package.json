@@ -10,5 +10,10 @@
   },
   "engines": {
     "node": ">=20"
+  },
+  "dependencies": {
+    "@solana-program/memo": "^0.10.0",
+    "@solana-program/system": "^0.10.0",
+    "@solana/kit": "^5.5.1"
   }
 }
