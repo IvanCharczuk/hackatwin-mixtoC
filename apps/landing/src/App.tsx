@@ -15,7 +15,7 @@ import {
 } from "lucide-react";
 import { MAX_LTV, money, quote, short, tokenSrc, type Ticker } from "./data";
 
-const NAME = "[Nombre]";
+const NAME = "Salto";
 
 export function App() {
   return (
