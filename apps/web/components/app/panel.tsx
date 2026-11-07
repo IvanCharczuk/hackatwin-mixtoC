@@ -90,7 +90,7 @@ export function Panel({
   const ocupado = fase === "leyendo" || fase === "evaluando" || (factura && !listo && fase !== "error");
 
   return (
-    <aside aria-labelledby="revision" className="flex flex-col gap-4 rounded-[20px] bg-white p-6 shadow-[0_1px_2px_rgb(0_37_100/0.06)] lg:sticky lg:top-6">
+    <aside aria-labelledby="revision" className="flex flex-col gap-4 rounded-[20px] bg-white p-6 shadow-[0_1px_2px_rgb(0_37_100/0.06)] lg:sticky lg:top-6 lg:max-h-[calc(100dvh-3rem)] lg:overflow-y-auto">
       <h2 id="revision" className="text-[16px] font-bold text-navy">Revisión de la factura</h2>
 
       <div aria-live="polite" className={cn("rounded-[16px] px-4 py-4", !listo || fase !== "listo" ? "bg-cream" : alcanza ? "bg-ok/10" : "bg-bad/10")}>

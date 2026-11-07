@@ -57,9 +57,10 @@ function PillMoneda({ logo, etiqueta, monto }: { logo: string; etiqueta: string;
   );
 }
 
-export function Paisaje({ children }: { children: React.ReactNode }) {
+// `llenar`: sin sesión el paisaje crece hasta el footer (las montañas y el sol están anclados abajo).
+export function Paisaje({ children, llenar = false }: { children: React.ReactNode; llenar?: boolean }) {
   return (
-    <section className="amanecer relative overflow-hidden">
+    <section className={`amanecer relative overflow-hidden${llenar ? " flex-1" : ""}`}>
       <div className="estrellas pointer-events-none absolute inset-0" aria-hidden="true" />
       <img src="/sol-de-mayo.png" alt="" aria-hidden="true" className="pointer-events-none absolute bottom-[70px] left-[58%] w-[260px] -translate-x-1/2 lg:bottom-[20px] lg:left-[60%] lg:w-[340px]" />
       <img src="/andes.png" alt="" aria-hidden="true" className="pointer-events-none absolute -bottom-[40px] left-1/2 w-[900px] lg:-bottom-[90px] max-w-none -translate-x-1/2 lg:w-[max(1440px,100%)]" />
