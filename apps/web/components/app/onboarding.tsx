@@ -40,7 +40,7 @@ export function Onboarding({ wallet, simular, onListo }: { wallet: `0x${string}`
       <ol className="flex items-center gap-3 text-[13px] font-semibold" aria-label="Pasos">
         {["Tu empresa", "Habilitar pagos"].map((t, i) => (
           <li key={t} className={cn("flex items-center gap-2", paso === i + 1 ? "text-navy" : "text-ink-2")} aria-current={paso === i + 1 ? "step" : undefined}>
-            <span className={cn("flex size-6 items-center justify-center rounded-full text-[12px]", paso > i + 1 ? "bg-ok text-white" : paso === i + 1 ? "bg-sun text-navy" : "bg-cream-2")}>{i + 1}</span>
+            <span className={cn("flex size-6 items-center justify-center rounded-full text-[12px]", paso > i + 1 ? "bg-ok text-white" : paso === i + 1 ? "bg-navy text-white" : "bg-cream-2")}>{i + 1}</span>
             {t}
           </li>
         ))}
@@ -56,7 +56,7 @@ export function Onboarding({ wallet, simular, onListo }: { wallet: `0x${string}`
             <legend className="mb-2 text-[14px] font-semibold text-navy">País de origen</legend>
             <div className="flex flex-wrap gap-2">
               {PAISES.map((p) => (
-                <button key={p.id} type="button" aria-pressed={p.id === paisId} onClick={() => { setPaisId(p.id); setIdLocal(""); }} className={cn("rounded-full border px-4 py-2 text-[14px] font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sun", p.id === paisId ? "border-navy bg-navy text-white" : "border-line bg-white text-navy hover:border-sun")}>
+                <button key={p.id} type="button" aria-pressed={p.id === paisId} onClick={() => { setPaisId(p.id); setIdLocal(""); }} className={cn("rounded-full border px-4 py-2 text-[14px] font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-navy", p.id === paisId ? "border-navy bg-navy text-white" : "border-line bg-white text-navy hover:border-navy")}>
                   {p.nombre}
                 </button>
               ))}
@@ -64,17 +64,17 @@ export function Onboarding({ wallet, simular, onListo }: { wallet: `0x${string}`
           </fieldset>
           <div className="flex flex-col gap-2">
             <label htmlFor="ob-id" className="text-[14px] font-semibold text-navy">{pais.idNombre} de la empresa en {pais.nombre}</label>
-            <input id="ob-id" value={idLocal} onChange={(e) => setIdLocal(e.target.value.replace(/[^0-9A-Za-zÑñ&.\-\/]/g, ""))} autoFocus placeholder={pais.ejemplo} spellCheck={false} aria-invalid={Boolean(idLocal) && !idOk} className={cn("rounded-full border bg-white px-5 py-3 font-mono text-[16px] text-navy outline-none focus-visible:border-sun", idLocal && !idOk ? "border-bad" : "border-line")} />
+            <input id="ob-id" value={idLocal} onChange={(e) => setIdLocal(e.target.value.replace(/[^0-9A-Za-zÑñ&.\-\/]/g, ""))} autoFocus placeholder={pais.ejemplo} spellCheck={false} aria-invalid={Boolean(idLocal) && !idOk} className={cn("rounded-full border bg-white px-5 py-3 font-mono text-[16px] text-navy outline-none focus-visible:border-navy", idLocal && !idOk ? "border-bad" : "border-line")} />
             <p className={cn("text-[13px]", idLocal && !idOk ? "text-bad" : "text-ink-2")}>
               {idLocal && !idOk ? `Ese ${pais.idNombre} no es válido. ` : ""}
-              <button type="button" onClick={() => setIdLocal(pais.ejemplo)} className="font-semibold text-sun-ink underline underline-offset-2 hover:text-navy">
+              <button type="button" onClick={() => setIdLocal(pais.ejemplo)} className="font-semibold text-navy underline underline-offset-2 hover:opacity-70">
                 Usar el de ejemplo
               </button>
             </p>
           </div>
           {idOk && !local && (
             <section aria-label={`Antecedentes en ${pais.nombre}`} className="flex flex-col gap-1 rounded-[16px] bg-paper px-4 py-3">
-              <p className="text-[12px] font-bold text-sun-ink">Antecedentes en {pais.nombre}</p>
+              <p className="text-[12px] font-bold text-ink-2">Antecedentes en {pais.nombre}</p>
               <ul>
                 {pais.instituciones.map((inst, k) => (
                   <motion.li key={inst} initial={quieto ? false : { opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.22, delay: quieto ? 0 : 0.25 + k * 0.35, ease: [0.22, 1, 0.36, 1] }} className="flex items-center gap-2 py-1.5 text-[14px] text-navy">
@@ -89,10 +89,10 @@ export function Onboarding({ wallet, simular, onListo }: { wallet: `0x${string}`
           {!local && idOk && (
             <div className="flex flex-col gap-2">
               <label htmlFor="ob-cuit" className="text-[14px] font-semibold text-navy">CUIT de tu filial en Argentina</label>
-              <input id="ob-cuit" value={cuitFilial} onChange={(e) => setCuitFilial(e.target.value.replace(/[^\d-]/g, ""))} inputMode="numeric" placeholder="30-99999902-3" className="rounded-full border border-line bg-white px-5 py-3 font-mono text-[16px] text-navy outline-none focus-visible:border-sun" />
+              <input id="ob-cuit" value={cuitFilial} onChange={(e) => setCuitFilial(e.target.value.replace(/[^\d-]/g, ""))} inputMode="numeric" placeholder="30-99999902-3" className="rounded-full border border-line bg-white px-5 py-3 font-mono text-[16px] text-navy outline-none focus-visible:border-navy" />
               <p className="text-[13px] text-ink-2">
                 Es a quien le llegan las facturas.{" "}
-                <button type="button" onClick={() => setCuitFilial("30-99999902-3")} className="font-semibold text-sun-ink underline underline-offset-2 hover:text-navy">
+                <button type="button" onClick={() => setCuitFilial("30-99999902-3")} className="font-semibold text-navy underline underline-offset-2 hover:opacity-70">
                   Usar el de ejemplo
                 </button>
               </p>
@@ -100,7 +100,7 @@ export function Onboarding({ wallet, simular, onListo }: { wallet: `0x${string}`
           )}
           {valido && (
             <div className="flex items-center gap-3 rounded-[16px] bg-paper px-4 py-3" aria-live="polite">
-              <Building2 className="size-5 shrink-0 text-sun-ink" aria-hidden="true" />
+              <Building2 className="size-5 shrink-0 text-navy" aria-hidden="true" />
               {empresa.isLoading ? (
                 <span className="text-[14px] text-ink-2">Buscando en el BCRA…</span>
               ) : bcra?.ok ? (
@@ -113,7 +113,7 @@ export function Onboarding({ wallet, simular, onListo }: { wallet: `0x${string}`
               )}
             </div>
           )}
-          <button type="button" onClick={() => setPaso(2)} disabled={!valido} className="rounded-full bg-sun px-6 py-4 text-[16px] font-bold text-navy transition-colors hover:bg-sun-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-navy disabled:cursor-not-allowed disabled:opacity-50">
+          <button type="button" onClick={() => setPaso(2)} disabled={!valido} className="rounded-full bg-navy px-6 py-4 text-[16px] font-bold text-white transition-colors hover:opacity-90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-navy disabled:cursor-not-allowed disabled:bg-cream-2 disabled:text-ink-2 disabled:hover:opacity-100">
             Seguir
           </button>
         </section>
@@ -123,7 +123,7 @@ export function Onboarding({ wallet, simular, onListo }: { wallet: `0x${string}`
         <section className="flex flex-col gap-4 rounded-[20px] bg-white p-6">
           <h2 className="text-[22px] font-bold text-navy">Los pagos ya están habilitados</h2>
           <p className="text-[15px] text-ink-2">Esta wallet ya dio los permisos. Cada pago son 3 firmas.</p>
-          <button type="button" onClick={terminar} className="rounded-full bg-sun px-6 py-4 text-[16px] font-bold text-navy hover:bg-sun-soft">Empezar</button>
+          <button type="button" onClick={terminar} className="rounded-full bg-navy px-6 py-4 text-[16px] font-bold text-white hover:opacity-90">Empezar</button>
         </section>
       ) : (
         <div className="flex flex-col gap-3">

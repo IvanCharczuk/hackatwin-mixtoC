@@ -64,7 +64,7 @@ export function Confirmacion({ recibo, onOtra }: { recibo: Recibo; onOtra: () =>
       </section>
 
       <div className="flex flex-wrap justify-center gap-3">
-        <button type="button" onClick={onOtra} className="inline-flex items-center gap-2 rounded-full bg-sun px-6 py-3.5 text-[15px] font-bold text-navy hover:bg-sun-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-navy">
+        <button type="button" onClick={onOtra} className="inline-flex items-center gap-2 rounded-full bg-navy px-6 py-3.5 text-[15px] font-bold text-white hover:opacity-90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-navy">
           <RotateCcw className="size-4" aria-hidden="true" /> Pagar otra factura
         </button>
         <a href="#movimientos" className="inline-flex items-center gap-2 rounded-full border-[1.5px] border-navy px-6 py-3.5 text-[15px] font-semibold text-navy hover:bg-navy/5">

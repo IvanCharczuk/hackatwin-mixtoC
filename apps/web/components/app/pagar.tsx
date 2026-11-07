@@ -98,7 +98,7 @@ export function Pagar({
           disabled={corriendo}
           className={cn(
             "inline-flex items-center justify-center gap-2 rounded-full px-6 transition-colors duration-200",
-            plano ? "bg-navy py-3.5 text-[15px] font-semibold text-white hover:bg-navy-deep" : "bg-sun py-4 text-[16px] font-bold text-navy hover:bg-sun-soft",
+            plano ? "bg-navy py-3.5 text-[15px] font-semibold text-white hover:bg-navy-deep" : "bg-navy py-4 text-[16px] font-bold text-white hover:opacity-90",
             "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-navy disabled:cursor-progress disabled:opacity-80",
           )}
         >
