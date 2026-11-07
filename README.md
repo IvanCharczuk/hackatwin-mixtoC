@@ -5,3 +5,15 @@ Proyecto del equipo Mixto C para la HackaTwin (7 de noviembre de 2026).
 ## Material previo al evento
 
 La carpeta `plantilla/` es una plantilla de trabajo armada antes del evento (método, specs, guías y un ejemplo de WebMCP). No es parte del producto. Todo lo que está fuera de `plantilla/` se construye durante el evento.
+
+## Track Twin Stablecoins
+
+Participamos en el track de Twin Stablecoins.
+
+- [Consigna original del track](docs/sources/2026-11-07-twin-stablecoins.pdf).
+- [Investigación, requisitos de entrega y recursos técnicos](docs/research.md).
+- [Registro de integridad del PDF](docs/sources/manifest.json).
+
+La entrega cierra el 7 de noviembre de 2026 a las 18:00, hora de Buenos Aires.
+El producto debe usar al menos una Twin Stablecoin elegible y demostrar una
+transacción onchain real con hash verificable. Los detalles están en la consigna.
