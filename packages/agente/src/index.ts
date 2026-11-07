@@ -14,7 +14,30 @@ export type Pedido = {
   colateralUsdt0?: number;
   pedidoArgt?: number;
   conExplicacion?: boolean;
+  /**
+   * Perfil del BCRA de ejemplo, para mostrar en la demo cómo recorta o rechaza
+   * sin exponer a una empresa real. Si viene, no se consulta al BCRA.
+   */
+  bcraSimulado?: { situacion: number | null; chequesRechazados?: number };
 };
+
+function perfilSimulado(s: NonNullable<Pedido["bcraSimulado"]>): Bcra {
+  const situacion = s.situacion === null || s.situacion === undefined ? null : Number(s.situacion);
+  if (situacion !== null && !(Number.isInteger(situacion) && situacion >= 1 && situacion <= 5)) {
+    throw new Error("bcraSimulado.situacion inválida: tiene que ser 1 a 5 o null.");
+  }
+  const cheques = Number(s.chequesRechazados ?? 0);
+  if (!Number.isInteger(cheques) || cheques < 0) throw new Error("bcraSimulado.chequesRechazados inválido.");
+  return {
+    ok: true,
+    simulado: true,
+    denominacion: "Empresa de ejemplo",
+    situacionMax: situacion,
+    deudaTotalArs: 0,
+    entidades: situacion === null ? 0 : 1,
+    chequesRechazados: cheques,
+  };
+}
 
 export type Resultado = {
   perfil: { bcra: Bcra; onchain: Onchain };
@@ -37,7 +60,8 @@ export async function evaluar(p: Pedido): Promise<Resultado> {
   const colateralExtraUsdt0 = numeroOpcional(p.colateralUsdt0, "colateralUsdt0");
   const pedidoArgt = numeroOpcional(p.pedidoArgt, "pedidoArgt");
 
-  const [bcra, onchain] = await Promise.all([consultarBcra(cuit), leerOnchain(wallet)]);
+  const simulado = p.bcraSimulado ? perfilSimulado(p.bcraSimulado) : null;
+  const [bcra, onchain] = await Promise.all([simulado ?? consultarBcra(cuit), leerOnchain(wallet)]);
   const decision = decidir({ bcra, mercado: onchain.mercado, posicion: onchain.posicion, colateralExtraUsdt0, pedidoArgt });
   const explicacion =
     p.conExplicacion === false

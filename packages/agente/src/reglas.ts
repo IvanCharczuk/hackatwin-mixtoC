@@ -3,6 +3,8 @@
 
 export type Bcra = {
   ok: boolean;
+  /** Perfil de ejemplo para la demo (no consultó al BCRA). */
+  simulado?: boolean;
   denominacion?: string;
   /** Peor situación del último período entre las deudas materiales (1 a 5); null si no tiene deudas registradas. */
   situacionMax: number | null;
