@@ -198,7 +198,7 @@ function Hero() {
   return (
     <section
       ref={ref}
-      className="hero-sky relative flex h-[800px] flex-col items-center overflow-hidden px-6 pt-14 lg:h-[980px] lg:px-24 lg:pt-[76px]"
+      className="hero-sky relative flex h-svh min-h-[680px] flex-col items-center overflow-hidden px-6 pt-14 lg:min-h-[760px] lg:px-24 lg:pt-[76px]"
     >
       <div className="parallax-layer intro-fade absolute inset-0" style={{ ["--depth" as string]: 0.55 }} aria-hidden>
         {STARS.map(([x, y, s], i) => (
