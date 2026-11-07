@@ -29,7 +29,7 @@ export function usePasos(pasos: Paso[], simular: boolean) {
   const actual = pasos.findIndex((p) => stages[p.id] !== "success");
   const set = (id: string, s: TxButtonStage) => setStages((prev) => ({ ...prev, [id]: s }));
 
-  async function firmar(paso: Paso) {
+  async function firmar(paso: Paso): Promise<boolean> {
     set(paso.id, "confirming");
     setErrores((e) => ({ ...e, [paso.id]: "" }));
     try {
@@ -51,10 +51,21 @@ export function usePasos(pasos: Paso[], simular: boolean) {
       set(paso.id, ok ? "success" : "error");
       if (!ok) setErrores((e) => ({ ...e, [paso.id]: "La transacción se revirtió." }));
       void queryClient.invalidateQueries();
+      return ok;
     } catch (err) {
       set(paso.id, "error");
       setErrores((e) => ({ ...e, [paso.id]: err instanceof Error ? err.message.split("\n")[0] : "Falló la firma." }));
+      return false;
     }
+  }
+
+  /** Corre los pasos que faltan uno detrás del otro; para en el primero que falla. */
+  async function firmarTodos() {
+    for (const p of pasos) {
+      if (stages[p.id] === "success") continue;
+      if (!(await firmar(p))) return false;
+    }
+    return true;
   }
 
   function reiniciar() {
@@ -63,5 +74,5 @@ export function usePasos(pasos: Paso[], simular: boolean) {
     setErrores({});
   }
 
-  return { stages, hashes, errores, hechos, actual, firmar, reiniciar, listo: pasos.length > 0 && hechos === pasos.length };
+  return { stages, hashes, errores, hechos, actual, firmar, firmarTodos, reiniciar, listo: pasos.length > 0 && hechos === pasos.length };
 }

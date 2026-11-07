@@ -12,7 +12,7 @@ import { FACTURA_EJEMPLO } from "@/lib/factura-ejemplo";
 import { Encabezado } from "@/components/app/encabezado";
 import { Subir } from "@/components/app/subir";
 import { Panel } from "@/components/app/panel";
-import { Plan } from "@/components/dashboard/antes-de-pedir";
+import { Pagar } from "@/components/app/pagar";
 
 export default function App() {
   const sesion = useAuth();
@@ -52,8 +52,8 @@ export default function App() {
         saldos={saldos}
       />
 
-      <main className="mx-auto grid w-full max-w-[1200px] flex-1 gap-8 px-6 py-10 lg:grid-cols-[minmax(0,1fr)_400px] lg:gap-12">
-        <div className="flex min-w-0 flex-col gap-10">
+      <main className="mx-auto grid w-full max-w-[1200px] flex-1 gap-10 px-6 py-14 lg:grid-cols-[minmax(0,1fr)_400px] lg:gap-16 lg:py-20">
+        <div className="flex min-w-0 flex-col gap-14">
           <Subir
             fase={f.fase}
             error={f.error}
@@ -91,14 +91,12 @@ export default function App() {
           )}
 
           {cap.alcanza && cap.chequeo.data && (
-            <Plan
+            <Pagar
               key={`${cap.chltAUsar}-${total}-${pagarA ?? "yo"}`}
-              titulo="Pagar la factura"
               pasos={cap.chequeo.data.pasos}
-              bloqueado={false}
-              rojo={false}
               simular={sesion.mock}
-              onCerrar={f.reiniciar}
+              monto={(total ?? 0).toLocaleString("es-AR")}
+              aProveedor={Boolean(pagarA)}
             />
           )}
         </div>
