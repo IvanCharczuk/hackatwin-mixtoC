@@ -48,11 +48,11 @@ sueltas, nada de frases largas) y Ivan cuenta. El video no tiene voz.
 
 | Tiempo | En pantalla (video) | Lo que decís |
 |---|---|---|
-| 0:00 a 0:14 | **Problema.** Amanece sobre la cordillera. Contadores: «13 mineras · US$ 25B» y «+20 en espera». Después caen tres cruces: «Banco» ✗ «Cepo» ✗ «Vender» ✗. | «Hoy hay 13 mineras con proyectos aprobados en el RIGI por 25 billions de dólares, y otros 20 de minería y petróleo esperando. Para arrancar necesitan pesos: el banco no las conoce, el cepo frena los dólares y vender sus stablecoins las deja sin respaldo.» |
+| 0:00 a 0:14 | **Problema.** Amanece sobre la cordillera. Contadores: «13 mineras · US$ 25B» y «+20 en espera». Después caen tres cruces: «Banco» ✗ «Cepo» ✗ «Vender» ✗. | «13 mineras ya tienen aprobados 25 billions de dólares en el RIGI, y hay 20 proyectos más esperando. Para arrancar necesitan pesos, pero el banco no las conoce y el cepo frena los dólares.» |
 | 0:14 a 0:22 | **Propuesta.** Aparece el logo de Saltar sobre un riel que se despeja. Texto: «Operá desde el día uno». | «Con Saltar agilizamos los rieles para que arranquen a operar en Argentina con financiación desde el día uno.» |
-| 0:22 a 0:32 | **Solución.** Los rieles se destraban: CHLt entra a una bóveda y sale ARGt; una factura recibe un check verde. Texto: «Día uno». | «Dejan su garantía en stablecoins y reciben ARGt, los pesos digitales de Twin, desde el día uno. Y nuestro agente revisa cada factura antes de pagar.» |
+| 0:22 a 0:32 | **Solución.** Los rieles se destraban: CHLt entra a una bóveda y sale ARGt; una factura recibe un check verde. Texto: «Día uno». | «Dejan su garantía en stablecoins y reciben ARGt, pesos digitales, desde el día uno. Y nuestro agente revisa cada factura antes de pagar.» |
 | 0:32 a 0:44 | **Mercado.** «7.500 pymes proveedoras» se llenan de puntos; el mapa se enciende país por país: «7 monedas». | «Detrás de cada proyecto hay cientos de proveedores: más de 7.500 pymes sólo en Vaca Muerta. Y con las siete monedas de Twin, cada país es un corredor.» |
-| 0:44 a 0:56 | **Diferencia.** Tres columnas: «Banco» ✗, «Pagos cripto» ✗, «Saltar» ✓. Debajo: «1%» y «0,3%». | «El banco pide historial y los pagos con stablecoins no prestan en pesos. Nosotros conectamos el crédito de Morpho con un agente que entiende Argentina. Cobramos 1% por abrir y 0,3% por pago.» |
+| 0:44 a 0:56 | **Diferencia.** Tres columnas: «Banco» ✗, «Pagos cripto» ✗, «Saltar» ✓. Debajo: «1%» y «0,3%». | «El banco pide historial y los pagos cripto no prestan en pesos. Nosotros conseguimos el crédito, con un agente que entiende Argentina. Cobramos 1% por abrir y 0,3% por pago.» |
 | 0:56 a 1:00 | **Cierre.** El logo de Saltar sobre el sol: «Financiación desde el día uno». | «Les muestro cómo funciona.» |
 
 ## Demo en vivo: cómo funciona (unos 90 segundos)
