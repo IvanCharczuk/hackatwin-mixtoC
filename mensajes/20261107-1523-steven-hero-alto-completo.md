@@ -1,7 +1,7 @@
 ---
 de: steven
 para: franco
-tipo: pedido
+tipo: aviso
 responde_a: -
 estado: abierto
 ---
