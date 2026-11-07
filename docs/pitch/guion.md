@@ -3,8 +3,12 @@
 Para Ivan, que presenta. 7/11/2026. Formato: 2,5 minutos; el primer minuto es el pitch con un video de fondo y
 después la demo en vivo, y preguntas.
 
-Frase que se repite en todo: **«Llegás a Argentina y operás en pesos desde el
-primer día.»**
+Idea central (de Ivan): hoy muchas empresas tienen problemas para arrancar a
+operar en Argentina; nosotros agilizamos los rieles para que den su primer
+salto con financiación desde el día uno.
+
+Frase que se repite en todo: **«Tu primer salto en Argentina, con
+financiación desde el día uno.»**
 
 ## Formato
 
@@ -25,12 +29,12 @@ sueltas, nada de frases largas) y Ivan cuenta. El video no tiene voz.
 
 | Tiempo | En pantalla (video) | Lo que decís |
 |---|---|---|
-| 0:00 a 0:08 | **Propuesta.** Amanece sobre la cordillera; aparece el logo de Saltar. Texto: «Pesos desde el día uno». | «Saltar le da pesos desde el primer día a las empresas que llegan a operar a Argentina.» |
-| 0:08 a 0:20 | **Problema.** Un camión cruza de Chile a San Juan. Caen tres cruces, una por palabra: «Banco» ✗ «Cepo» ✗ «Vender» ✗. | «Una minera de Chile abre en San Juan y necesita pesos para arrancar. El banco no la conoce, traer dólares choca con el cepo y vender sus stablecoins la deja sin respaldo.» |
-| 0:20 a 0:32 | **Solución.** La moneda CHLt entra a una bóveda y sale ARGt. Una factura recibe un check verde. Texto: «CHLt → ARGt». | «Con Saltar deja sus CHLt de garantía y recibe ARGt, los pesos digitales de Twin. Y nuestro agente revisa cada factura antes de pagarle al proveedor.» |
-| 0:32 a 0:44 | **Mercado.** Contadores que suben: «1.158 empresas», «US$ 50.000 M RIGI». El mapa de la región se enciende país por país: «7 monedas». | «Hay 1.158 empresas chilenas que ya le venden a Argentina, y el RIGI aprobó casi 50.000 millones de dólares en proyectos que traen empresas de afuera. Con las siete monedas de Twin, cada país es un corredor.» |
-| 0:44 a 0:56 | **Diferencia.** Tres columnas: «Banco» ✗, «Pagos cripto» ✗, «Saltar» ✓. Debajo: «1%» y «0,3%». | «El banco pide historial; los pagos con stablecoins no prestan en pesos ni validan facturas. Nosotros no prestamos plata propia: conectamos el crédito de Morpho con un agente que entiende Argentina. Cobramos 1% por abrir el crédito y 0,3% por cada pago.» |
-| 0:56 a 1:00 | **Cierre.** El logo de Saltar sobre el sol. | «Les muestro cómo funciona.» |
+| 0:00 a 0:08 | **Propuesta.** Amanece sobre la cordillera; algo da un salto y aparece el logo de Saltar. Texto: «Tu primer salto». | «Saltar agiliza los rieles para que una empresa que llega a Argentina dé su primer salto, con financiación desde el día uno.» |
+| 0:08 a 0:20 | **Problema.** Un camión cruza de Chile a San Juan y frena. Caen tres cruces, una por palabra: «Banco» ✗ «Cepo» ✗ «Vender» ✗. | «Hoy 1.158 empresas chilenas le venden a Argentina, pero arrancar a operar acá es lento: el banco no las conoce, traer dólares choca con el cepo y vender sus stablecoins las deja sin respaldo.» |
+| 0:20 a 0:32 | **Solución.** Los rieles se destraban: CHLt entra a una bóveda y sale ARGt; una factura recibe un check verde. Texto: «Día uno». | «Nosotros agilizamos los rieles: deja CHLt de garantía y recibe ARGt, los pesos digitales de Twin, desde el día uno. Y nuestro agente revisa cada factura antes de pagar.» |
+| 0:32 a 0:44 | **Mercado.** Contadores que suben: «1.158 empresas», «US$ 50.000 M RIGI». El mapa se enciende país por país: «7 monedas». | «El RIGI aprobó casi 50.000 millones de dólares en proyectos que traen empresas de afuera. Y con las siete monedas de Twin, cada país es un corredor.» |
+| 0:44 a 0:56 | **Diferencia.** Tres columnas: «Banco» ✗, «Pagos cripto» ✗, «Saltar» ✓. Debajo: «1%» y «0,3%». | «El banco pide historial; los pagos con stablecoins no prestan en pesos. Nosotros no prestamos plata propia: conectamos el crédito de Morpho con un agente que entiende Argentina. Cobramos 1% por abrir el crédito y 0,3% por cada pago.» |
+| 0:56 a 1:00 | **Cierre.** El logo de Saltar sobre el sol: «Financiación desde el día uno». | «Les muestro cómo funciona.» |
 
 ## Demo en vivo: cómo funciona (unos 90 segundos)
 
@@ -44,7 +48,7 @@ sueltas, nada de frases largas) y Ivan cuenta. El video no tiene voz.
 > piden los ARGt y el proveedor cobra.
 > [Arbiscan] Este es el hash: la transacción es real, en Arbitrum. Cuando la
 > empresa vende acá, devuelve y recupera su garantía.
-> Saltar: llegás a Argentina y operás en pesos desde el primer día.
+> Saltar: tu primer salto en Argentina, con financiación desde el día uno.
 
 ## Si piden la versión hablada de 30 segundos
 
