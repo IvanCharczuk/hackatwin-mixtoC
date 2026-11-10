@@ -41,6 +41,17 @@ export default function App() {
     if (wallet && c.replace(/\D/g, "").length === 11) guardarOnboarding(wallet, { cuit: c.replace(/\D/g, "") });
   };
   const [proveedor, setProveedor] = useState("");
+  // Pedido que llega armado desde Claude (MCP saltarg, preparar_adelanto):
+  // /app?monto=&proveedor=&cuit=. Precarga el formulario; la persona igual sube la factura y firma.
+  const [link, setLink] = useState<{ monto?: number; proveedor?: string }>({});
+  useEffect(() => {
+    const q = new URLSearchParams(window.location.search);
+    const monto = Number(q.get("monto"));
+    const prov = q.get("proveedor") ?? undefined;
+    if (q.get("cuit")) setCuit(q.get("cuit")!);
+    if (prov && isAddress(prov)) setProveedor(prov);
+    setLink({ monto: monto > 0 ? monto : undefined, proveedor: prov && isAddress(prov) ? prov : undefined });
+  }, []);
   const pagarA = isAddress(proveedor) ? proveedor : undefined;
 
   const empresa = useEmpresa(cuit, wallet);
@@ -49,9 +60,12 @@ export default function App() {
   const f = useFactura();
   const [montoTxt, setMontoTxt] = useState("");
   const facturaOk = f.fase === "listo" && f.factura?.ok ? f.factura : undefined;
-  useEffect(() => setMontoTxt(facturaOk ? String(facturaOk.total) : ""), [facturaOk]);
+  useEffect(
+    () => setMontoTxt(facturaOk ? String(link.monto && link.monto <= facturaOk.total ? link.monto : facturaOk.total) : ""),
+    [facturaOk, link.monto],
+  );
   // La wallet del proveedor sale de la factura; se puede corregir a mano.
-  useEffect(() => setProveedor(f.factura?.walletProveedor ?? ""), [f.factura]);
+  useEffect(() => setProveedor(f.factura?.walletProveedor ?? link.proveedor ?? ""), [f.factura, link.proveedor]);
   const monto = Number(montoTxt.replace(",", "."));
   const montoValido = Boolean(facturaOk) && monto > 0 && monto <= (facturaOk?.total ?? 0);
   const total = montoValido ? monto : undefined;
