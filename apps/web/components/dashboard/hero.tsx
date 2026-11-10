@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowDown, ArrowRight, LogOut, Wallet } from "lucide-react";
+import { ArrowDown, ArrowRight, LogOut, Sun, Wallet } from "lucide-react";
 import { useAccount, useSwitchChain } from "wagmi";
 import { SlidingNumber } from "@/components/animate-ui/primitives/texts/sliding-number";
 import { CHAIN_ID } from "@/lib/tokens";
@@ -8,6 +8,7 @@ import { fmt, pct } from "@/lib/formato";
 import type { Credito } from "@/lib/credito";
 import { useSaldos } from "@/lib/hooks/use-factura";
 import { CopiarDireccion } from "@/components/copiar-direccion";
+import { Paisaje3D } from "@/components/paisaje-3d";
 
 const EYEBROW = "text-[12px] font-semibold uppercase tracking-[2px] lg:text-[13px]";
 
@@ -20,7 +21,7 @@ export function BarraSuperior({ authenticated, mock, login, logout }: { authenti
   return (
     <header className="relative z-10 mx-auto flex w-full max-w-[1248px] items-center justify-between gap-3 px-5 py-5 sm:px-6">
       <a href="/" className="flex shrink-0 items-center gap-2 text-[16px] font-bold whitespace-nowrap text-white sm:text-[17px]">
-        <img src="/sol-de-mayo.png" alt="" className="size-7 sm:size-8" />
+        <Sun className="size-7 text-sun sm:size-8" aria-hidden="true" />
         Saltar
       </a>
       {authenticated && address ? (
@@ -83,8 +84,7 @@ export function Paisaje({ children, llenar = false }: { children: React.ReactNod
   return (
     <section className={`amanecer relative flex min-h-[100dvh] flex-col overflow-hidden${llenar ? " flex-1" : ""}`}>
       <div className="estrellas pointer-events-none absolute inset-0" aria-hidden="true" />
-      <img src="/sol-de-mayo.png" alt="" aria-hidden="true" className="pointer-events-none absolute bottom-[70px] left-[58%] w-[260px] -translate-x-1/2 lg:bottom-[20px] lg:left-[60%] lg:w-[340px]" />
-      <img src="/andes.png" alt="" aria-hidden="true" className="pointer-events-none absolute -bottom-[40px] left-1/2 w-[900px] lg:-bottom-[90px] max-w-none -translate-x-1/2 lg:w-[max(1440px,100%)]" />
+      <Paisaje3D className="inset-0 size-full" solX={0.6} carga />
       <div className="relative flex flex-1 flex-col">{children}</div>
     </section>
   );

@@ -3,6 +3,7 @@
 // Root: solo el hero y un botón para conectar. Con sesión, pasa directo a /app.
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { Sun } from "lucide-react";
 import { useAccount } from "wagmi";
 import { useAuth } from "@/lib/auth";
 import { CIELO, Paisaje } from "@/components/dashboard/hero";
@@ -21,7 +22,7 @@ export default function Inicio() {
     <main className="flex min-h-screen flex-col">
       <Paisaje llenar>
         <header className="relative z-10 mx-auto flex w-full max-w-[1248px] items-center gap-2 px-5 py-5 text-[16px] font-bold text-white sm:px-6 sm:text-[17px]">
-          <img src="/sol-de-mayo.png" alt="" className="size-7 sm:size-8" />
+          <Sun className="size-7 text-sun sm:size-8" aria-hidden="true" />
           Saltar
         </header>
         <div className={`mx-auto flex w-full max-w-[1248px] flex-col items-start gap-6 px-6 pt-8 lg:pt-10 ${CIELO}`}>

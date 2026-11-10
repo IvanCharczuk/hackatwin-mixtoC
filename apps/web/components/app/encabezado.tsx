@@ -1,7 +1,7 @@
 "use client";
 
 // Arriba de /app: la barra (marca y wallet) sobre el cielo, y el bloque de la empresa que abre la tarjeta.
-import { Check, CircleAlert, CircleHelp, LogOut, Wallet } from "lucide-react";
+import { Check, CircleAlert, CircleHelp, LogOut, Sun, Wallet } from "lucide-react";
 import { useAccount, useSwitchChain } from "wagmi";
 import { CHAIN_ID } from "@/lib/tokens";
 import { corta, fmt } from "@/lib/formato";
@@ -56,7 +56,7 @@ export function Barra({ sesion }: { sesion: Sesion }) {
   return (
     <div className="mx-auto flex w-full max-w-[1120px] items-center justify-between gap-3 px-6 py-5">
       <a href="/" className="flex items-center gap-2 text-[16px] font-bold tracking-[-0.01em] text-navy">
-        <img src="/sol-de-mayo.png" alt="" className="size-7" />
+        <Sun className="size-7 text-[#F2AE2E]" aria-hidden="true" />
         Saltar
       </a>
       {dentro && address ? (

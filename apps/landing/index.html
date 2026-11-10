@@ -11,7 +11,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
   </head>
   <body>
-    <div id="root"></div>
+    <!-- Pantalla de carga hasta que monta React (después la sigue la de Paisaje3D): sin flash en blanco. -->
+    <div id="root"><div style="position:fixed;inset:0;background:#1b2250"></div></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

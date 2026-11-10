@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import { MAX_LTV, money, num, quote, short, tokenSrc, type Ticker } from "./data";
 import { LANGS, useT } from "./i18n";
+import { Paisaje3D } from "./Paisaje3D";
 
 const NAME = "Saltar";
 const APP_URL = "https://saltarg-app.vercel.app/";
@@ -87,27 +88,6 @@ function Logo({ size = 18 }: { size?: number }) {
   );
 }
 
-function Andes({ className }: { className: string }) {
-  return (
-    <img
-      src="/andes.png"
-      alt=""
-      aria-hidden
-      className={`andes pointer-events-none absolute left-1/2 -translate-x-1/2 select-none ${className}`}
-    />
-  );
-}
-
-function SolDeMayo({ className }: { className: string }) {
-  return (
-    <img
-      src="/sol-de-mayo.png"
-      alt=""
-      aria-hidden
-      className={`pointer-events-none absolute select-none ${className}`}
-    />
-  );
-}
 
 /* ---------- hero ---------- */
 
@@ -248,15 +228,8 @@ function Hero() {
           />
         ))}
       </div>
-      <div className="parallax-layer absolute inset-0" style={{ ["--depth" as string]: 0.4 }} aria-hidden>
-        <div className="hero-glow absolute bottom-[-60px] left-1/2 h-[400px] w-[640px] -translate-x-1/2 rounded-full lg:h-[520px] lg:w-[900px]" />
-        <SolDeMayo className="sun-rise sun-spot bottom-[-20px] left-[calc(50%-120px)] w-[240px]" />
-      </div>
-      <div className="parallax-layer absolute inset-0 z-[2]" style={{ ["--depth" as string]: 0.12 }} aria-hidden>
-        <div className="andes-rise absolute inset-0">
-          <Andes className="bottom-[-226px] lg:bottom-[-110px]" />
-        </div>
-      </div>
+      {/* La cordillera 3D con el sol (Paisaje3D, con su propio paralaje y la pantalla de carga). */}
+      <Paisaje3D className="inset-0 z-[2] size-full" solX={0.42} alto={0.72} carga />
 
       <div className="parallax-copy relative z-10 flex flex-col items-center lg:flex-1 lg:justify-center lg:pb-[200px]">
         <p className="intro-up flex items-center gap-2 pt-12 pb-4 lg:pt-0 lg:pb-6" style={{ animationDelay: "0.1s" }}>
@@ -661,8 +634,7 @@ function Closing() {
       id="contacto"
       className="closing-sky relative flex scroll-mt-4 flex-col items-center gap-[22px] overflow-hidden px-6 pt-[88px] pb-[300px] lg:gap-6 lg:px-[120px] lg:pt-[152px] lg:pb-[420px]"
     >
-      <SolDeMayo className="bottom-[70px] left-[calc(50%-80px)] w-40 lg:bottom-[180px]" />
-      <Andes className="bottom-[-176px] z-[1] lg:bottom-[-76px]" />
+      <Paisaje3D className="inset-0 z-[1] size-full" />
       <h2 className="relative z-[2] max-w-[820px] text-center text-[32px] leading-9 font-semibold tracking-[-0.8px] text-navy lg:text-[52px] lg:leading-[57px] lg:tracking-[-1.5px]">
         {t.closing.title}
       </h2>
